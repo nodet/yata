@@ -24,6 +24,8 @@ class CanRetrieveATask(TestCase):
         self.assertEqual(1, Task.objects.filter(description__startswith="Something to do").count())
 
         
+        
+        
 def tomorrow(aDate):
     return aDate + datetime.timedelta(1)
 
@@ -57,3 +59,17 @@ class GetRelativeDateTest(TestCase):
         self.assertEqual('Jan 27', relativeDueDate(aDate, aDate + datetime.timedelta(8)))
         self.assertEqual('Jan 10', relativeDueDate(aDate, aDate - datetime.timedelta(9)))
         self.assertEqual('2010-12-31', relativeDueDate(aDate, aDate - datetime.timedelta(19)))
+
+        
+        
+class TaskHasDone(TestCase):
+    def runTest(self):
+        t = Task(description = 'not yet done')
+        self.assertEqual(False, t.done)
+        t.save()
+        self.assertEqual(0, Task.objects.filter(done='True').count())
+        t.done = True
+        self.assertEqual(0, Task.objects.filter(done='True').count())
+        t.save()
+        self.assertEqual(1, Task.objects.filter(done='True').count())
+        

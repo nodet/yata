@@ -6,19 +6,21 @@ from django.db import models
 class Task(models.Model):
     description = models.CharField(max_length=200)
     due_date = models.DateField(null=True,blank=True)
-    
-    def relative_due_date(self):
-        if self.due_date:
-            return relativeDueDate(datetime.date.today(), self.due_date)
-        return ''
-    # When ordering for relative_due_date, use 'due_date' instead
-    relative_due_date.admin_order_field = 'due_date'
+    done = models.BooleanField()
     
     def __unicode__(self):
         if self.due_date:
             return '%s, due %s' % (self.description, self.relative_due_date())
         return self.description
 
+    def relative_due_date(self):
+        if self.due_date:
+            return relativeDueDate(datetime.date.today(), self.due_date)
+        return ''
+    # When ordering for relative_due_date, use 'due_date' instead
+    relative_due_date.admin_order_field = 'due_date'
+
+    
         
 def relativeDueDate(origin, theDate):
     "Returns a string representing theDate relative to origin (i.e. 'Today', 'In 3 days', ...)"
