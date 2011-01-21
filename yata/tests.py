@@ -5,6 +5,7 @@ Tests for my ToDo app
 import datetime
 from yata.models import Task, relativeDueDate
 from django.test import TestCase
+from django.test.client import Client
 
 
 class CanCreateATask(TestCase):
@@ -73,3 +74,9 @@ class TaskHasDone(TestCase):
         t.save()
         self.assertEqual(1, Task.objects.filter(done='True').count())
         
+        
+class MainViewTest(TestCase):
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/')
+        self.assertEqual(response.status_code, 200)
