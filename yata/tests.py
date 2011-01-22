@@ -152,7 +152,8 @@ class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
         tasks_recently_done = response.context['tasks_recently_done']
         for t in tasks_recently_done:
             self.assertTrue(t.done)
-        self.assertTrue(have_same_elements(sorted(tasks_recently_done, key = lambda task: task.last_edited), tasks_recently_done))
+        sorted_tasks = sorted(tasks_recently_done, key = lambda task: task.last_edited, reverse = True)
+        self.assertTrue(have_same_elements(sorted_tasks, tasks_recently_done))
         
         
         
