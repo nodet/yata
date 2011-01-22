@@ -46,9 +46,9 @@ def relativeDueDate(origin, theDate):
     elif nbDays == 1:
         return 'Tomorrow'
     elif nbDays >= 2 and nbDays <= 6:
-        return 'In %s days' % nbDays
+        return 'in %s days' % nbDays
     elif nbDays == 7:
-        return 'In 1 week'
+        return 'in 1 week'
     if theDate.year == origin.year:
         return theDate.strftime("%b %d")
     else:
