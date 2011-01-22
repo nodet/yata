@@ -76,7 +76,18 @@ class TaskHasDone(TestCase):
         
         
 class MainViewTest(TestCase):
+    def setUp(self):
+        t = Task(description = "something to do")
+        t.save()
+        t = Task(description = "something else", due_date = datetime.date(2011,01,19))
+        t.save()
+        t = Task(description = "another thing", due_date = datetime.date(2010,01,19));
+        t.save();
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template.name, 'yata/index.html')
+        tasks = response.context['tasks']
+        self.assertEqual(3, tasks.count())
+        
