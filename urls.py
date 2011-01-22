@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # (r'^xno/', include('xno.foo.urls')),
     (r'^yata/$', 'yata.views.index'),
     (r'^yata/(?P<task_id>\d+)/mark_done/$', 'yata.views.mark_done'),
-    (r'^yata/(?P<task_id>\d+)/mark_not_done/$', 'yata.views.mark_not_done'),
+    (r'^yata/(?P<task_id>\d+)/mark_not_done/$', 'yata.views.mark_done', {'b': False}),
     
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
