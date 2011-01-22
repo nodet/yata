@@ -48,11 +48,11 @@ class TaskHasADueDate(TestCase):
         self.assertEqual(1, Task.objects.filter(due_date__lte=oneDayAfter).count())
         self.assertEqual(1, Task.objects.filter(due_date__gte=oneDayBefore).count())
 
-#class TaskHasLastEdited(TestCase):
-#    def runTest(self):
-#        t = Task(description = 'something')
-#        t.save()
-#        self.assertTrue((t.last_edited - datetime.datetime.now()).seconds <= 1)
+class TaskHasLastEdited(TestCase):
+    def runTest(self):
+        t = Task(description = 'something')
+        t.save()
+        self.assertTrue((t.last_edited - datetime.datetime.now()).seconds <= 1)
         
       
 class DueDateCmpTest(TestCase):

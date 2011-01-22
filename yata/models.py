@@ -7,7 +7,7 @@ class Task(models.Model):
     description = models.CharField(max_length=200)
     due_date = models.DateField(null=True,blank=True)
     done = models.BooleanField()
-    #last_edited = models.DateTimeField(auto_now=True)
+    last_edited = models.DateTimeField(auto_now=True)
     
     def __unicode__(self):
         if self.due_date:
@@ -53,5 +53,3 @@ def relativeDueDate(origin, theDate):
         return theDate.strftime("%b %d")
     else:
         return theDate.isoformat()
-
-        
