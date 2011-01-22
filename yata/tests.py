@@ -47,7 +47,13 @@ class TaskHasADueDate(TestCase):
         self.assertEqual(0, Task.objects.filter(due_date__lte=oneDayBefore).count())
         self.assertEqual(1, Task.objects.filter(due_date__lte=oneDayAfter).count())
         self.assertEqual(1, Task.objects.filter(due_date__gte=oneDayBefore).count())
-      
+
+#class TaskHasLastEdited(TestCase):
+#    def runTest(self):
+#        t = Task(description = 'something')
+#        t.save()
+#        self.assertTrue((t.last_edited - datetime.datetime.now()).seconds <= 1)
+        
       
 class DueDateCmpTest(TestCase):
     def runTest(self):
@@ -113,4 +119,22 @@ class MainViewHasTasksSortedByEarliestDueDateTest(MainViewTest):
         self.assertEqual(3, len(tasks))
         self.assertEqual(sorted(tasks, Task.compare_by_due_date), tasks)
         
+class MainViewHasListOfNotDoneTasks(MainViewTest):
+    def setUp(self):
+        t = Task(description = "Already done", done = True)
+        t.save()
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/')
+        tasks = response.context['tasks']
+        for t in tasks:
+            self.assertFalse(t.done)
+        
+class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/')
+        tasks_recently_done = response.context['tasks_recently_done']
+        for t in tasks_recently_done:
+            self.assertTrue(t.done)
         
