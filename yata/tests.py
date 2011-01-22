@@ -3,6 +3,7 @@ Tests for my ToDo app
 """
 
 import datetime
+import time
 from yata.models import Task, relativeDueDate, due_date_cmp
 from django.test import TestCase
 from django.test.client import Client
@@ -123,13 +124,27 @@ class MainViewHasListOfNotDoneTasks(MainViewTest):
     def setUp(self):
         t = Task(description = "Already done", done = True)
         t.save()
+        # Ensure enough time between saves so they have different last_edited date/time
+        time.sleep(0.05)
+        t = Task(description = "Another that's done", done = True)
+        t.save()
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
         tasks = response.context['tasks']
         for t in tasks:
             self.assertFalse(t.done)
-        
+
+
+def have_same_elements(it1, it2):
+    if len(it1) != len(it2):
+        return False
+    for t1, t2 in zip(it1, it2):
+        if t1 != t2:
+            return False
+    return True
+
+            
 class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
     def runTest(self):
         c = Client()
@@ -137,4 +152,7 @@ class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
         tasks_recently_done = response.context['tasks_recently_done']
         for t in tasks_recently_done:
             self.assertTrue(t.done)
+        self.assertTrue(have_same_elements(sorted(tasks_recently_done, key = lambda task: task.last_edited), tasks_recently_done))
+        
+        
         
