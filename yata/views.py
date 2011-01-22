@@ -20,3 +20,9 @@ def mark_done(request, task_id):
     t.done = True
     t.save()
     return HttpResponseRedirect(reverse('yata.views.index'))
+
+def mark_not_done(request, task_id):
+    t = get_object_or_404(Task, pk=task_id)
+    t.done = False
+    t.save()
+    return HttpResponseRedirect(reverse('yata.views.index'))    

@@ -165,3 +165,18 @@ class MarkDoneTest(TestCase):
         response = c.get('/yata/1/mark_done', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
+        self.assertEqual(0, len(response.context['tasks']))
+        self.assertEqual(1, response.context['tasks_recently_done'].count())
+
+class MarkNotDoneTest(TestCase):
+    def setUp(self):
+        t = Task(description = "something to do", done = True)
+        t.save()
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/1/mark_not_done', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template.name, 'yata/index.html')
+        self.assertEqual(1, len(response.context['tasks']))
+        self.assertEqual(0, response.context['tasks_recently_done'].count())
+        
