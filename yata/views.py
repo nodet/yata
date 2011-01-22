@@ -1,5 +1,7 @@
+from django.shortcuts import get_object_or_404
 from django.template import Context, loader
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from yata.models import Task
 
 def index(request):
@@ -11,3 +13,10 @@ def index(request):
         'tasks_recently_done': recently_done,
     })
     return HttpResponse(t.render(c))
+    
+    
+def mark_done(request, task_id):
+    t = get_object_or_404(Task, pk=task_id)
+    t.done = True
+    t.save()
+    return HttpResponseRedirect(reverse('yata.views.index'))

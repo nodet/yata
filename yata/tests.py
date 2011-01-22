@@ -156,4 +156,12 @@ class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
         self.assertTrue(have_same_elements(sorted_tasks, tasks_recently_done))
         
         
-        
+class MarkDoneTest(TestCase):
+    def setUp(self):
+        t = Task(description = "something to do")
+        t.save()
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/1/mark_done', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template.name, 'yata/index.html')
