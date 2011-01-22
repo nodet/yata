@@ -3,7 +3,7 @@ Tests for my ToDo app
 """
 
 import datetime
-from yata.models import Task, relativeDueDate
+from yata.models import Task, relativeDueDate, due_date_cmp
 from django.test import TestCase
 from django.test.client import Client
 
@@ -47,7 +47,20 @@ class TaskHasADueDate(TestCase):
         self.assertEqual(0, Task.objects.filter(due_date__lte=oneDayBefore).count())
         self.assertEqual(1, Task.objects.filter(due_date__lte=oneDayAfter).count())
         self.assertEqual(1, Task.objects.filter(due_date__gte=oneDayBefore).count())
+      
+      
+class DueDateCmpTest(TestCase):
+    def runTest(self):
+        aDate = datetime.date(2010,01,19)
+        self.assertEqual( 0, due_date_cmp(aDate, aDate))
+        self.assertEqual(-1, due_date_cmp(aDate, tomorrow(aDate)))
+        self.assertEqual( 1, due_date_cmp(tomorrow(aDate), aDate))
+        self.assertEqual( 1, due_date_cmp(None, aDate))
+        self.assertEqual(-1, due_date_cmp(aDate, None))
+        self.assertEqual( 0, due_date_cmp(None, None))
         
+
+      
 class GetRelativeDateTest(TestCase):
     def runTest(self):
         aDate = datetime.date(2011,01,19)
@@ -89,5 +102,15 @@ class MainViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         tasks = response.context['tasks']
-        self.assertEqual(3, tasks.count())
+        self.assertEqual(3, len(tasks))
+        
+      
+class MainViewHasTasksSortedByEarliestDueDateTest(MainViewTest):
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(3, len(tasks))
+        self.assertEqual(sorted(tasks, Task.compare_by_due_date), tasks)
+        
         

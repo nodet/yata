@@ -20,6 +20,19 @@ class Task(models.Model):
     # When ordering for relative_due_date, use 'due_date' instead
     relative_due_date.admin_order_field = 'due_date'
 
+    @staticmethod
+    def compare_by_due_date(t1, t2):
+        return due_date_cmp(t1.due_date, t2.due_date)
+
+    
+def due_date_cmp(t1, t2):
+    if t1 == None and t2 == None:
+        return 0;
+    if t1 == None:
+        return 1
+    if t2 == None:
+        return -1
+    return (t1 - t2).days
     
         
 def relativeDueDate(origin, theDate):
