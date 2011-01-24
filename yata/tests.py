@@ -212,3 +212,5 @@ class TestRepetitionDate(TestCase):
         self.assertEqual(datetime.date(2011,9,12), next_date(datetime.date(2011,7,12), 2, 'M'))
         self.assertEqual(datetime.date(2013,7,12), next_date(datetime.date(2012,7,12), 1, 'Y'))
         # test with carry from D to M, from M to Y, from D to Y
+        self.assertEqual(datetime.date(2011,8,2), next_date(datetime.date(2011,7,30), 3, 'D'))
+        

@@ -65,7 +65,7 @@ def next_date(aDate, nb, repetition_type):
         repetition_type = 'D'
         nb = 7 * nb
     if repetition_type == 'D':
-        return datetime.date(aDate.year, aDate.month, aDate.day + nb)
+        return aDate + datetime.timedelta(nb)
     elif repetition_type == 'M':
         return datetime.date(aDate.year, aDate.month + nb, aDate.day)
     elif repetition_type == 'Y':
