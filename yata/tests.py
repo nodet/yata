@@ -4,7 +4,7 @@ Tests for my ToDo app
 
 import datetime
 import time
-from yata.models import Task, relativeDueDate, due_date_cmp
+from yata.models import Task, relativeDueDate, due_date_cmp, next_date
 from django.test import TestCase
 from django.test.client import Client
 
@@ -204,3 +204,11 @@ class MainViewDoesNotShowTasksNotStartedTest(TestCase):
         tasks = response.context['tasks']
         self.assertEqual(1, len(tasks))
         
+        
+class TestRepetitionDate(TestCase):
+     def runTest(self):
+        self.assertEqual(datetime.date(2011,7,15), next_date(datetime.date(2011,7,12), 3, 'D'))
+        self.assertEqual(datetime.date(2011,7,26), next_date(datetime.date(2011,7,12), 2, 'W'))
+        self.assertEqual(datetime.date(2011,9,12), next_date(datetime.date(2011,7,12), 2, 'M'))
+        self.assertEqual(datetime.date(2013,7,12), next_date(datetime.date(2012,7,12), 1, 'Y'))
+        # test with carry from D to M, from M to Y, from D to Y

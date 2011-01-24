@@ -59,3 +59,14 @@ def relativeDueDate(origin, theDate):
         return theDate.strftime("%b %d")
     else:
         return theDate.isoformat()
+
+def next_date(aDate, nb, repetition_type):
+    if repetition_type == 'W':
+        repetition_type = 'D'
+        nb = 7 * nb
+    if repetition_type == 'D':
+        return datetime.date(aDate.year, aDate.month, aDate.day + nb)
+    elif repetition_type == 'M':
+        return datetime.date(aDate.year, aDate.month + nb, aDate.day)
+    elif repetition_type == 'Y':
+        return datetime.date(aDate.year + nb, aDate.month, aDate.day)        
