@@ -5,6 +5,7 @@ from django.db import models
 
 class Task(models.Model):
     description = models.CharField(max_length=200)
+    start_date = models.DateField(null=True,blank=True)
     due_date = models.DateField(null=True,blank=True)
     done = models.BooleanField()
     last_edited = models.DateTimeField(auto_now=True)
@@ -21,6 +22,11 @@ class Task(models.Model):
     # When ordering for relative_due_date, use 'due_date' instead
     relative_due_date.admin_order_field = 'due_date'
 
+    def is_future(self):
+        if self.start_date:
+            return self.start_date >= datetime.date.today()
+        return False
+    
     @staticmethod
     def compare_by_due_date(t1, t2):
         return due_date_cmp(t1.due_date, t2.due_date)

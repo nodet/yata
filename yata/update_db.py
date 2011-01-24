@@ -6,10 +6,23 @@ from django.db import connection, transaction
 # from yata import update_db
 # update_db.addLastEditedColumn()
 #
-        
-def addLastEditedColumn():
+
+
+#
+# It would be nice that these scripts do not change the
+# last_edited timestamp...
+#
+
+def runQueryAndSaveAll(query):
     cursor = connection.cursor()
-    cursor.execute('alter table "yata_task" add column "last_edited"')
+    cursor.execute(query)
     for t in Task.objects.all():
         t.save()
         
+      
+def addLastEditedColumn():
+    runQueryAndSaveAll('alter table "yata_task" add column "last_edited" datetime')
+
+def addStartDateColumn():
+    runQueryAndSaveAll('alter table "yata_task" add column "start_date" date')
+    

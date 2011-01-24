@@ -4,9 +4,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from yata.models import Task
 
+import datetime
+
+
 def index(request):
-    tasks = sorted(Task.objects.all().exclude(done__exact = True), Task.compare_by_due_date)
-    recently_done = Task.objects.all().filter(done__exact = True).order_by('-last_edited')
+
+    tasks = Task.objects.all()
+    tasks = tasks.exclude(done__exact = True)
+    tasks = filter(lambda t: not t.is_future(), tasks)
+    tasks = sorted(tasks, Task.compare_by_due_date)
+
+    recently_done = Task.objects.all()
+    recently_done = recently_done.filter(done__exact = True)
+    recently_done = recently_done.order_by('-last_edited')
+
     t = loader.get_template('yata/index.html')
     c = Context({
         'tasks': tasks,
