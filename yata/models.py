@@ -5,11 +5,21 @@ from django.db import models
 
 
 class Task(models.Model):
-    description = models.CharField(max_length=200)
-    start_date = models.DateField(null=True,blank=True)
-    due_date = models.DateField(null=True,blank=True)
+
+    REPEAT_CHOICES = (
+        ('D', 'day(s)'),
+        ('W', 'week(s)'),
+        ('M', 'month(s)'),
+        ('Y', 'year(s)'),
+    )
+
+    description = models.CharField(max_length = 200)
+    start_date = models.DateField(null = True, blank = True)
+    due_date = models.DateField(null = True, blank = True)
+    repeat_nb = models.PositiveIntegerField(null = True, blank = True)
+    repeat_type = models.CharField(max_length = 1, choices = REPEAT_CHOICES, null = True, blank = True)
     done = models.BooleanField()
-    last_edited = models.DateTimeField(auto_now=True)
+    last_edited = models.DateTimeField(auto_now = True)
     
     def __unicode__(self):
         if self.due_date:
@@ -28,8 +38,12 @@ class Task(models.Model):
             return self.start_date >= datetime.date.today()
         return False
 
-    def mark_done(self, b):
+    def mark_done(self, b = True):
         self.done = b
+        if b and self.repeat_type:
+            ddate = next_date(datetime.date.today(), self.repeat_nb, self.repeat_type)
+            new_task = Task(description = self.description, due_date = ddate, repeat_nb = self.repeat_nb, repeat_type = self.repeat_type)
+            new_task.save()
         self.save()
         
     @staticmethod

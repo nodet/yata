@@ -219,3 +219,20 @@ class TestRepetitionDate(TestCase):
         self.assertEqual(datetime.date(2011,3,28), next_date(datetime.date(2011,2,28), 1, 'M'))
         self.assertEqual(datetime.date(2011,2,28), next_date(datetime.date(2011,1,31), 1, 'M'))
         self.assertEqual(datetime.date(2012,1,15), next_date(datetime.date(2011,12,15), 1, 'M'))
+
+        
+class MarkingARepeatableTaskCreatesANewCopy(TestCase):
+    def runTest(self):
+        t = Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
+        self.assertEqual(0, Task.objects.exclude(done__exact = True).count())
+        t.mark_done()
+        tasks = Task.objects.exclude(done__exact = True)
+        self.assertEqual(1, tasks.count())
+        t = tasks[0]
+        self.assertEqual(7, (t.due_date - datetime.date.today()).days)
+        
+        
+        
+        
+        
+        

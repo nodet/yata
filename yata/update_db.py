@@ -26,3 +26,6 @@ def addLastEditedColumn():
 def addStartDateColumn():
     runQueryAndSaveAll('alter table "yata_task" add column "start_date" date')
     
+def addRepeatColumns():
+    #runQueryAndSaveAll('alter table "yata_task" add column "repeat_nb" integer unsigned')
+    runQueryAndSaveAll('alter table "yata_task" add column "repeat_type" varchar(1)')
