@@ -1,5 +1,6 @@
 import unittest
 import datetime
+import calendar
 from django.db import models
 
 
@@ -60,6 +61,15 @@ def relativeDueDate(origin, theDate):
     else:
         return theDate.isoformat()
 
+
+def _next_date_end_of_month(year, month, day):
+    year = year + (month - 1) / 12
+    month = (month - 1) % 12 + 1
+    range = calendar.monthrange(year, month)[1]
+    if range < day:
+        day = range
+    return datetime.date(year, month, day)
+        
 def next_date(aDate, nb, repetition_type):
     if repetition_type == 'W':
         repetition_type = 'D'
@@ -67,6 +77,6 @@ def next_date(aDate, nb, repetition_type):
     if repetition_type == 'D':
         return aDate + datetime.timedelta(nb)
     elif repetition_type == 'M':
-        return datetime.date(aDate.year, aDate.month + nb, aDate.day)
+        return _next_date_end_of_month(aDate.year, aDate.month + nb, aDate.day)
     elif repetition_type == 'Y':
-        return datetime.date(aDate.year + nb, aDate.month, aDate.day)        
+        return _next_date_end_of_month(aDate.year + nb, aDate.month, aDate.day)        
