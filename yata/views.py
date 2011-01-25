@@ -29,6 +29,5 @@ def index(request):
     
 def mark_done(request, task_id, b = True):
     t = get_object_or_404(Task, pk=task_id)
-    t.done = b
-    t.save()
+    t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))

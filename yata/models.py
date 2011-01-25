@@ -27,7 +27,11 @@ class Task(models.Model):
         if self.start_date:
             return self.start_date >= datetime.date.today()
         return False
-    
+
+    def mark_done(self, b):
+        self.done = b
+        self.save()
+        
     @staticmethod
     def compare_by_due_date(t1, t2):
         return due_date_cmp(t1.due_date, t2.due_date)
