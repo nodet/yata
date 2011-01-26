@@ -40,8 +40,9 @@ def add_task(request):
         form = AddTaskForm(request.POST)    # A form bound to the POST data
         if form.is_valid():
             # Create the task
-            d = form.cleaned_data['description']
-            Task(description = d).save()
+            desc = form.cleaned_data['description']
+            ddate = form.cleaned_data['due_date']
+            Task(description = desc, due_date = ddate).save()
             return HttpResponseRedirect('/yata/')
     else:
         form = AddTaskForm()

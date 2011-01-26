@@ -234,8 +234,14 @@ class MarkingARepeatableTaskCreatesANewCopy(TestCase):
         
 class AddTaskViewTest(TestCase):
     def runTest(self):
-        response = Client().post('/yata/add_task/', {'description': 'The created task'})
-        self.assertEqual(1, Task.objects.all().count())
+        desc = 'The created task'
+        ddate = datetime.date.today()
+        response = Client().post('/yata/add_task/', {'description': desc, 'due_date': ddate})
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(desc, t.description)
+        self.assertEqual(ddate, t.due_date)
         
         
         
