@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404
-from django.template import Context, loader
+from django.template import Context, loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response
 from yata.models import Task
+from yata.forms import AddTaskForm
 
 import datetime
 
@@ -31,3 +33,20 @@ def mark_done(request, task_id, b = True):
     t = get_object_or_404(Task, pk=task_id)
     t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))
+
+    
+def add_task(request):
+    if request.method == 'POST':            # The form has been submitted
+        form = AddTaskForm(request.POST)    # A form bound to the POST data
+        if form.is_valid():
+            # Create the task
+            d = form.cleaned_data['description']
+            Task(description = d).save()
+            return HttpResponseRedirect('/yata/')
+    else:
+        form = AddTaskForm()
+        
+    return render_to_response('yata/add_task.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))
+ 

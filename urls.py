@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Example:
     # (r'^xno/', include('xno.foo.urls')),
     (r'^yata/$', 'yata.views.index'),
+    (r'^yata/add_task/$', 'yata.views.add_task'),
     (r'^yata/(?P<task_id>\d+)/mark_done/$', 'yata.views.mark_done'),
     (r'^yata/(?P<task_id>\d+)/mark_not_done/$', 'yata.views.mark_done', {'b': False}),
     

@@ -232,6 +232,10 @@ class MarkingARepeatableTaskCreatesANewCopy(TestCase):
         self.assertEqual(7, (t.due_date - datetime.date.today()).days)
         
         
+class AddTaskViewTest(TestCase):
+    def runTest(self):
+        response = Client().post('/yata/add_task/', {'description': 'The created task'})
+        self.assertEqual(1, Task.objects.all().count())
         
         
         

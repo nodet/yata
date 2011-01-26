@@ -1,0 +1,9 @@
+Add a task:
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="/yata/add_task/" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Create!" />
+</form>
