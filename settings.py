@@ -81,7 +81,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    'f:/users/nodet/My Dropbox/src/python/django_templates'
+    'f:/users/nodet/My Dropbox/src/python/xno/public/templates'
 )
 
 INSTALLED_APPS = (

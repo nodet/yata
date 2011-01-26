@@ -1,0 +1,26 @@
+Tasks not done, by earliest due date:
+
+{% if tasks %}
+    <ul>
+    {% for t in tasks %}
+        <li>{{ t }} - <a href="/yata/{{ t.id }}/mark_done/">Done!</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nothing to do!</p>
+{% endif %}
+
+
+Tasks done:
+
+{% if tasks_recently_done %}
+    <ul>
+    {% for t in tasks_recently_done %}
+        <li>{{ t }} - <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nothing...</p>
+{% endif %}
+
+<a href="/admin/yata/task">Admin</a>
