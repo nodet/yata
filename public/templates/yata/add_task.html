@@ -1,9 +1,29 @@
-Add a task:
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="text/css" href="{{ MEDIA_URL }}css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />	
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.9.custom.min.js"></script>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <script type="text/javascript">
+            $(function(){
+                // Datepicker
+                $('#id_due_date').datepicker({
+                    inline: true
+                });
+            });
+        </script>
+    </head>
+    
+<body>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="/yata/add_task/" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Create!" />
-</form>
+    <form action="/yata/add_task/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create!" />
+    </form>
+
+</body>
+
+</html>
