@@ -9,7 +9,12 @@
             $(function(){
                 // Datepicker
                 $('#id_due_date').datepicker({
-                    inline: true
+                    inline: true,
+                    dateFormat: 'yy-mm-dd',
+                    autoSize: true,
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    firstDay: 1
                 });
             });
         </script>
