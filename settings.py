@@ -2,7 +2,7 @@
 
 from socket import gethostname
 
-DEBUG = False
+DEBUG = True
 XNO_LOCAL_PREFIX='/home/nodet/mysite/'
 XNO_ROOT_URL_CONF='mysite.urls'
 if gethostname() == 'fwplc3j':
