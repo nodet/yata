@@ -275,7 +275,20 @@ class RepeatingWithDueDateGetsADueDate(TestCase):
         self.assertEqual(1, tasks.count())
         t = tasks[0]
         self.assertEqual(7, (t.due_date - d).days)
-
+        self.assertTrue(t.start_date == None)
+        
+class RepeatingWithStartDateGetsAStartDate(TestCase):
+    def runTest(self):
+        d = tomorrow()
+        t = Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W', start_date = d)
+        self.assertEqual(0, Task.objects.exclude(done__exact = True).count())
+        t.mark_done()
+        tasks = Task.objects.exclude(done__exact = True)
+        self.assertEqual(1, tasks.count())
+        t = tasks[0]
+        self.assertEqual(7, (t.start_date - d).days)
+        self.assertTrue(t.due_date == None)
+        
 class RepeatingWithStartAndDueDateGetsBoth(TestCase):
     def runTest(self):
         y = yesterday()
@@ -287,7 +300,7 @@ class RepeatingWithStartAndDueDateGetsBoth(TestCase):
         self.assertEqual(1, tasks.count())
         t = tasks[0]
         self.assertEqual(7, (t.due_date - d).days)
-        #self.assertEqual(7, (t.start_date - y).days)
+        self.assertEqual(7, (t.start_date - y).days)
 
         
         
