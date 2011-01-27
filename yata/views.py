@@ -41,8 +41,11 @@ def add_task(request):
         if form.is_valid():
             # Create the task
             desc = form.cleaned_data['description']
+            sdate = form.cleaned_data['start_date']
             ddate = form.cleaned_data['due_date']
-            Task(description = desc, due_date = ddate).save()
+            repeat_nb = form.cleaned_data['repeat_nb']
+            repeat_type = form.cleaned_data['repeat_type']
+            Task(description = desc, start_date = sdate, due_date = ddate, repeat_nb = repeat_nb, repeat_type = repeat_type).save()
             return HttpResponseRedirect('/yata/')
     else:
         form = AddTaskForm()

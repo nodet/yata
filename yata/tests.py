@@ -27,6 +27,8 @@ class CanRetrieveATask(TestCase):
 
         
         
+def today():
+    return datetime.date.today()
         
 def tomorrow(aDate = datetime.date.today()):
     return aDate + datetime.timedelta(1)
@@ -231,18 +233,61 @@ class MarkingARepeatableTaskCreatesANewCopy(TestCase):
         t = tasks[0]
         self.assertEqual(7, (t.due_date - datetime.date.today()).days)
         
+class TasksNotRepeatableIfNotCorrectlyDefined(TestCase):
+    def runTest(self):
+        t = Task(description = 'Not really repeatable', repeat_nb = None, repeat_type = 'W')
+        t.mark_done()
+        t = Task(description = 'Not really repeatable', repeat_nb = 1, repeat_type = None)
+        t.mark_done()
+
         
 class AddTaskViewTest(TestCase):
     def runTest(self):
         desc = 'The created task'
-        ddate = datetime.date.today()
-        response = Client().post('/yata/add_task/', {'description': desc, 'due_date': ddate})
+        sdate = today()
+        ddate = tomorrow()
+        repeat_nb = 1
+        repeat_type = 'W'
+        response = Client().post('/yata/add_task/', {
+            'description': desc,
+            'start_date': sdate,
+            'due_date': ddate,
+            'repeat_nb': repeat_nb,
+            'repeat_type': repeat_type
+        })
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
         self.assertEqual(desc, t.description)
+        self.assertEqual(sdate, t.start_date)
         self.assertEqual(ddate, t.due_date)
+        self.assertEqual(repeat_nb, t.repeat_nb)
+        self.assertEqual(repeat_type, t.repeat_type)
         
         
+class RepeatingWithDueDateGetsADueDate(TestCase):
+    def runTest(self):
+        d = tomorrow()
+        t = Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W', due_date = d)
+        self.assertEqual(0, Task.objects.exclude(done__exact = True).count())
+        t.mark_done()
+        tasks = Task.objects.exclude(done__exact = True)
+        self.assertEqual(1, tasks.count())
+        t = tasks[0]
+        self.assertEqual(7, (t.due_date - d).days)
+
+class RepeatingWithStartAndDueDateGetsBoth(TestCase):
+    def runTest(self):
+        y = yesterday()
+        d = today()
+        t = Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W', start_date = y, due_date = d)
+        self.assertEqual(0, Task.objects.exclude(done__exact = True).count())
+        t.mark_done()
+        tasks = Task.objects.exclude(done__exact = True)
+        self.assertEqual(1, tasks.count())
+        t = tasks[0]
+        self.assertEqual(7, (t.due_date - d).days)
+        #self.assertEqual(7, (t.start_date - y).days)
+
         
         

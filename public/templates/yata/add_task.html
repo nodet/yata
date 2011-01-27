@@ -8,14 +8,16 @@
         <script type="text/javascript">
             $(function(){
                 // Datepicker
-                $('#id_due_date').datepicker({
+                param = {
                     inline: true,
                     dateFormat: 'yy-mm-dd',
                     autoSize: true,
                     showOtherMonths: true,
                     selectOtherMonths: true,
                     firstDay: 1
-                });
+                }
+                $('#id_due_date').datepicker(param);
+                $('#id_start_date').datepicker(param);
             });
         </script>
     </head>

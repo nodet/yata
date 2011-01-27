@@ -7,10 +7,10 @@ from django.db import models
 class Task(models.Model):
 
     REPEAT_CHOICES = (
-        ('D', 'day(s)'),
-        ('W', 'week(s)'),
-        ('M', 'month(s)'),
-        ('Y', 'year(s)'),
+        ('D', 'day'),
+        ('W', 'week'),
+        ('M', 'month'),
+        ('Y', 'year'),
     )
 
     description = models.CharField(max_length = 200)
@@ -22,9 +22,15 @@ class Task(models.Model):
     last_edited = models.DateTimeField(auto_now = True)
     
     def __unicode__(self):
+        s = self.description
         if self.due_date:
-            return '%s, due %s' % (self.description, self.relative_due_date())
-        return self.description
+            s = '%s, due %s' % (s, self.relative_due_date())
+        if self.is_repeating():
+            if self.repeat_nb > 1:
+                s = '%s, repeating every %s %ss' % (s, self.repeat_nb, self.repeat_choice(self.repeat_type))
+            else:
+                s = '%s, repeating every %s' % (s, self.repeat_choice(self.repeat_type))
+        return s
 
     def relative_due_date(self):
         if self.due_date:
@@ -38,18 +44,41 @@ class Task(models.Model):
             return self.start_date >= datetime.date.today()
         return False
 
+    def is_repeating(self):
+        return self.repeat_type and self.repeat_nb
+
+    @staticmethod
+    def repeat_choice(choice):
+        for pair in Task.REPEAT_CHOICES:
+            if pair[0] == choice:
+                return pair[1]
+
+                
+    def _make_copy(self):
+        return Task(description = self.description, start_date = self.start_date, due_date = self.due_date, repeat_nb = self.repeat_nb, repeat_type = self.repeat_type, done = self.done)
+                
+                
     def mark_done(self, b = True):
-        self.done = b
-        if b and self.repeat_type:
-            ddate = next_date(datetime.date.today(), self.repeat_nb, self.repeat_type)
-            new_task = Task(description = self.description, due_date = ddate, repeat_nb = self.repeat_nb, repeat_type = self.repeat_type)
+        if b and self.is_repeating():
+            new_task = self._make_copy()
+
+            if self.start_date:
+                new_task.start_date = next_date(self.start_date, self.repeat_nb, self.repeat_type)
+            if not self.start_date or self.due_date:
+                d = datetime.date.today()
+                if self.due_date and (self.due_date > d):
+                    d = self.due_date
+                new_task.due_date = next_date(d, self.repeat_nb, self.repeat_type)
+
             new_task.save()
+        self.done = b
         self.save()
+        
         
     @staticmethod
     def compare_by_due_date(t1, t2):
         return due_date_cmp(t1.due_date, t2.due_date)
-
+                
     
 def due_date_cmp(t1, t2):
     if t1 == None and t2 == None:
