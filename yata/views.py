@@ -50,7 +50,34 @@ def add_task(request):
     else:
         form = AddTaskForm()
         
+    # Either the form was not valid, or we've just created it
     return render_to_response('yata/add_task.html', {
         'form': form,
     }, context_instance=RequestContext(request))
  
+ 
+def edit(request, task_id):
+    t = get_object_or_404(Task, pk=task_id)
+    if request.method == 'POST':
+        form = AddTaskForm(request.POST)    # A form bound to the POST data
+        if form.is_valid():
+            t.description = form.cleaned_data['description']
+            t.start_date = form.cleaned_data['start_date']
+            t.due_date = form.cleaned_data['due_date']
+            t.repeat_nb = form.cleaned_data['repeat_nb']
+            t.repeat_type = form.cleaned_data['repeat_type']
+            t.save()
+            return HttpResponseRedirect('/yata/')
+    else:
+        data = {'description': t.description,
+                'start_date': t.start_date,
+                'due_date': t.due_date,
+                'repeat_nb': t.repeat_nb,
+                'repeat_type': t.repeat_type}
+        form = AddTaskForm(data)
+        
+    # Either the form was not valid, or we've just created it
+    return render_to_response('yata/edit.html', {
+        'form': form,
+        'id': t.id
+    }, context_instance=RequestContext(request))

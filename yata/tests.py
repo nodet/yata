@@ -304,3 +304,33 @@ class RepeatingWithStartAndDueDateGetsBoth(TestCase):
 
         
         
+class EditViewTest(TestCase):
+    def setUp(self):
+        t = Task(description = "something to do")
+        t.save()
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/1/edit')
+        self.assertEqual(301, response.status_code)
+        
+        ndesc = 'new description'
+        sdate = yesterday()
+        ddate = tomorrow()
+        nb = 2
+        type = 'W'
+        response = Client().post('/yata/1/edit/', {
+            'description': ndesc,
+            'start_date': sdate,
+            'due_date': ddate,
+            'repeat_nb': nb,
+            'repeat_type': type
+        })
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(ndesc, t.description)
+        self.assertEqual(sdate, t.start_date)
+        self.assertEqual(ddate, t.due_date)
+        self.assertEqual(nb, t.repeat_nb)
+        self.assertEqual(type, t.repeat_type)
+        
