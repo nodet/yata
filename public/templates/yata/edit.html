@@ -23,12 +23,19 @@
     </head>
     
 <body>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
     
-    <form action="/yata/{{ id }}/edit/" method="post">
+    {% if id %}
+        <form action="/yata/{{ id }}/edit/" method="post">
+    {% else %}
+        <form action="/yata/add_task/" method="post">
+    {% endif %}
+    
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save changes!" />
+    <input type="submit" value="Save!" />
     </form>
 
 </body>

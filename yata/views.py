@@ -34,35 +34,26 @@ def mark_done(request, task_id, b = True):
     t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))
 
+
+def edit_or_add(request, task_id = None):
+    t = get_object_or_404(Task, pk=task_id) if task_id else None
+    if request.method == 'POST':
+        form = AddTaskForm(request.POST, instance=t)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/yata/')
+    else:
+        form = AddTaskForm(instance = t)
+        
+    # Either the form was not valid, or we've just created it
+    dic = {'form': form}
+    if task_id:
+        dic['id'] = t.id
+    return render_to_response('yata/edit.html', dic, 
+        context_instance=RequestContext(request))
     
 def add_task(request):
-    t = None
-    if request.method == 'POST':            # The form has been submitted
-        form = AddTaskForm(request.POST, instance = t)    # A form bound to the POST data
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/yata/')
-    else:
-        form = AddTaskForm(instance = t)
-        
-    # Either the form was not valid, or we've just created it
-    return render_to_response('yata/add_task.html', {
-        'form': form,
-    }, context_instance=RequestContext(request))
- 
+    return edit_or_add(request)
  
 def edit(request, task_id):
-    t = get_object_or_404(Task, pk=task_id)
-    if request.method == 'POST':
-        form = AddTaskForm(request.POST, instance=t)    # A form bound to the POST data
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/yata/')
-    else:
-        form = AddTaskForm(instance = t)
-        
-    # Either the form was not valid, or we've just created it
-    return render_to_response('yata/edit.html', {
-        'form': form,
-        'id': t.id
-    }, context_instance=RequestContext(request))
+    return edit_or_add(request, task_id)
