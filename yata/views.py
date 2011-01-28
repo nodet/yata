@@ -11,21 +11,19 @@ import datetime
 
 def index(request):
 
-    tasks = Task.objects.all()
-    tasks = tasks.exclude(done__exact = True)
+    tasks = Task.objects.all(). \
+                exclude(done__exact = True)
     tasks = filter(lambda t: not t.is_future(), tasks)
     tasks = sorted(tasks, Task.compare_by_due_date)
 
-    recently_done = Task.objects.all()
-    recently_done = recently_done.filter(done__exact = True)
-    recently_done = recently_done.order_by('-last_edited')
+    recently_done = Task.objects.all(). \
+                        filter(done__exact = True). \
+                        order_by('-last_edited')
 
-    t = loader.get_template('yata/index.html')
-    c = Context({
+    return render_to_response('yata/index.html', {
         'tasks': tasks,
         'tasks_recently_done': recently_done,
     })
-    return HttpResponse(t.render(c))
     
 
     
@@ -46,10 +44,10 @@ def edit(request, task_id = None):
         form = AddTaskForm(instance = t)
         
     # Either the form was not valid, or we've just created it
-    dic = {'form': form}
+    d = {'form': form}
     if task_id:
-        # The template needs the id to decide if the form calls
-        # add_task or edit (which needs the id)
-        dic['id'] = t.id
-    return render_to_response('yata/edit.html', dic, 
+        # The template needs the id to decide if the form's action
+        # is .../add_task or .../{{id}}/edit
+        d['id'] = t.id
+    return render_to_response('yata/edit.html', d, 
         context_instance=RequestContext(request))

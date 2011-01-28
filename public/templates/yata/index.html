@@ -3,7 +3,11 @@ Tasks not done, by earliest due date:
 {% if tasks %}
     <ul>
     {% for t in tasks %}
-        <li>{{ t }} - <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - <a href="/yata/{{ t.id }}/edit/">Edit</a></li>
+        <li>
+            {{ t }} - 
+            <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - 
+            <a href="/yata/{{ t.id }}/edit/">Edit</a>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
@@ -16,11 +20,16 @@ Tasks done:
 {% if tasks_recently_done %}
     <ul>
     {% for t in tasks_recently_done %}
-        <li>{{ t }} - <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a> - <a href="/yata/{{ t.id }}/edit/">Edit</a></li>
+        <li>
+            {{ t }} - 
+            <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a> - 
+            <a href="/yata/{{ t.id }}/edit/">Edit</a>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>Nothing...</p>
 {% endif %}
 
-<a href="/yata/add_task/">Add task</a>, <a href="/admin/yata/task">Admin</a>
+<a href="/yata/add_task/">Add task</a>, 
+<a href="/admin/yata/task">Admin</a>
