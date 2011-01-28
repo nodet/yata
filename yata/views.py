@@ -48,6 +48,8 @@ def edit_or_add(request, task_id = None):
     # Either the form was not valid, or we've just created it
     dic = {'form': form}
     if task_id:
+        # The template needs the id to decide if the form calls
+        # add_task or edit (which needs the id)
         dic['id'] = t.id
     return render_to_response('yata/edit.html', dic, 
         context_instance=RequestContext(request))
