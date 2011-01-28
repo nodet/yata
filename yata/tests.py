@@ -264,6 +264,14 @@ class AddTaskViewTest(TestCase):
         self.assertEqual(repeat_nb, t.repeat_nb)
         self.assertEqual(repeat_type, t.repeat_type)
         
+                
+class CheckIsRepeating(TestCase):
+    def runTest(self):
+            self.assertTrue(not Task(repeat_type = 'D'               ).is_repeating())
+            self.assertTrue(not Task(repeat_type = 'D', repeat_nb = 0).is_repeating())
+            self.assertTrue(not Task(                   repeat_nb = 1).is_repeating())
+            self.assertTrue(    Task(repeat_type = 'D', repeat_nb = 1).is_repeating())
+        
         
 class RepeatingWithDueDateGetsADueDate(TestCase):
     def runTest(self):
