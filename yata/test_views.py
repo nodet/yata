@@ -66,7 +66,21 @@ class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
         sorted_tasks = sorted(tasks_recently_done, key = lambda task: task.last_edited, reverse = True)
         self.assertTrue(have_same_elements(sorted_tasks, tasks_recently_done))
         
+class MainViewDoesNotShowTasksNotStartedTest(TestCase):
+    def setUp(self):
+        t = Task(description = "something to do now")
+        t.save()
+        # Something in the future. Not just tomorrow, in case the test is run around midnight...
+        t = Task(description = "something to do in two days", start_date = tomorrow(tomorrow()))
+        t.save()
+    def runTest(self):
+        c = Client()
+        response = c.get('/yata/')
+        self.assertEqual(response.status_code, 200)
+        tasks = response.context['tasks']
+        self.assertEqual(1, len(tasks))
         
+       
 class MarkDoneTest(TestCase):
     def setUp(self):
         t = Task(description = "something to do")
