@@ -5,6 +5,7 @@ Tests for my ToDo app
 import datetime
 import time
 from yata.models import Task, relativeDueDate, due_date_cmp, next_date
+from yata.test_utils import today, tomorrow, yesterday
 from django.test import TestCase
 from django.test.client import Client
 import unittest
@@ -26,16 +27,6 @@ class CanRetrieveATask(TestCase):
         self.assertEqual(2, Task.objects.all().count())
         self.assertEqual(1, Task.objects.filter(description__startswith="Something to do").count())
 
-        
-        
-def today():
-    return datetime.date.today()
-        
-def tomorrow(aDate = datetime.date.today()):
-    return aDate + datetime.timedelta(1)
-
-def yesterday(aDate = datetime.date.today()):
-    return aDate - datetime.timedelta(1)
         
         
 class TaskHasADueDate(TestCase):
@@ -156,29 +147,6 @@ class TasksNotRepeatableIfNotCorrectlyDefined(TestCase):
         t.mark_done()
 
         
-class AddTaskViewTest(TestCase):
-    def runTest(self):
-        desc = 'The created task'
-        sdate = today()
-        ddate = tomorrow()
-        repeat_nb = 1
-        repeat_type = 'W'
-        response = Client().post('/yata/add_task/', {
-            'description': desc,
-            'start_date': sdate,
-            'due_date': ddate,
-            'repeat_nb': repeat_nb,
-            'repeat_type': repeat_type
-        })
-        all = Task.objects.all()
-        self.assertEqual(1, all.count())
-        t = all[0]
-        self.assertEqual(desc, t.description)
-        self.assertEqual(sdate, t.start_date)
-        self.assertEqual(ddate, t.due_date)
-        self.assertEqual(repeat_nb, t.repeat_nb)
-        self.assertEqual(repeat_type, t.repeat_type)
-        
                 
 class CheckIsRepeating(TestCase):
     def runTest(self):
@@ -225,36 +193,3 @@ class RepeatingWithStartAndDueDateGetsBoth(TestCase):
         self.assertEqual(7, (t.due_date - d).days)
         self.assertEqual(7, (t.start_date - y).days)
 
-        
-        
-class EditViewTest(TestCase):
-    def setUp(self):
-        t = Task(description = "something to do")
-        t.save()
-    def runTest(self):
-        c = Client()
-        response = c.get('/yata/1/edit')
-        self.assertEqual(301, response.status_code)
-        
-        ndesc = 'new description'
-        sdate = yesterday()
-        ddate = tomorrow()
-        nb = 2
-        type = 'W'
-        done = True
-        response = Client().post('/yata/1/edit/', {
-            'description': ndesc,
-            'start_date': sdate,
-            'due_date': ddate,
-            'repeat_nb': nb,
-            'repeat_type': type,
-            'done': done
-        })
-        all = Task.objects.all()
-        self.assertEqual(1, all.count())
-        t = all[0]
-        self.assertEqual(ndesc, t.description)
-        self.assertEqual(sdate, t.start_date)
-        self.assertEqual(ddate, t.due_date)
-        self.assertEqual(nb, t.repeat_nb)
-        self.assertEqual(type, t.repeat_type)
