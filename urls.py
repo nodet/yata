@@ -8,10 +8,10 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     (r'^yata/$', 'yata.views.index'),
-    (r'^yata/add_task/$', 'yata.views.add_task'),
+    (r'^yata/add_task/$',              'yata.views.edit'),
+    (r'^yata/(?P<task_id>\d+)/edit/$', 'yata.views.edit'),
     (r'^yata/(?P<task_id>\d+)/mark_done/$', 'yata.views.mark_done'),
     (r'^yata/(?P<task_id>\d+)/mark_not_done/$', 'yata.views.mark_done', {'b': False}),
-    (r'^yata/(?P<task_id>\d+)/edit/$', 'yata.views.edit'),
     
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),

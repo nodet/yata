@@ -35,7 +35,7 @@ def mark_done(request, task_id, b = True):
     return HttpResponseRedirect(reverse('yata.views.index'))
 
 
-def edit_or_add(request, task_id = None):
+def edit(request, task_id = None):
     t = get_object_or_404(Task, pk=task_id) if task_id else None
     if request.method == 'POST':
         form = AddTaskForm(request.POST, instance=t)
@@ -53,9 +53,3 @@ def edit_or_add(request, task_id = None):
         dic['id'] = t.id
     return render_to_response('yata/edit.html', dic, 
         context_instance=RequestContext(request))
-    
-def add_task(request):
-    return edit_or_add(request)
- 
-def edit(request, task_id):
-    return edit_or_add(request, task_id)
