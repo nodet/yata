@@ -36,19 +36,14 @@ def mark_done(request, task_id, b = True):
 
     
 def add_task(request):
+    t = None
     if request.method == 'POST':            # The form has been submitted
-        form = AddTaskForm(request.POST)    # A form bound to the POST data
+        form = AddTaskForm(request.POST, instance = t)    # A form bound to the POST data
         if form.is_valid():
-            # Create the task
-            desc = form.cleaned_data['description']
-            sdate = form.cleaned_data['start_date']
-            ddate = form.cleaned_data['due_date']
-            repeat_nb = form.cleaned_data['repeat_nb']
-            repeat_type = form.cleaned_data['repeat_type']
-            Task(description = desc, start_date = sdate, due_date = ddate, repeat_nb = repeat_nb, repeat_type = repeat_type).save()
+            form.save()
             return HttpResponseRedirect('/yata/')
     else:
-        form = AddTaskForm()
+        form = AddTaskForm(instance = t)
         
     # Either the form was not valid, or we've just created it
     return render_to_response('yata/add_task.html', {
@@ -59,22 +54,12 @@ def add_task(request):
 def edit(request, task_id):
     t = get_object_or_404(Task, pk=task_id)
     if request.method == 'POST':
-        form = AddTaskForm(request.POST)    # A form bound to the POST data
+        form = AddTaskForm(request.POST, instance=t)    # A form bound to the POST data
         if form.is_valid():
-            t.description = form.cleaned_data['description']
-            t.start_date = form.cleaned_data['start_date']
-            t.due_date = form.cleaned_data['due_date']
-            t.repeat_nb = form.cleaned_data['repeat_nb']
-            t.repeat_type = form.cleaned_data['repeat_type']
-            t.save()
+            form.save()
             return HttpResponseRedirect('/yata/')
     else:
-        data = {'description': t.description,
-                'start_date': t.start_date,
-                'due_date': t.due_date,
-                'repeat_nb': t.repeat_nb,
-                'repeat_type': t.repeat_type}
-        form = AddTaskForm(data)
+        form = AddTaskForm(instance = t)
         
     # Either the form was not valid, or we've just created it
     return render_to_response('yata/edit.html', {

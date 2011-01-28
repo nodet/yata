@@ -318,12 +318,14 @@ class EditViewTest(TestCase):
         ddate = tomorrow()
         nb = 2
         type = 'W'
+        done = True
         response = Client().post('/yata/1/edit/', {
             'description': ndesc,
             'start_date': sdate,
             'due_date': ddate,
             'repeat_nb': nb,
-            'repeat_type': type
+            'repeat_type': type,
+            'done': done
         })
         all = Task.objects.all()
         self.assertEqual(1, all.count())
