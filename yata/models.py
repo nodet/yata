@@ -2,6 +2,7 @@ import unittest
 import datetime
 import calendar
 from django.db import models
+import copy
 
 
 class Task(models.Model):
@@ -52,15 +53,11 @@ class Task(models.Model):
         for pair in Task.REPEAT_CHOICES:
             if pair[0] == choice:
                 return pair[1]
-
-                
-    def _make_copy(self):
-        return Task(description = self.description, start_date = self.start_date, due_date = self.due_date, repeat_nb = self.repeat_nb, repeat_type = self.repeat_type, done = self.done)
                 
                 
     def mark_done(self, b = True):
         if b and self.is_repeating():
-            new_task = self._make_copy()
+            new_task = copy.copy(self)
 
             if self.start_date:
                 new_task.start_date = next_date(self.start_date, self.repeat_nb, self.repeat_type)
