@@ -49,5 +49,9 @@ def edit(request, task_id = None):
         # The template needs the id to decide if the form's action
         # is .../add_task or .../{{id}}/edit
         d['id'] = t.id
+        action = reverse(edit, args=[task_id])
+    else:
+        action = reverse(edit)
+    d['action'] = action
     return render_to_response('yata/edit.html', d, 
         context_instance=RequestContext(request))

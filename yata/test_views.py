@@ -87,7 +87,7 @@ class MarkDoneTest(TestCase):
         t.save()
     def runTest(self):
         c = Client()
-        response = c.get('/yata/1/mark_done', follow=True)
+        response = c.get('/yata/1/mark_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(0, len(response.context['tasks']))
@@ -99,7 +99,7 @@ class MarkNotDoneTest(TestCase):
         t.save()
     def runTest(self):
         c = Client()
-        response = c.get('/yata/1/mark_not_done', follow=True)
+        response = c.get('/yata/1/mark_not_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, len(response.context['tasks']))
@@ -136,8 +136,8 @@ class EditViewTest(TestCase):
         t.save()
     def runTest(self):
         c = Client()
-        response = c.get('/yata/1/edit')
-        self.assertEqual(301, response.status_code)
+        response = c.get('/yata/1/edit/')
+        self.assertEqual(200, response.status_code)
         
         ndesc = 'new description'
         sdate = yesterday()
@@ -161,3 +161,16 @@ class EditViewTest(TestCase):
         self.assertEqual(ddate, t.due_date)
         self.assertEqual(nb, t.repeat_nb)
         self.assertEqual(type, t.repeat_type)
+
+class UrlForActionIsProvidedToEditView(TestCase):
+    def setUp(self):
+        t = Task(description = "UrlForActionIsProvidedToEditView")
+        t.save()
+    def runTest(self):
+        c = Client()
+        url = '/yata/1/edit/'
+        response = c.get(url)
+        self.assertEqual(url, response.context['action'])
+        
+        
+        
