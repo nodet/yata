@@ -242,3 +242,13 @@ class FilterTasksByContext(TestCase):
         for t in tasks:
             self.assertTrue(t.context == None or t.context.title == 'C2')
     
+    def test_context_to_show_is_persistent(self):
+        self.ask_for_contexts(['', 'C2'])
+        response = self.client.get('/yata/')
+        # A second call to check if the setting was stored
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(2, len(tasks))
+        for t in tasks:
+            self.assertTrue(t.context == None or t.context.title == 'C2')
+    
