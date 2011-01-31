@@ -15,6 +15,7 @@ class Task(models.Model):
     )
 
     description = models.CharField(max_length = 200)
+    context = models.ForeignKey('Context', null = True, blank = True)
     start_date = models.DateField(null = True, blank = True)
     due_date = models.DateField(null = True, blank = True)
     repeat_nb = models.PositiveIntegerField(null = True, blank = True)
@@ -48,6 +49,12 @@ class Task(models.Model):
     def is_repeating(self):
         return self.repeat_type and self.repeat_nb
 
+    def matches_contexts(self, contexts):
+        if not self.context:
+            return '' in contexts
+        return self.context.title in contexts
+        
+        
     @staticmethod
     def repeat_choice(choice):
         for pair in Task.REPEAT_CHOICES:
@@ -124,3 +131,12 @@ def next_date(aDate, nb, repetition_type):
         return _next_date_end_of_month(aDate.year, aDate.month + nb, aDate.day)
     elif repetition_type == 'Y':
         return _next_date_end_of_month(aDate.year + nb, aDate.month, aDate.day)        
+        
+        
+        
+class Context(models.Model):
+
+    title = models.CharField(max_length = 20)
+
+    def __unicode__(self):
+        return self.title

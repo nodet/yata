@@ -3,7 +3,7 @@ from django.template import Context, loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
-from yata.models import Task
+from yata.models import Task, Context
 from yata.forms import AddTaskForm
 
 import datetime
@@ -13,9 +13,16 @@ def index(request):
 
     tasks = Task.objects.all(). \
                 exclude(done__exact = True)
+
+    contexts_to_display = request.session.get('contexts_to_display', [])
+    # Need to ensure something is put in the session so that it's saved.
+    request.session['contexts_to_display'] = contexts_to_display
+    if len(contexts_to_display):
+        tasks = filter(lambda t: t.matches_contexts(contexts_to_display), tasks)
+
     tasks = filter(lambda t: not t.is_future(), tasks)
     tasks = sorted(tasks, Task.compare_by_due_date)
-
+    
     recently_done = Task.objects.all(). \
                         filter(done__exact = True). \
                         order_by('-last_edited')

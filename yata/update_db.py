@@ -29,3 +29,8 @@ def addStartDateColumn():
 def addRepeatColumns():
     #runQueryAndSaveAll('alter table "yata_task" add column "repeat_nb" integer unsigned')
     runQueryAndSaveAll('alter table "yata_task" add column "repeat_type" varchar(1)')
+
+def addContextColumn():
+    runQueryAndSaveAll('alter table "yata_task" add column "context_id" integer')
+    
+    

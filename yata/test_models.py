@@ -2,7 +2,7 @@
 Tests for my ToDo app
 """
 
-from yata.models import Task, relativeDueDate, due_date_cmp, next_date
+from yata.models import Task, relativeDueDate, due_date_cmp, next_date, Context
 from yata.test_utils import today, tomorrow, yesterday
 from django.test import TestCase
 import datetime
@@ -175,6 +175,18 @@ class DatesForTasksCreatedFromRepeating(TestCase):
 
 
         
-        
-        
+class TestContext(TestCase):
+    def setUp(self):
+        c = Context(title = 'Context')
+        c.save()
+
+    def test_can_retrieve(self):
+        c = Context.objects.get(title__exact = 'Context')
+        self.assertEqual(c.title, 'Context')
+        self.assertEqual(c.__unicode__(), 'Context')
+
+    def test_task_can_have_a_context(self):
+        c = Context.objects.get(title__exact = 'Context')
+        t = Task(description = 'a task', context = c)
+        self.assertEqual(t.context.title, 'Context')
         

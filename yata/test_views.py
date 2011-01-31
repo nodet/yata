@@ -1,5 +1,5 @@
 from django.test import TestCase
-from yata.models import Task, relativeDueDate, due_date_cmp, next_date
+from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
 from yata.test_utils import today, tomorrow, yesterday
 import datetime
 import time
@@ -174,3 +174,71 @@ class UrlForActionIsProvidedToEditView(TestCase):
         
         
         
+class FilterTasksByContext(TestCase):
+    def setUp(self):
+        c1 = Context(title = 'C1')
+        c1.save()
+        c2 = Context(title = 'C2')
+        c2.save()
+        t = Task(description = "In no context")
+        t.save()
+        t = Task(description = "In context 'C1'", context = c1)
+        t.save()
+        t = Task(description = "In context 'C2'", context = c2)
+        t.save()
+        self.client = Client()
+        # Make sure we call the view first so that it saves a session
+        self.client.get('/yata/')
+        
+    def test_default_is_to_show_all_contexts(self):
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(3, len(tasks))
+        
+    def ask_for_contexts(self, contexts):
+        session = self.client.session
+        session['contexts_to_display'] = contexts
+        session.save()
+        
+    def test_session(self):
+        self.ask_for_contexts(['C1'])
+        self.assertEqual('C1', self.client.session['contexts_to_display'][0])
+
+    def test_show_all_contexts(self):
+        self.ask_for_contexts([])
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(3, len(tasks))
+    
+    def test_show_one_contexts(self):
+        self.ask_for_contexts(['C1'])
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(1, len(tasks))
+        for t in tasks:
+            self.assertEqual('C1', t.context.title)
+    
+    def test_show_two_contexts(self):
+        self.ask_for_contexts(['C1', 'C2'])
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(2, len(tasks))
+        for t in tasks:
+            self.assertTrue(t.context.title in ['C1','C2'])
+    
+    def test_show_no_context(self):
+        self.ask_for_contexts([''])
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(1, len(tasks))
+        for t in tasks:
+            self.assertEqual(None, t.context)
+
+    def test_show_one_and_no(self):
+        self.ask_for_contexts(['', 'C2'])
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(2, len(tasks))
+        for t in tasks:
+            self.assertTrue(t.context == None or t.context.title == 'C2')
+    
