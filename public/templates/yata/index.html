@@ -1,3 +1,10 @@
+<p>
+Contexts to display:
+{% for c in contexts %}
+    <a href="{{ c.1 }}">{{ c.0 }}</a>
+{% endfor %}    
+</p>
+
 Tasks not done, by earliest due date:
 
 {% if tasks %}

@@ -251,4 +251,24 @@ class FilterTasksByContext(TestCase):
         self.assertEqual(2, len(tasks))
         for t in tasks:
             self.assertTrue(t.context == None or t.context.title == 'C2')
+
+    def test_view_is_given_list_of_contexts(self):
+        c = Client()
+        url = '/yata/'
+        response = c.get(url)
+        expected = [('All', '/yata/context/all/'), 
+            ('None', '/yata/context/none/'), 
+            (u'C1', '/yata/context/1/'), 
+            (u'C2', '/yata/context/2/')]
+        self.assertEqual(expected, response.context['contexts'])
     
+    
+class SelectContextTests(FilterTasksByContext):    
+    
+    def test_select_one_context(self):
+        # Calling /yata/context/1/ selects a context
+        self.ask_for_contexts(['', 'C2'])
+        response = self.client.get('/yata/context/1/', follow=True)
+        tasks = response.context['tasks']
+        for t in tasks:
+            self.assertTrue(t.context.title == 'C1')

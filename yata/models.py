@@ -52,6 +52,7 @@ class Task(models.Model):
     def matches_contexts(self, contexts):
         if not self.context:
             return '' in contexts
+        #print 'matching(%s, %s)' % (self.description, contexts)
         return self.context.title in contexts
         
         

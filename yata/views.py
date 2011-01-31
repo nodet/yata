@@ -11,6 +11,14 @@ import datetime
 
 def index(request):
 
+    def get_context_list():
+        l = []
+        l.append(('All', '/yata/context/all/'))
+        l.append(('None', '/yata/context/none/'))
+        for c in Context.objects.all():
+            l.append((c.title, '/yata/context/%s/' % c.id))
+        return l
+
     tasks = Task.objects.all(). \
                 exclude(done__exact = True)
 
@@ -27,13 +35,33 @@ def index(request):
                         filter(done__exact = True). \
                         order_by('-last_edited')
 
+    contexts = get_context_list()
+                        
     return render_to_response('yata/index.html', {
         'tasks': tasks,
+        'contexts': contexts,
         'tasks_recently_done': recently_done,
     })
     
 
+def select_context(request, context_id):
+    c = get_object_or_404(Context, pk=context_id)
+    s = request.session
+    s['contexts_to_display'] = [c.title]
+    s.modified = True
+    s.save()
+    #return index(request)
+    return HttpResponseRedirect(reverse('yata.views.index'))
     
+    
+def select_context_all(request):
+    s = request.session
+    s['contexts_to_display'] = []
+    s.modified = True
+    s.save()
+    return HttpResponseRedirect(reverse('yata.views.index'))
+    
+
 def mark_done(request, task_id, b = True):
     t = get_object_or_404(Task, pk=task_id)
     t.mark_done(b)
