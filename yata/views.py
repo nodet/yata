@@ -19,16 +19,13 @@ def index(request):
             l.append((c.title, '/yata/context/%s/' % c.id))
         return l
         
-    def can_start_now(t):
-        return not t.is_future()
-
     contexts_to_display = request.session.get('contexts_to_display', [])
     # Need to ensure something is put in the session so that it's saved.
     request.session['contexts_to_display'] = contexts_to_display
 
-    tasks = Task.objects.all().exclude(done__exact = True)
-    tasks = filter(lambda t: t.matches_contexts(contexts_to_display), tasks)
-    tasks = filter(Task.can_start_now, tasks)
+    tasks = [t for t in Task.objects.all().exclude(done__exact = True)
+                if t.matches_contexts(contexts_to_display)
+                if t.can_start_now()]
     tasks.sort(Task.compare_by_due_date)
     
     recently_done = Task.objects.all(). \
