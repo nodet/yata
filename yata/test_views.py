@@ -266,9 +266,21 @@ class FilterTasksByContext(TestCase):
 class SelectContextTests(FilterTasksByContext):    
     
     def test_select_one_context(self):
-        # Calling /yata/context/1/ selects a context
         self.ask_for_contexts(['', 'C2'])
         response = self.client.get('/yata/context/1/', follow=True)
         tasks = response.context['tasks']
         for t in tasks:
             self.assertTrue(t.context.title == 'C1')
+    
+    def test_select_all_contexts(self):
+        self.ask_for_contexts(['', 'C2'])
+        response = self.client.get('/yata/context/all/', follow=True)
+        tasks = response.context['tasks']
+        self.assertEqual(3, len(tasks))
+    
+    def test_select_no_context(self):
+        self.ask_for_contexts(['', 'C2'])
+        response = self.client.get('/yata/context/none/', follow=True)
+        tasks = response.context['tasks']
+        for t in tasks:
+            self.assertFalse(t.context)

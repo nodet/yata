@@ -41,31 +41,33 @@ def index(request):
         'tasks_recently_done': recently_done,
     })
     
+    
 
+def select_context_helper(request, contexts):
+    s = request.session
+    s['contexts_to_display'] = contexts
+    s.modified = True
+    s.save()
+    return HttpResponseRedirect(reverse('yata.views.index'))
+    
 def select_context(request, context_id):
     c = get_object_or_404(Context, pk=context_id)
-    s = request.session
-    s['contexts_to_display'] = [c.title]
-    s.modified = True
-    s.save()
-    #return index(request)
-    return HttpResponseRedirect(reverse('yata.views.index'))
-    
+    return select_context_helper(request, [c.title])
     
 def select_context_all(request):
-    s = request.session
-    s['contexts_to_display'] = []
-    s.modified = True
-    s.save()
-    return HttpResponseRedirect(reverse('yata.views.index'))
-    
+    return select_context_helper(request, [])
 
+def select_context_none(request):
+    return select_context_helper(request, [''])
+
+    
+    
 def mark_done(request, task_id, b = True):
     t = get_object_or_404(Task, pk=task_id)
     t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))
 
-
+    
 def edit(request, task_id = None):
     t = get_object_or_404(Task, pk=task_id) if task_id else None
     if request.method == 'POST':
