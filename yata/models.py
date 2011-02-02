@@ -50,11 +50,16 @@ class Task(models.Model):
         return self.repeat_type and self.repeat_nb
 
     def matches_contexts(self, contexts):
+        if not len(contexts):
+            # Matching against nothing is always ok
+            return True
         if not self.context:
+            # If we don't have a context, we must find '' in the list
             return '' in contexts
-        #print 'matching(%s, %s)' % (self.description, contexts)
         return self.context.title in contexts
         
+    def can_start_now(self):
+        return not self.is_future()
         
     @staticmethod
     def repeat_choice(choice):
