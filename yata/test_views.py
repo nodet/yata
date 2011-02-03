@@ -256,10 +256,10 @@ class FilterTasksByContext(TestCase):
         c = Client()
         url = '/yata/'
         response = c.get(url)
-        expected = [('All', '/yata/context/all/'), 
-            ('None', '/yata/context/none/'), 
-            (u'C1', '/yata/context/1/'), 
-            (u'C2', '/yata/context/2/')]
+        expected = [('All', '/yata/context/show/all/'), 
+            ('None', '/yata/context/show/none/'), 
+            (u'C1', '/yata/context/show/1/'), 
+            (u'C2', '/yata/context/show/2/')]
         self.assertEqual(expected, response.context['contexts'])
     
     
@@ -267,20 +267,35 @@ class SelectContextTests(FilterTasksByContext):
     
     def test_select_one_context(self):
         self.ask_for_contexts(['', 'C2'])
-        response = self.client.get('/yata/context/1/', follow=True)
+        response = self.client.get('/yata/context/show/1/', follow=True)
         tasks = response.context['tasks']
         for t in tasks:
             self.assertTrue(t.context.title == 'C1')
     
     def test_select_all_contexts(self):
         self.ask_for_contexts(['', 'C2'])
-        response = self.client.get('/yata/context/all/', follow=True)
+        response = self.client.get('/yata/context/show/all/', follow=True)
         tasks = response.context['tasks']
         self.assertEqual(3, len(tasks))
     
     def test_select_no_context(self):
         self.ask_for_contexts(['', 'C2'])
-        response = self.client.get('/yata/context/none/', follow=True)
+        response = self.client.get('/yata/context/show/none/', follow=True)
         tasks = response.context['tasks']
         for t in tasks:
             self.assertFalse(t.context)
+
+            
+class AddContextViewTest(TestCase):
+    def runTest(self):
+        title = 'New context'
+        response = Client().post('/yata/context/add/', {
+            'title': title,
+        })
+        all = Context.objects.all()
+        self.assertEqual(1, all.count())
+        c = all[0]
+        self.assertEqual(title, c.title)
+        
+        
+            

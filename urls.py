@@ -12,9 +12,11 @@ urlpatterns = patterns('',
     (r'^yata/(?P<task_id>\d+)/edit/$', 'yata.views.edit'),
     (r'^yata/(?P<task_id>\d+)/mark_done/$', 'yata.views.mark_done'),
     (r'^yata/(?P<task_id>\d+)/mark_not_done/$', 'yata.views.mark_done', {'b': False}),
-    (r'^yata/context/(?P<context_id>\d+)/$', 'yata.views.select_context'),
-    (r'^yata/context/all/$', 'yata.views.select_context_all'),
-    (r'^yata/context/none/$', 'yata.views.select_context_none'),
+    (r'^yata/context/show/(?P<context_id>\d+)/$', 'yata.views.select_context'),
+    (r'^yata/context/show/all/$', 'yata.views.select_context_all'),
+    (r'^yata/context/show/none/$', 'yata.views.select_context_none'),
+    (r'^yata/context/add/$', 'yata.views.edit_context'),
+    (r'^yata/context/(?P<id>\d+)/edit/$', 'yata.views.edit_context'),
     
     
     # Uncomment the admin/doc line below to enable admin documentation:

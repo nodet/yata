@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from yata.models import Task, Context
-from yata.forms import AddTaskForm
+from yata.forms import AddTaskForm, AddContextForm
 
 import datetime
 
@@ -13,10 +13,10 @@ def index(request):
 
     def get_context_list():
         l = []
-        l.append(('All', '/yata/context/all/'))
-        l.append(('None', '/yata/context/none/'))
+        l.append(('All', '/yata/context/show/all/'))
+        l.append(('None', '/yata/context/show/none/'))
         for c in Context.objects.all():
-            l.append((c.title, '/yata/context/%s/' % c.id))
+            l.append((c.title, '/yata/context/show/%s/' % c.id))
         return l
         
     contexts_to_display = request.session.get('contexts_to_display', [])
@@ -84,6 +84,30 @@ def edit(request, task_id = None):
         action = reverse(edit, args=[task_id])
     else:
         action = reverse(edit)
+    d['action'] = action
+    return render_to_response('yata/edit.html', d, 
+        context_instance=RequestContext(request))
+
+        
+def edit_context(request, id = None):
+    c = get_object_or_404(Context, pk=id) if id else None
+    if request.method == 'POST':
+        form = AddContextForm(request.POST, instance=c)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/yata/')
+    else:
+        form = AddContextForm(instance = c)
+        
+    # Either the form was not valid, or we've just created it
+    d = {'form': form}
+    if id:
+        # The template needs the id to decide if the form's action
+        # is .../add_task or .../{{id}}/edit
+        d['id'] = c.id
+        action = reverse(edit_context, args=[id])
+    else:
+        action = reverse(edit_context)
     d['action'] = action
     return render_to_response('yata/edit.html', d, 
         context_instance=RequestContext(request))
