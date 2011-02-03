@@ -66,28 +66,21 @@ def mark_done(request, task_id, b = True):
 
 
 
-def edit_any_form(request, the_class, form_class, view_func, id = None):
+def edit_any_form(request, the_class, the_form_class, view_func, id = None):
     c = get_object_or_404(the_class, pk=id) if id else None
     if request.method == 'POST':
-        form = form_class(request.POST, instance=c)
+        form = the_form_class(request.POST, instance=c)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/yata/')
     else:
-        form = form_class(instance = c)
+        form = the_form_class(instance = c)
         
     # Either the form was not valid, or we've just created it
-    d = {'form': form}
-    if id:
-        # The template needs the id to decide if the form's action
-        # is .../add_task or .../{{id}}/edit
-        d['id'] = c.id
-        action = reverse(view_func, args=[id])
-    else:
-        action = reverse(view_func)
-    d['action'] = action
-    return render_to_response('yata/edit.html', d, 
-        context_instance=RequestContext(request))
+    return render_to_response('yata/edit.html', {
+        'form': form, 
+        'action': reverse(view_func, args=[id] if id else None)
+    }, context_instance=RequestContext(request))
 
     
 def edit(request, task_id = None):

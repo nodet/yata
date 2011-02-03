@@ -107,7 +107,11 @@ class MarkNotDoneTest(TestCase):
 
         
 class AddTaskViewTest(TestCase):
-    def runTest(self):
+    def test_get(self):
+        response = Client().get('/yata/add_task/')
+        self.assertEqual(response.status_code, 200)
+        
+    def test_post(self):
         desc = 'The created task'
         sdate = today()
         ddate = tomorrow()
