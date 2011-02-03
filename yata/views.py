@@ -11,7 +11,7 @@ import datetime
 
 def index(request):
 
-    def get_context_list():
+    def _get_context_list():
         l = []
         l.append(('All', '/yata/context/show/all/'))
         l.append(('None', '/yata/context/show/none/'))
@@ -34,13 +34,13 @@ def index(request):
 
     return render_to_response('yata/index.html', {
         'tasks': tasks,
-        'contexts': get_context_list(),
+        'contexts': _get_context_list(),
         'tasks_recently_done': recently_done,
     })
     
     
 
-def select_context_helper(request, contexts):
+def _select_context_helper(request, contexts):
     s = request.session
     s['contexts_to_display'] = contexts
     s.modified = True
@@ -49,13 +49,13 @@ def select_context_helper(request, contexts):
     
 def select_context(request, context_id):
     c = get_object_or_404(Context, pk=context_id)
-    return select_context_helper(request, [c.title])
+    return _select_context_helper(request, [c.title])
     
 def select_context_all(request):
-    return select_context_helper(request, [])
+    return _select_context_helper(request, [])
 
 def select_context_none(request):
-    return select_context_helper(request, [''])
+    return _select_context_helper(request, [''])
 
     
     
@@ -66,7 +66,7 @@ def mark_done(request, task_id, b = True):
 
 
 
-def edit_any_form(request, the_class, the_form_class, view_func, id = None):
+def _edit_any_form(request, the_class, the_form_class, view_func, id = None):
     c = get_object_or_404(the_class, pk=id) if id else None
     if request.method == 'POST':
         form = the_form_class(request.POST, instance=c)
@@ -84,8 +84,8 @@ def edit_any_form(request, the_class, the_form_class, view_func, id = None):
 
     
 def edit(request, task_id = None):
-    return edit_any_form(request, Task, AddTaskForm, edit, task_id)
+    return _edit_any_form(request, Task, AddTaskForm, edit, task_id)
 
         
 def edit_context(request, id = None):
-    return edit_any_form(request, Context, AddContextForm, edit_context, id)
+    return _edit_any_form(request, Context, AddContextForm, edit_context, id)
