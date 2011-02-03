@@ -64,40 +64,17 @@ def mark_done(request, task_id, b = True):
     t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))
 
-    
-def edit(request, task_id = None):
-    t = get_object_or_404(Task, pk=task_id) if task_id else None
-    if request.method == 'POST':
-        form = AddTaskForm(request.POST, instance=t)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/yata/')
-    else:
-        form = AddTaskForm(instance = t)
-        
-    # Either the form was not valid, or we've just created it
-    d = {'form': form}
-    if task_id:
-        # The template needs the id to decide if the form's action
-        # is .../add_task or .../{{id}}/edit
-        d['id'] = t.id
-        action = reverse(edit, args=[task_id])
-    else:
-        action = reverse(edit)
-    d['action'] = action
-    return render_to_response('yata/edit.html', d, 
-        context_instance=RequestContext(request))
 
-        
-def edit_context(request, id = None):
-    c = get_object_or_404(Context, pk=id) if id else None
+
+def edit_any_form(request, the_class, form_class, view_func, id = None):
+    c = get_object_or_404(the_class, pk=id) if id else None
     if request.method == 'POST':
-        form = AddContextForm(request.POST, instance=c)
+        form = form_class(request.POST, instance=c)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/yata/')
     else:
-        form = AddContextForm(instance = c)
+        form = form_class(instance = c)
         
     # Either the form was not valid, or we've just created it
     d = {'form': form}
@@ -105,9 +82,17 @@ def edit_context(request, id = None):
         # The template needs the id to decide if the form's action
         # is .../add_task or .../{{id}}/edit
         d['id'] = c.id
-        action = reverse(edit_context, args=[id])
+        action = reverse(view_func, args=[id])
     else:
-        action = reverse(edit_context)
+        action = reverse(view_func)
     d['action'] = action
     return render_to_response('yata/edit.html', d, 
         context_instance=RequestContext(request))
+
+    
+def edit(request, task_id = None):
+    return edit_any_form(request, Task, AddTaskForm, edit, task_id)
+
+        
+def edit_context(request, id = None):
+    return edit_any_form(request, Context, AddContextForm, edit_context, id)
