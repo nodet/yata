@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     (r'^yata/context/show/none/$', 'yata.views.select_context_none'),
     (r'^yata/context/add/$', 'yata.views.edit_context'),
     (r'^yata/context/(?P<id>\d+)/edit/$', 'yata.views.edit_context'),
+    (r'^yata/context/(?P<id>\d+)/delete/$', 'yata.views.delete_context'),
+    (r'^yata/task/(?P<id>\d+)/delete/$', 'yata.views.delete_task'),
     
     
     # Uncomment the admin/doc line below to enable admin documentation:

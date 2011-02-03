@@ -266,7 +266,27 @@ class FilterTasksByContext(TestCase):
             (u'C2', '/yata/context/show/2/')]
         self.assertEqual(expected, response.context['contexts'])
     
-    
+
+class EditViewHasDeleteButton(FilterTasksByContext):
+    def test_delete_context(self):
+        response = self.client.post('/yata/context/2/delete/', follow = True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template.name, 'yata/index.html')
+        self.assertEqual(1, Context.objects.all().count())
+        self.assertEqual('C1', Context.objects.get(pk = 1).title)
+
+    def test_delete_task(self):
+        response = self.client.post('/yata/task/2/delete/', follow = True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template.name, 'yata/index.html')
+        self.assertEqual(2, Task.objects.all().count())
+        for t in Task.objects.all():
+            self.assertNotEqual("In context 'C1'", t.description)
+        
+
+
+
+        
 class SelectContextTests(FilterTasksByContext):    
     
     def test_select_one_context(self):
@@ -302,4 +322,3 @@ class AddContextViewTest(TestCase):
         self.assertEqual(title, c.title)
         
         
-            

@@ -89,3 +89,15 @@ def edit(request, task_id = None):
         
 def edit_context(request, id = None):
     return _edit_any_form(request, Context, AddContextForm, edit_context, id)
+
+
+def delete_context(request, id):
+    t = get_object_or_404(Context, pk=id)
+    t.delete()
+    return HttpResponseRedirect(reverse('yata.views.index'))
+
+def delete_task(request, id):
+    t = get_object_or_404(Task, pk=id)
+    t.delete()
+    return HttpResponseRedirect(reverse('yata.views.index'))
+        
