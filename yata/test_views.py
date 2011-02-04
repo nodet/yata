@@ -274,6 +274,9 @@ class EditViewHasDeleteButton(FilterTasksByContext):
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, Context.objects.all().count())
         self.assertEqual('C1', Context.objects.get(pk = 1).title)
+        
+        # We've just deleted a task!
+        self.assertEqual(3, Task.objects.all().count())
 
     def test_delete_task(self):
         response = self.client.post('/yata/task/2/delete/', follow = True)

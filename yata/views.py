@@ -66,7 +66,7 @@ def mark_done(request, task_id, b = True):
 
 
 
-def _edit_any_form(request, the_class, the_form_class, view_func, id = None):
+def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, id = None):
     c = get_object_or_404(the_class, pk=id) if id else None
     if request.method == 'POST':
         form = the_form_class(request.POST, instance=c)
@@ -79,21 +79,27 @@ def _edit_any_form(request, the_class, the_form_class, view_func, id = None):
     # Either the form was not valid, or we've just created it
     return render_to_response('yata/edit.html', {
         'form': form, 
-        'action': reverse(view_func, args=[id] if id else None)
+        'action': reverse(view_func, args=[id] if id else None),
+        'delete': reverse(delete_func, args=[id]) if id else None
     }, context_instance=RequestContext(request))
 
     
 def edit(request, task_id = None):
-    return _edit_any_form(request, Task, AddTaskForm, edit, task_id)
+    return _edit_any_form(request, Task, AddTaskForm, edit, delete_task, task_id)
 
         
 def edit_context(request, id = None):
-    return _edit_any_form(request, Context, AddContextForm, edit_context, id)
+    return _edit_any_form(request, Context, AddContextForm, edit_context, delete_context, id)
 
 
 def delete_context(request, id):
-    t = get_object_or_404(Context, pk=id)
-    t.delete()
+    c = get_object_or_404(Context, pk=id)
+    # in next Django version, use on_delete on the context FK in Task
+    # and remove this code
+    for t in Task.objects.filter(context = c):
+        t.context = None
+        t.save()
+    c.delete()
     return HttpResponseRedirect(reverse('yata.views.index'))
 
 def delete_task(request, id):
