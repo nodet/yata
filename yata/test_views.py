@@ -1,5 +1,5 @@
 from django.test import TestCase
-from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
+from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date, create_tasks_from_xml
 from yata.test_utils import today, tomorrow, yesterday
 import datetime
 import time
@@ -323,5 +323,23 @@ class AddContextViewTest(TestCase):
         self.assertEqual(1, all.count())
         c = all[0]
         self.assertEqual(title, c.title)
+        
+        
+class XmlImportTest(TestCase):
+    def test_import_one_task(self):
+        the_xml = """
+<xml>
+<item>
+<title>Change password</title>
+<duedate>2011-03-28</duedate>
+</item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        self.assertEqual(1, Task.objects.all().count())
+        t = Task.objects.all()[0]
+        self.assertEqual('Change password', t.description)
+        self.assertEqual(datetime.date(2011,03,28), t.due_date)
+        
         
         
