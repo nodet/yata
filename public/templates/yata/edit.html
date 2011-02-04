@@ -33,10 +33,12 @@
     {{ form.as_p }}
     <input type="submit" value="Save" />
     {% if delete %}
-        <form action="{{ delete }}" method="post">
-        <input type="submit" value="Delete!">
-        </form>
     {% endif %}
+    </form>
+    
+    <form action="{{ delete }}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete!">
     </form>
     
 
