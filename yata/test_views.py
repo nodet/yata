@@ -1,5 +1,6 @@
 from django.test import TestCase
-from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date, create_tasks_from_xml
+from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
+from yata.xml_io import create_tasks_from_xml
 from yata.test_utils import today, tomorrow, yesterday
 import datetime
 import time
