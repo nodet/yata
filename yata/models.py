@@ -169,14 +169,26 @@ def create_tasks_from_xml(the_xml):
         day = match_object.group(3)
         return datetime.date(int(year), int(month), int(day))
         
+    def handle_duedates(ddates):
+        if ddates:
+            return handle_duedate(ddates[0])
+        else:
+            return None
+        
     def handle_title(title):
         return getText(title.childNodes)
 
+    def handle_titles(titles):
+        if titles:
+            return handle_title(titles[0])
+        else:
+            return '[No title]'
+
     def handle_task(task):
-        title = task.getElementsByTagName("title")[0]
-        ddate = task.getElementsByTagName("duedate")[0]
-        t = Task(description = handle_title(title),
-                  due_date = handle_duedate(ddate))
+        titles = task.getElementsByTagName("title")
+        ddates = task.getElementsByTagName("duedate")
+        t = Task(description = handle_titles(titles),
+                  due_date = handle_duedates(ddates))
         t.save()
 
     def handle_tasks(tasks):

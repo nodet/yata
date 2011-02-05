@@ -341,5 +341,25 @@ class XmlImportTest(TestCase):
         self.assertEqual('Change password', t.description)
         self.assertEqual(datetime.date(2011,03,28), t.due_date)
         
+    def test_import_two_tasks(self):
+        the_xml = """
+<xml>
+<item><title>T1</title></item>
+<item><title>T2</title></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        self.assertEqual(2, Task.objects.all().count())
         
+    def test_import_missing_title(self):
+        the_xml = """
+<xml>
+<item></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        self.assertEqual(1, Task.objects.all().count())
+        t = Task.objects.all()[0]
+        self.assertEqual('[No title]', t.description)
         
+                
