@@ -18,12 +18,11 @@ def create_tasks_from_xml(the_xml):
     def expect_one_of(task, tag_name, f = None, default = None):
         list = task.getElementsByTagName(tag_name)
         if len(list) > 1:
-            raise Exception, "Only one value allowed!"
-        if list:
-            text = getText(list[0])
-            return f(text) if f else text
-        else:
+            raise Exception, "Only one '%s' tag allowed!" % tag_name
+        if not list:
             return default
+        text = getText(list[0])
+        return f(text) if f else text
             
     def expect_list(node, tag_name, f):
         list = node.getElementsByTagName(tag_name)
