@@ -33,4 +33,7 @@ def addRepeatColumns():
 def addContextColumn():
     runQueryAndSaveAll('alter table "yata_task" add column "context_id" integer')
     
+def addNoteColumn():
+    runQueryAndSaveAll('alter table "yata_task" add column "note" text')
+    
     

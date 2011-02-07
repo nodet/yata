@@ -21,6 +21,7 @@ class Task(models.Model):
     repeat_nb = models.PositiveIntegerField(null = True, blank = True)
     repeat_type = models.CharField(max_length = 1, choices = REPEAT_CHOICES, null = True, blank = True)
     done = models.BooleanField()
+    note = models.TextField(null = True, blank = True)
     last_edited = models.DateTimeField(auto_now = True)
     
     def __unicode__(self):

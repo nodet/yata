@@ -1,6 +1,5 @@
 from django.test import TestCase
 from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
-from yata.xml_io import create_tasks_from_xml
 from yata.test_utils import today, tomorrow, yesterday
 import datetime
 import time
@@ -118,12 +117,14 @@ class AddTaskViewTest(TestCase):
         ddate = tomorrow()
         repeat_nb = 1
         repeat_type = 'W'
+        note = 'the note...'
         response = Client().post('/yata/add_task/', {
             'description': desc,
             'start_date': sdate,
             'due_date': ddate,
             'repeat_nb': repeat_nb,
-            'repeat_type': repeat_type
+            'repeat_type': repeat_type,
+            'note': note
         })
         all = Task.objects.all()
         self.assertEqual(1, all.count())
@@ -133,6 +134,7 @@ class AddTaskViewTest(TestCase):
         self.assertEqual(ddate, t.due_date)
         self.assertEqual(repeat_nb, t.repeat_nb)
         self.assertEqual(repeat_type, t.repeat_type)
+        self.assertEqual(note, t.note)
         
         
 class EditViewTest(TestCase):
@@ -150,13 +152,15 @@ class EditViewTest(TestCase):
         nb = 2
         type = 'W'
         done = True
+        note = 'the note...'
         response = Client().post('/yata/1/edit/', {
             'description': ndesc,
             'start_date': sdate,
             'due_date': ddate,
             'repeat_nb': nb,
             'repeat_type': type,
-            'done': done
+            'done': done,
+            'note': note
         })
         all = Task.objects.all()
         self.assertEqual(1, all.count())
@@ -166,6 +170,7 @@ class EditViewTest(TestCase):
         self.assertEqual(ddate, t.due_date)
         self.assertEqual(nb, t.repeat_nb)
         self.assertEqual(type, t.repeat_type)
+        self.assertEqual(note, t.note)
 
 class UrlForActionIsProvidedToEditView(TestCase):
     def setUp(self):
@@ -325,42 +330,3 @@ class AddContextViewTest(TestCase):
         c = all[0]
         self.assertEqual(title, c.title)
         
-        
-class XmlImportTest(TestCase):
-    def test_import_one_task(self):
-        the_xml = """
-<xml>
-<item>
-<title>Change password</title>
-<duedate>2011-03-28</duedate>
-</item>
-</xml>
-"""
-        create_tasks_from_xml(the_xml)
-        self.assertEqual(1, Task.objects.all().count())
-        t = Task.objects.all()[0]
-        self.assertEqual('Change password', t.description)
-        self.assertEqual(datetime.date(2011,03,28), t.due_date)
-        
-    def test_import_two_tasks(self):
-        the_xml = """
-<xml>
-<item><title>T1</title></item>
-<item><title>T2</title></item>
-</xml>
-"""
-        create_tasks_from_xml(the_xml)
-        self.assertEqual(2, Task.objects.all().count())
-        
-    def test_import_missing_title(self):
-        the_xml = """
-<xml>
-<item></item>
-</xml>
-"""
-        create_tasks_from_xml(the_xml)
-        self.assertEqual(1, Task.objects.all().count())
-        t = Task.objects.all()[0]
-        self.assertEqual('[No title]', t.description)
-        
-                
