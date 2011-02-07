@@ -10,13 +10,21 @@ def create_tasks_from_xml(the_xml):
 
     def getText(nodelist):
         rc = []
-        for node in nodelist:
+        for node in nodelist.childNodes:
             if node.nodeType == node.TEXT_NODE:
                 rc.append(node.data)
         return ''.join(rc)
 
-    def handle_date(ddate):
-        s = getText(ddate.childNodes)
+    def first_of(list, f = None, default = None):
+        if len(list) > 1:
+            raise Exception, "Only one value allowed!"
+        if list:
+            text = getText(list[0])
+            return f(text) if f else text
+        else:
+            return default
+            
+    def handle_date(s):
         if s is '':
             return None
         match_object = re.match('(\d{4})-(\d{2})-(\d{2})', s)
@@ -25,35 +33,12 @@ def create_tasks_from_xml(the_xml):
         day = match_object.group(3)
         return datetime.date(int(year), int(month), int(day))
         
-    def handle_dates(ddates):
-        if ddates:
-            return handle_date(ddates[0])
-        else:
-            return None
-        
-    def handle_title(title):
-        return getText(title.childNodes)
-
-    def handle_titles(titles):
-        if titles:
-            return handle_title(titles[0])
-        else:
-            return '[No title]'
-
-    def handle_prio(prio):
-        p = getText(prio.childNodes)
+    def handle_prio(p):
         for pair in Task.PRIO_CHOICES:
             if (p == pair[1]):
                 return pair[0]
 
-    def handle_prios(prios):
-        if prios:
-            return handle_prio(prios[0])
-        else:
-            return 0
-
-    def handle_context(context):
-        context_name = getText(context.childNodes)
+    def handle_context(context_name):
         if context_name is '':
             return None
         contexts = Context.objects.filter(title__exact = context_name)
@@ -64,30 +49,9 @@ def create_tasks_from_xml(the_xml):
             c.save()
         return c
 
-    def handle_contexts(contexts):
-        if contexts:
-            return handle_context(contexts[0])
-        else:
-            return None
-
-    def handle_note(note):
-        return getText(note.childNodes)
-            
-    def handle_notes(notes):
-        if notes:
-            return handle_note(notes[0])
-        else:
-            return None
-
     def handle_completed(completed):
-        return getText(completed.childNodes) != '0000-00-00'
+        return completed != '0000-00-00'
         
-    def handle_completeds(completeds):
-        if completeds:
-            return handle_completed(completeds[0])
-        else:
-            return False
-
     def handle_task(task):
         titles = task.getElementsByTagName("title")
         prios = task.getElementsByTagName("priority")
@@ -96,13 +60,15 @@ def create_tasks_from_xml(the_xml):
         contexts = task.getElementsByTagName("context")
         notes = task.getElementsByTagName("note")
         completeds = task.getElementsByTagName("completed")
-        t = Task(description = handle_titles(titles),
-                  priority = handle_prios(prios),
-                  start_date = handle_dates(sdates),
-                  due_date = handle_dates(ddates),
-                  context = handle_contexts(contexts),
-                  done = handle_completeds(completeds),
-                  note = handle_notes(notes))
+        t = Task(
+            description = first_of(titles,                      default = '[No title]'),
+            priority    = first_of(prios,      handle_prio,     0),
+            start_date  = first_of(sdates,     handle_date),
+            due_date    = first_of(ddates,     handle_date),
+            context     = first_of(contexts,   handle_context),
+            done        = first_of(completeds, handle_completed, False),
+            note        = first_of(notes),
+        )
         t.save()
 
     def handle_tasks(tasks):

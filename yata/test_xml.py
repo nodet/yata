@@ -109,6 +109,22 @@ Python</note>
         create_tasks_from_xml(the_xml)
         self.assertEqual(0, Context.objects.all().count())
     
+    def test_no_repeated_field(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><title>T2</title></item>
+</xml>
+"""
+        seen_exception = False
+        try:
+            create_tasks_from_xml(the_xml)
+        except:
+            seen_exception = True
+        self.assertTrue(seen_exception)
+        self.assertEqual(0, Task.objects.all().count())
+    
+        
+        
         
         
         
