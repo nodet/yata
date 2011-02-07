@@ -44,10 +44,14 @@ Python</note>
 <item></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
-        self.assertEqual(1, Task.objects.all().count())
-        t = Task.objects.all()[0]
-        self.assertEqual('[No title]', t.description)
+        seen_exception = False
+        try:
+            create_tasks_from_xml(the_xml)
+        except:
+            seen_exception = True
+        self.assertTrue(seen_exception)
+        self.assertEqual(0, Task.objects.all().count())
+
         
     def test_import_two_tasks_with_same_context(self):
         the_xml = """

@@ -15,7 +15,8 @@ def create_tasks_from_xml(the_xml):
                 rc.append(node.data)
         return ''.join(rc)
 
-    def first_of(list, f = None, default = None):
+    def expect_one_of(task, attr, f = None, default = None):
+        list = task.getElementsByTagName(attr)
         if len(list) > 1:
             raise Exception, "Only one value allowed!"
         if list:
@@ -61,13 +62,13 @@ def create_tasks_from_xml(the_xml):
         notes = task.getElementsByTagName("note")
         completeds = task.getElementsByTagName("completed")
         t = Task(
-            description = first_of(titles,                      default = '[No title]'),
-            priority    = first_of(prios,      handle_prio,     0),
-            start_date  = first_of(sdates,     handle_date),
-            due_date    = first_of(ddates,     handle_date),
-            context     = first_of(contexts,   handle_context),
-            done        = first_of(completeds, handle_completed, False),
-            note        = first_of(notes),
+            description = expect_one_of(task, "title"),
+            priority    = expect_one_of(task, "priority", handle_prio, 0),
+            start_date  = expect_one_of(task, "startdate", handle_date),
+            due_date    = expect_one_of(task, "duedate", handle_date),
+            context     = expect_one_of(task, "context", handle_context),
+            done        = expect_one_of(task, "completed", handle_completed, False),
+            note        = expect_one_of(task, "note"),
         )
         t.save()
 
