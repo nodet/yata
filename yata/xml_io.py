@@ -15,8 +15,8 @@ def create_tasks_from_xml(the_xml):
                 rc.append(node.data)
         return ''.join(rc)
 
-    def expect_one_of(task, attr, f = None, default = None):
-        list = task.getElementsByTagName(attr)
+    def expect_one_of(task, tag_name, f = None, default = None):
+        list = task.getElementsByTagName(tag_name)
         if len(list) > 1:
             raise Exception, "Only one value allowed!"
         if list:
@@ -25,6 +25,11 @@ def create_tasks_from_xml(the_xml):
         else:
             return default
             
+    def expect_list(node, tag_name, f):
+        list = node.getElementsByTagName(tag_name)
+        return [f(item) for item in list]
+
+        
     def handle_date(s):
         if s is '':
             return None
@@ -54,7 +59,7 @@ def create_tasks_from_xml(the_xml):
         return completed != '0000-00-00'
         
     def handle_task(task):
-        t = Task(
+        Task(
             description = expect_one_of(task, "title"),
             priority    = expect_one_of(task, "priority", handle_prio, 0),
             start_date  = expect_one_of(task, "startdate", handle_date),
@@ -62,16 +67,11 @@ def create_tasks_from_xml(the_xml):
             context     = expect_one_of(task, "context", handle_context),
             done        = expect_one_of(task, "completed", handle_completed, False),
             note        = expect_one_of(task, "note"),
-        )
-        t.save()
+        ).save()
 
-    def handle_tasks(tasks):
-        for t in tasks:
-            handle_task(t)
-
+        
     dom = parseString(the_xml)
-    tasks = dom.getElementsByTagName("item")
-    handle_tasks(tasks)
+    expect_list(dom, "item", handle_task)
     
     
     
