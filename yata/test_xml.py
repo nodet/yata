@@ -1,6 +1,6 @@
 from django.test import TestCase, TransactionTestCase
 from yata.models import Task, Context
-from yata.xml_io import create_tasks_from_xml
+from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 import datetime
 import re
 
@@ -152,3 +152,46 @@ class XMLTransactions(TransactionTestCase):
                 
 
                 
+class XmlExportTest(TestCase):
+    def test_export_empty(self):
+        the_xml = """<xml>
+</xml>"""
+        s = create_xml_from_tasks([])
+        self.assertEqual(the_xml, s)
+
+
+    def test_export_one_task(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+<startdate>2011-02-01</startdate>
+<duedate>2011-03-28</duedate>
+<context>C2</context>
+<note>Django
+Python</note>
+</item>
+</xml>"""
+        c = Context(title = 'C2')
+        t = Task(
+            description = 't1',
+            start_date = datetime.date(2011,2,1),
+            due_date = datetime.date(2011,3,28),
+            context = c,
+            note = 'Django\nPython'
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)
+
+    def test_xml_round_trip(self):
+        the_xml = """<xml>
+<item>
+<title>Change password</title>
+<startdate>2011-02-01</startdate>
+<duedate>2011-03-28</duedate>
+<context>C2</context>
+<note>Django
+Python</note>
+</item>
+</xml>"""
+        out = create_xml_from_tasks(create_tasks_from_xml(the_xml))
+        self.assertEqual(the_xml, out)

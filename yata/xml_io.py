@@ -58,7 +58,7 @@ def create_tasks_from_xml(the_xml):
         return completed != '0000-00-00'
         
     def handle_task(task):
-        Task(
+        t = Task(
             description = expect_one_of(task, "title"),
             priority    = expect_one_of(task, "priority", handle_prio, 0),
             start_date  = expect_one_of(task, "startdate", handle_date),
@@ -66,15 +66,65 @@ def create_tasks_from_xml(the_xml):
             context     = expect_one_of(task, "context", handle_context),
             done        = expect_one_of(task, "completed", handle_completed, False),
             note        = expect_one_of(task, "note"),
-        ).save()
+        )
+        t.save()
+        return t
 
         
     dom = parseString(the_xml)
-    expect_list(dom, "item", handle_task)
+    return expect_list(dom, "item", handle_task)
     
     
     
 def create_tasks_from_file(xml_file_name):
     with open(xml_file_name) as f:
         the_xml = f.read()
-        create_tasks_from_xml(the_xml)
+        return create_tasks_from_xml(the_xml)
+        
+        
+        
+def create_xml_from_tasks(tasks):
+
+    def tag(tag_name, text):
+        return '<%s>' % tag_name + text + '</%s>\n' % tag_name
+
+    def write_title(t):
+        return tag("title", t.description)
+        
+    def write_start_date(t):
+        return tag("startdate", t.start_date.isoformat())
+
+    def write_due_date(t):
+        return tag("duedate", t.due_date.isoformat())
+
+    def write_context(t):
+        if t.context is None:
+            return ''
+        return tag("context", t.context.title)
+
+    def write_note(t):
+        return tag("note", t.note)
+        
+    def write_task(t):
+        res = ['<item>\n']
+        res.append(write_title(t))
+        res.append(write_start_date(t))
+        res.append(write_due_date(t))
+        res.append(write_context(t))
+        res.append(write_note(t))
+        res.append('</item>\n')
+        return ''.join(res)
+
+    res = ["<xml>\n"]
+    for t in tasks:
+        res.append(write_task(t))
+    res.append("</xml>")
+    return ''.join(res)
+
+
+
+
+
+
+
+
