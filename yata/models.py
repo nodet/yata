@@ -13,8 +13,16 @@ class Task(models.Model):
         ('M', 'month'),
         ('Y', 'year'),
     )
+    PRIO_CHOICES = (
+        ( 3, 'Top'),
+        ( 2, 'High'),
+        ( 1, 'Medium'),
+        ( 0, 'Low'),
+        (-1, 'Negative'),
+    )
 
     description = models.CharField(max_length = 200)
+    priority = models.SmallIntegerField(choices=PRIO_CHOICES, default=0)
     context = models.ForeignKey('Context', null = True, blank = True)
     start_date = models.DateField(null = True, blank = True)
     due_date = models.DateField(null = True, blank = True)

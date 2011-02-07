@@ -113,6 +113,7 @@ class AddTaskViewTest(TestCase):
         
     def test_post(self):
         desc = 'The created task'
+        prio = 0
         sdate = today()
         ddate = tomorrow()
         repeat_nb = 1
@@ -120,6 +121,7 @@ class AddTaskViewTest(TestCase):
         note = 'the note...'
         response = Client().post('/yata/add_task/', {
             'description': desc,
+            'priority': prio,
             'start_date': sdate,
             'due_date': ddate,
             'repeat_nb': repeat_nb,
@@ -130,6 +132,7 @@ class AddTaskViewTest(TestCase):
         self.assertEqual(1, all.count())
         t = all[0]
         self.assertEqual(desc, t.description)
+        self.assertEqual(prio, t.priority)
         self.assertEqual(sdate, t.start_date)
         self.assertEqual(ddate, t.due_date)
         self.assertEqual(repeat_nb, t.repeat_nb)
@@ -147,6 +150,7 @@ class EditViewTest(TestCase):
         self.assertEqual(200, response.status_code)
         
         ndesc = 'new description'
+        prio = 0
         sdate = yesterday()
         ddate = tomorrow()
         nb = 2
@@ -155,6 +159,7 @@ class EditViewTest(TestCase):
         note = 'the note...'
         response = Client().post('/yata/1/edit/', {
             'description': ndesc,
+            'priority': prio,
             'start_date': sdate,
             'due_date': ddate,
             'repeat_nb': nb,
@@ -166,6 +171,7 @@ class EditViewTest(TestCase):
         self.assertEqual(1, all.count())
         t = all[0]
         self.assertEqual(ndesc, t.description)
+        self.assertEqual(prio, t.priority)
         self.assertEqual(sdate, t.start_date)
         self.assertEqual(ddate, t.due_date)
         self.assertEqual(nb, t.repeat_nb)

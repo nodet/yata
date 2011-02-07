@@ -190,3 +190,12 @@ class TestContext(TestCase):
         t = Task(description = 'a task', context = c)
         self.assertEqual(t.context.title, 'Context')
         
+        
+        
+class TaskHasAPriority(TestCase):
+    def test_can_have_positive_priority(self):
+        prio = 1
+        t = Task(description = "something", priority = 1)
+        t.save();
+        self.assertEqual(1, Task.objects.filter(priority__gte=1).count())
+        

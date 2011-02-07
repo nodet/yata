@@ -36,4 +36,8 @@ def addContextColumn():
 def addNoteColumn():
     runQueryAndSaveAll('alter table "yata_task" add column "note" text')
     
+def addPrioColumn():
+    #runQueryAndSaveAll('alter table "yata_task" add column "priority" integer')
+    runQueryAndSaveAll('alter table "yata_task" modify column "priority" smallint NOT NULL')
+    
     
