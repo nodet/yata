@@ -54,13 +54,6 @@ def create_tasks_from_xml(the_xml):
         return completed != '0000-00-00'
         
     def handle_task(task):
-        titles = task.getElementsByTagName("title")
-        prios = task.getElementsByTagName("priority")
-        sdates = task.getElementsByTagName("startdate")
-        ddates = task.getElementsByTagName("duedate")
-        contexts = task.getElementsByTagName("context")
-        notes = task.getElementsByTagName("note")
-        completeds = task.getElementsByTagName("completed")
         t = Task(
             description = expect_one_of(task, "title"),
             priority    = expect_one_of(task, "priority", handle_prio, 0),
