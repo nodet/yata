@@ -119,7 +119,7 @@ class Task(models.Model):
         
         
     @staticmethod
-    def compare_by_due_date(t1, t2):
+    def compare(t1, t2):
         return t2.importance() - t1.importance()
         #return due_date_cmp(t1.due_date, t2.due_date)
                 

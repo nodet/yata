@@ -23,13 +23,13 @@ class MainViewTest(TestCase):
         self.assertEqual(3, len(tasks))
         
       
-class MainViewHasTasksSortedByEarliestDueDateTest(MainViewTest):
+class MainViewHasTasksSorted(MainViewTest):
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
         tasks = response.context['tasks']
         self.assertEqual(3, len(tasks))
-        self.assertEqual(sorted(tasks, Task.compare_by_due_date), tasks)
+        self.assertEqual(sorted(tasks, Task.compare), tasks)
         
 class MainViewHasListOfNotDoneTasks(MainViewTest):
     def setUp(self):

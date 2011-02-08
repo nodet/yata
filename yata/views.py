@@ -47,7 +47,7 @@ def index(request):
     tasks = [t for t in Task.objects.all().exclude(done__exact = True)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
-    tasks.sort(Task.compare_by_due_date)
+    tasks.sort(Task.compare)
     
     recently_done = Task.objects.all(). \
                         filter(done__exact = True). \
