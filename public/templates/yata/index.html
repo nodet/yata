@@ -43,6 +43,25 @@ Tasks done:
     <p>Nothing...</p>
 {% endif %}
 
+{% comment %}
+{% if task_lists %}
+   {% for tasks in task_lists %}
+        <ul>
+        {% for t in tasks %}
+            <li>
+                {{ t }} - 
+                <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - 
+                <a href="/yata/{{ t.id }}/edit/">Edit</a>
+            </li>
+        {% endfor %}
+        </ul>
+   {% endfor %}
+{% else %}
+    <p>Nothing to do!</p>
+{% endif %}
+{% endcomment %}
+
+
 <a href="/yata/add_task/">Add task</a>, 
 <a href="/yata/context/add/">Add context</a><br>
 <a href="/admin/yata/task">Admin</a>,

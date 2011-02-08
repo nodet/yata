@@ -55,6 +55,22 @@ def index(request):
                         filter(done__exact = True). \
                         order_by('-last_edited')
 
+    def tasks_by_importance(tasks):
+        result = []
+        if len(tasks) is 0:
+            return result
+        i = tasks[0].importance()
+        same_importance = []
+        for t in tasks:
+            if t.importance() == i:
+                same_importance.append(t)
+            else:
+                i = t.importance()
+                result.append(same_importance)
+                same_importance = [t]
+        result.append(same_importance)
+        return result
+                        
     return render_to_response('yata/index.html', {
         'tasks': tasks,
         'contexts': context_menu(),
@@ -62,6 +78,7 @@ def index(request):
         'future_tasks_menu': future_tasks_menu(),
         'future_tasks_menu_selected': future_tasks_menu_displayed(show_future_tasks),
         'tasks_recently_done': recently_done,
+        'task_lists': tasks_by_importance(tasks)
     })
     
     
