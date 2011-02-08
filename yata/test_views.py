@@ -336,3 +336,61 @@ class AddContextViewTest(TestCase):
         c = all[0]
         self.assertEqual(title, c.title)
         
+class HideOrShowFutureTasks(TestCase):
+    def setUp(self):
+        t = Task(description = "Not future")
+        t.save()
+        t = Task(description = "Future", start_date = tomorrow(tomorrow()))
+        t.save()
+        self.client = Client()
+        # Make sure we call the view first so that it saves a session
+        self.client.get('/yata/')
+        
+    def test_default_is_to_hide_future_tasks(self):
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual(1, len(tasks))
+        self.assertEqual(None, tasks[0].start_date)
+        
+    def test_view_is_given_future_tasks_menu(self):
+        c = Client()
+        url = '/yata/'
+        response = c.get(url)
+        expected = (('Show', '/yata/future/show/'), 
+                    ('Hide', '/yata/future/hide/'))
+        self.assertEqual(expected, response.context['future_tasks_menu'])
+    
+    def ask_for_future(self, show_future_tasks):
+        session = self.client.session
+        session['show_future_tasks'] = show_future_tasks
+        session.save()
+        
+    def test_session(self):
+        self.ask_for_future(True)
+        self.assertEqual(True, self.client.session['show_future_tasks'])
+
+    def test_show_future_tasks(self):
+        self.ask_for_future(True)
+        response = self.client.get('/yata/')
+        tasks = response.context['tasks']
+        self.assertEqual('Show', response.context['future_tasks_menu_selected'])
+        self.assertEqual(2, len(tasks))
+    
+
+class ShowFutureTasksMenuTests(HideOrShowFutureTasks):    
+    
+    def test_show_future_tasks(self):
+        self.ask_for_future(False)
+        response = self.client.get('/yata/future/show/', follow=True)
+        tasks = response.context['tasks']
+        self.assertEqual('Show', response.context['future_tasks_menu_selected'])
+        self.assertEqual(2, len(tasks))
+            
+    def test_hide_future_tasks(self):
+        self.ask_for_future(False)
+        response = self.client.get('/yata/future/hide/', follow=True)
+        tasks = response.context['tasks']
+        self.assertEqual('Hide', response.context['future_tasks_menu_selected'])
+        self.assertEqual(1, len(tasks))
+            
+    

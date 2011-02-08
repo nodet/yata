@@ -29,14 +29,24 @@ def index(request):
         else:
             return contexts_to_display[0]
 
+    def _get_future_tasks_menu():
+        return (('Show', '/yata/future/show/'), 
+                 ('Hide', '/yata/future/hide/'))
+                 
+    def _get_future_tasks_menu_displayed(b):
+        return 'Show' if b else 'Hide'
         
     contexts_to_display = request.session.get('contexts_to_display', [])
     # Need to ensure something is put in the session so that it's saved.
     request.session['contexts_to_display'] = contexts_to_display
 
+    show_future_tasks = request.session.get('show_future_tasks', False)
+    # Need to ensure something is put in the session so that it's saved.
+    request.session['show_future_tasks'] = show_future_tasks
+
     tasks = [t for t in Task.objects.all().exclude(done__exact = True)
                 if t.matches_contexts(contexts_to_display)
-                if t.can_start_now()]
+                if show_future_tasks or t.can_start_now()]
     tasks.sort(Task.compare_by_due_date)
     
     recently_done = Task.objects.all(). \
@@ -47,6 +57,8 @@ def index(request):
         'tasks': tasks,
         'contexts': _get_context_list(),
         'context_displayed': _get_context_displayed(contexts_to_display),
+        'future_tasks_menu': _get_future_tasks_menu(),
+        'future_tasks_menu_selected': _get_future_tasks_menu_displayed(show_future_tasks),
         'tasks_recently_done': recently_done,
     })
     
@@ -69,6 +81,13 @@ def select_context_all(request):
 def select_context_none(request):
     return _select_context_helper(request, [''])
 
+
+def show_future_tasks(request, b):
+    s = request.session
+    s['show_future_tasks'] = b
+    s.modified = True
+    s.save()
+    return HttpResponseRedirect(reverse('yata.views.index'))
     
     
 def mark_done(request, task_id, b = True):

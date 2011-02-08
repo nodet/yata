@@ -21,6 +21,8 @@ urlpatterns = patterns('',
     (r'^yata/task/(?P<id>\d+)/delete/$', 'yata.views.delete_task'),
     (r'^yata/xml/import/$', 'yata.views.xml_import'),
     (r'^yata/xml/export/$', 'yata.views.xml_export'),
+    (r'^yata/future/show/$', 'yata.views.show_future_tasks', {'b': True}),
+    (r'^yata/future/hide/$', 'yata.views.show_future_tasks', {'b': False}),
     
     
     # Uncomment the admin/doc line below to enable admin documentation:

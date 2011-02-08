@@ -3,9 +3,14 @@ Context to display:
 {% for c in contexts %}
     {% if c.0 == context_displayed %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == context_displayed %}# {% endif %}
 {% endfor %}    
+<br>
+Future tasks:
+{% for c in future_tasks_menu %}
+    {% if c.0 == future_tasks_menu_selected %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == future_tasks_menu_selected %}# {% endif %}
+{% endfor %}    
 </p>
 
-Tasks not done, by earliest due date:
+Tasks by earliest due date:
 
 {% if tasks %}
     <ul>
