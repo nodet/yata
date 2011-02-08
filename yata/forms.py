@@ -10,3 +10,5 @@ class AddContextForm(forms.ModelForm):
     class Meta:
         model = Context
         
+class UploadXMLForm(forms.Form):
+    file  = forms.FileField()

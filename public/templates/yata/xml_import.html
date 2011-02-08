@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    
+    <form enctype="multipart/form-data" action="{{ action }}" method="post">
+    
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Load" />
+    </form>
+
+</body>
+
+</html>

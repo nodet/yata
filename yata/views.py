@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from yata.models import Task, Context
-from yata.forms import AddTaskForm, AddContextForm
+from yata.forms import AddTaskForm, AddContextForm, UploadXMLForm
+from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 
 import datetime
 
@@ -18,6 +19,16 @@ def index(request):
         for c in Context.objects.all():
             l.append((c.title, '/yata/context/show/%s/' % c.id))
         return l
+
+    def _get_context_displayed(contexts_to_display):
+        # Specify which context is actually displayed
+        if len(contexts_to_display) == 0:
+            return 'All'
+        elif contexts_to_display[0] is '':
+            return 'None'
+        else:
+            return contexts_to_display[0]
+
         
     contexts_to_display = request.session.get('contexts_to_display', [])
     # Need to ensure something is put in the session so that it's saved.
@@ -35,6 +46,7 @@ def index(request):
     return render_to_response('yata/index.html', {
         'tasks': tasks,
         'contexts': _get_context_list(),
+        'context_displayed': _get_context_displayed(contexts_to_display),
         'tasks_recently_done': recently_done,
     })
     
@@ -106,4 +118,27 @@ def delete_task(request, id):
     t = get_object_or_404(Task, pk=id)
     t.delete()
     return HttpResponseRedirect(reverse('yata.views.index'))
-        
+
+    
+    
+    
+    
+def xml_import(request):
+    if request.method == 'POST':
+        form = UploadXMLForm(request.POST, request.FILES)
+        if form.is_valid():
+            create_tasks_from_xml(request.FILES['file'].read())
+            return HttpResponseRedirect(reverse('yata.views.index'))
+    else:
+        form = UploadXMLForm()
+    return render_to_response('yata/xml_import.html', {
+        'form': form,
+        'action': reverse(xml_import),
+    }, context_instance=RequestContext(request))
+
+def xml_export(request):
+    the_xml = create_xml_from_tasks(Task.objects.all())
+    response = HttpResponse(the_xml, mimetype="text/xml")
+    response['Content-Disposition'] = 'attachment; filename=yata.xml'
+    return response
+    

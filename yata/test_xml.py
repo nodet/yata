@@ -182,6 +182,18 @@ Python</note>
         s = create_xml_from_tasks([t])
         self.assertEqual(the_xml, s)
 
+    def test_export_not_much_info(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+</item>
+</xml>"""
+        t = Task(
+            description = 't1',
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)
+        
     def test_xml_round_trip(self):
         the_xml = """<xml>
 <item>

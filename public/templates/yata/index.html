@@ -1,7 +1,7 @@
 <p>
 Context to display:
 {% for c in contexts %}
-    <a href="{{ c.1 }}">{{ c.0 }}</a>
+    {% if c.0 == context_displayed %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == context_displayed %}# {% endif %}
 {% endfor %}    
 </p>
 
@@ -39,5 +39,7 @@ Tasks done:
 {% endif %}
 
 <a href="/yata/add_task/">Add task</a>, 
-<a href="/yata/context/add/">Add context</a>, 
-<a href="/admin/yata/task">Admin</a>
+<a href="/yata/context/add/">Add context</a><br>
+<a href="/admin/yata/task">Admin</a>,
+<a href="/yata/xml/import/">Import tasks...</a>, 
+<a href="/yata/xml/export/">Export tasks...</a>

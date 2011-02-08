@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.utils.html import escape
 from xml.dom.minidom import parseString
 from yata.models import Task, Context
 import re
@@ -86,16 +87,21 @@ def create_tasks_from_file(xml_file_name):
 def create_xml_from_tasks(tasks):
 
     def tag(tag_name, text):
-        return '<%s>' % tag_name + text + '</%s>\n' % tag_name
+        return '<%s>' % tag_name + escape(text) + '</%s>\n' % tag_name
 
     def write_title(t):
         return tag("title", t.description)
         
+    def write_date(tag_name, d):
+        if d is None:
+            return ''
+        return tag(tag_name, d.isoformat())
+        
     def write_start_date(t):
-        return tag("startdate", t.start_date.isoformat())
+        return write_date("startdate", t.start_date)
 
     def write_due_date(t):
-        return tag("duedate", t.due_date.isoformat())
+        return write_date("duedate", t.due_date)
 
     def write_context(t):
         if t.context is None:
@@ -103,6 +109,8 @@ def create_xml_from_tasks(tasks):
         return tag("context", t.context.title)
 
     def write_note(t):
+        if t.note is None:
+            return ''
         return tag("note", t.note)
         
     def write_task(t):

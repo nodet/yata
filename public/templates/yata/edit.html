@@ -32,8 +32,6 @@
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />
-    {% if delete %}
-    {% endif %}
     </form>
     
     <form action="{{ delete }}" method="post">
