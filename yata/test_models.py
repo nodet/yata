@@ -198,4 +198,20 @@ class TaskHasAPriority(TestCase):
         t = Task(description = "something", priority = 1)
         t.save();
         self.assertEqual(1, Task.objects.filter(priority__gte=1).count())
+
         
+        
+class TaskHasImportance(TestCase):
+
+    def setUp(self):
+        d = tomorrow()
+        self.t1 = Task(description='T1')
+        self.t2 = Task(description='T2', due_date=d)
+        
+    def test_task_is_more_important_if_due_date(self):
+        self.assertTrue(self.t1.importance() < self.t2.importance())
+
+
+
+
+

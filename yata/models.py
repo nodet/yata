@@ -69,6 +69,30 @@ class Task(models.Model):
         
     def can_start_now(self):
         return not self.is_future()
+
+
+    def importance(self):
+    
+        def due_date_contribution(t):
+            if t.due_date is None:
+                return 0
+            diff = (t.due_date - datetime.date.today()).days
+            if diff > 14:
+                d = 0
+            elif diff >= 7:
+                d = 1
+            elif diff >= 2:
+                d = 2
+            elif diff == 1:
+                d = 3
+            elif diff == 0:
+                d = 5
+            else:
+                d = 6
+            return d
+            
+        return 2 + self.priority + due_date_contribution(self)
+
         
     @staticmethod
     def repeat_choice(choice):
@@ -96,7 +120,8 @@ class Task(models.Model):
         
     @staticmethod
     def compare_by_due_date(t1, t2):
-        return due_date_cmp(t1.due_date, t2.due_date)
+        return t2.importance() - t1.importance()
+        #return due_date_cmp(t1.due_date, t2.due_date)
                 
     
 def due_date_cmp(t1, t2):
