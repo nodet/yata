@@ -12,7 +12,7 @@ import datetime
 
 def index(request):
 
-    def _get_context_list():
+    def context_menu():
         l = []
         l.append(('All', '/yata/context/show/all/'))
         l.append(('None', '/yata/context/show/none/'))
@@ -20,7 +20,7 @@ def index(request):
             l.append((c.title, '/yata/context/show/%s/' % c.id))
         return l
 
-    def _get_context_displayed(contexts_to_display):
+    def context_menu_displayed(contexts_to_display):
         # Specify which context is actually displayed
         if len(contexts_to_display) == 0:
             return 'All'
@@ -29,21 +29,23 @@ def index(request):
         else:
             return contexts_to_display[0]
 
-    def _get_future_tasks_menu():
-        return (('Show', '/yata/future/show/'), 
-                 ('Hide', '/yata/future/hide/'))
-                 
-    def _get_future_tasks_menu_displayed(b):
-        return 'Show' if b else 'Hide'
-        
     contexts_to_display = request.session.get('contexts_to_display', [])
     # Need to ensure something is put in the session so that it's saved.
     request.session['contexts_to_display'] = contexts_to_display
 
+
+    def future_tasks_menu():
+        return (('Show', '/yata/future/show/'), 
+                 ('Hide', '/yata/future/hide/'))
+                 
+    def future_tasks_menu_displayed(b):
+        return 'Show' if b else 'Hide'
+        
     show_future_tasks = request.session.get('show_future_tasks', False)
     # Need to ensure something is put in the session so that it's saved.
     request.session['show_future_tasks'] = show_future_tasks
 
+    
     tasks = [t for t in Task.objects.all().exclude(done__exact = True)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
@@ -55,10 +57,10 @@ def index(request):
 
     return render_to_response('yata/index.html', {
         'tasks': tasks,
-        'contexts': _get_context_list(),
-        'context_displayed': _get_context_displayed(contexts_to_display),
-        'future_tasks_menu': _get_future_tasks_menu(),
-        'future_tasks_menu_selected': _get_future_tasks_menu_displayed(show_future_tasks),
+        'contexts': context_menu(),
+        'context_displayed': context_menu_displayed(contexts_to_display),
+        'future_tasks_menu': future_tasks_menu(),
+        'future_tasks_menu_selected': future_tasks_menu_displayed(show_future_tasks),
         'tasks_recently_done': recently_done,
     })
     
