@@ -481,4 +481,9 @@ class AddTaskHasDefaultContext(TestCase):
         self.ask_for_contexts([])
         response = self.client.get('/yata/add_task/')
         self.assertFalse('context' in response.context['form'].initial.keys())
-                
+
+    def test_no_default_if_all(self):
+        self.ask_for_contexts([''])
+        response = self.client.get('/yata/add_task/')
+        self.assertFalse('context' in response.context['form'].initial.keys())
+                        
