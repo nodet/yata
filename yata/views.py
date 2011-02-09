@@ -142,7 +142,20 @@ def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, i
 
     
 def edit(request, task_id = None):
-    return _edit_any_form(request, Task, AddTaskForm, edit, delete_task, task_id)
+
+    # An 'AddTaskForm' that additionally can provide a default value
+    # for the context when it makes sense
+    # see http://stackoverflow.com/questions/4235883/django-testing-test-the-initial-value-of-a-form-field/4249407#4249407
+    class AddTaskFormWithInitial(AddTaskForm):
+        def __init__(self, *args, **kwargs):
+            initial = kwargs.get('initial', {})
+            c = request.session.get('contexts_to_display')
+            if c and len(c) == 1 and c[0] != '':
+                initial['context'] = Context.objects.get(title__exact=c[0])
+            kwargs['initial'] = initial        
+            super(AddTaskFormWithInitial, self).__init__(*args, **kwargs)
+            
+    return _edit_any_form(request, Task, AddTaskFormWithInitial, edit, delete_task, task_id)
 
         
 def edit_context(request, id = None):

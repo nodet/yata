@@ -181,7 +181,8 @@ class UrlForActionIsProvidedToEditView(TestCase):
         
         
         
-class FilterTasksByContext(TestCase):
+class FilterTaskByContextSetup(TestCase):        
+
     def setUp(self):
         c1 = Context(title = 'C1')
         c1.save()
@@ -197,15 +198,17 @@ class FilterTasksByContext(TestCase):
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
         
-    def test_default_is_to_show_all_contexts(self):
-        response = self.client.get('/yata/')
-        tasks = get_tasks(response)
-        self.assertEqual(3, len(tasks))
-        
     def ask_for_contexts(self, contexts):
         session = self.client.session
         session['contexts_to_display'] = contexts
         session.save()
+        
+        
+class FilterTasksByContext(FilterTaskByContextSetup):
+    def test_default_is_to_show_all_contexts(self):
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual(3, len(tasks))
         
     def test_session(self):
         self.ask_for_contexts(['C1'])
@@ -270,7 +273,7 @@ class FilterTasksByContext(TestCase):
         self.assertEqual(expected, response.context['contexts'])
     
 
-class EditViewHasDeleteButton(FilterTasksByContext):
+class EditViewHasDeleteButton(FilterTaskByContextSetup):
     def test_delete_context(self):
         response = self.client.post('/yata/context/2/delete/', follow = True)
         self.assertEqual(response.status_code, 200)
@@ -293,7 +296,7 @@ class EditViewHasDeleteButton(FilterTasksByContext):
 
 
         
-class SelectContextTests(FilterTasksByContext):    
+class SelectContextTests(FilterTaskByContextSetup):    
     
     def test_select_one_context(self):
         self.ask_for_contexts(['', 'C2'])
@@ -327,7 +330,8 @@ class AddContextViewTest(TestCase):
         c = all[0]
         self.assertEqual(title, c.title)
         
-class HideOrShowFutureTasks(TestCase):
+        
+class HideOrShowFutureTasksSetup(TestCase):
     def setUp(self):
         t = Task(description = "Not future")
         t.save()
@@ -337,6 +341,13 @@ class HideOrShowFutureTasks(TestCase):
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
         
+    def ask_for_future(self, show_future_tasks):
+        session = self.client.session
+        session['show_future_tasks'] = show_future_tasks
+        session.save()
+        
+        
+class HideOrShowFutureTasks(HideOrShowFutureTasksSetup):
     def test_default_is_to_hide_future_tasks(self):
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
@@ -351,11 +362,6 @@ class HideOrShowFutureTasks(TestCase):
                     ('Hide', '/yata/future/hide/'))
         self.assertEqual(expected, response.context['future_tasks_menu'])
     
-    def ask_for_future(self, show_future_tasks):
-        session = self.client.session
-        session['show_future_tasks'] = show_future_tasks
-        session.save()
-        
     def test_session(self):
         self.ask_for_future(True)
         self.assertEqual(True, self.client.session['show_future_tasks'])
@@ -368,7 +374,7 @@ class HideOrShowFutureTasks(TestCase):
         self.assertEqual(2, len(tasks))
     
 
-class ShowFutureTasksMenuTests(HideOrShowFutureTasks):    
+class ShowFutureTasksMenuTests(HideOrShowFutureTasksSetup):    
     
     def test_show_future_tasks(self):
         self.ask_for_future(False)
@@ -381,6 +387,7 @@ class ShowFutureTasksMenuTests(HideOrShowFutureTasks):
         response = self.client.get('/yata/future/hide/', follow=True)
         self.assertEqual('Hide', response.context['future_tasks_menu_selected'])
         self.assertEqual(1, len(get_tasks(response)))
+            
             
 class HideOrShowTasksDone(TestCase):
     def setUp(self):
@@ -441,5 +448,37 @@ class HideOrShowTasksDone(TestCase):
         self.assertEqual(2, len(tasks))
         
     
-    
-    
+class AddTaskHasDefaultContext(TestCase):
+    def setUp(self):
+        self.c1 = Context(title = 'C1')
+        self.c1.save()
+        self.c2 = Context(title = 'C2')
+        self.c2.save()
+        self.client = Client()
+        # Make sure we call the view first so that it saves a session
+        self.client.get('/yata/')
+
+    def ask_for_contexts(self, contexts):
+        session = self.client.session
+        session['contexts_to_display'] = contexts
+        session.save()
+        
+    def test_default_is_empty(self):
+        response = self.client.get('/yata/add_task/')
+        self.assertFalse('context' in response.context['form'].initial.keys())
+
+    def test_get_default_context(self):
+        self.ask_for_contexts(['C2'])
+        response = self.client.get('/yata/add_task/')
+        self.assertEqual(self.c2, response.context['form'].initial['context'])
+
+    def test_no_default_if_several_selected(self):
+        self.ask_for_contexts(['C1','C2'])
+        response = self.client.get('/yata/add_task/')
+        self.assertFalse('context' in response.context['form'].initial.keys())
+        
+    def test_no_default_if_none(self):
+        self.ask_for_contexts([])
+        response = self.client.get('/yata/add_task/')
+        self.assertFalse('context' in response.context['form'].initial.keys())
+                
