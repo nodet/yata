@@ -69,10 +69,6 @@ def index(request):
     tasks = group_by(tasks, lambda t: 
         'Importance %s' % t.importance()
     )
-    
-    recently_done = Task.objects.all(). \
-                        filter(done__exact = True). \
-                        order_by('-last_edited')
 
     return render_to_response('yata/index.html', {
         'contexts': context_menu(),
@@ -82,7 +78,6 @@ def index(request):
         'tasks_done_menu': tasks_done_menu(),
         'tasks_done_menu_selected': show_tasks_done,
         'tasks': tasks,
-        'tasks_recently_done': recently_done,
     })
     
     

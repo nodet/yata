@@ -59,16 +59,6 @@ def have_same_elements(it1, it2):
     return True
 
             
-class MainViewHasListOfDoneTasks(MainViewHasListOfNotDoneTasks):
-    def runTest(self):
-        c = Client()
-        response = c.get('/yata/')
-        tasks_recently_done = response.context['tasks_recently_done']
-        for t in tasks_recently_done:
-            self.assertTrue(t.done)
-        sorted_tasks = sorted(tasks_recently_done, key = lambda task: task.last_edited, reverse = True)
-        self.assertTrue(have_same_elements(sorted_tasks, tasks_recently_done))
-        
 class MainViewDoesNotShowTasksNotStartedTest(TestCase):
     def setUp(self):
         t = Task(description = "something to do now")
@@ -94,7 +84,6 @@ class MarkDoneTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(0, len(get_tasks(response)))
-        self.assertEqual(1, response.context['tasks_recently_done'].count())
 
 class MarkNotDoneTest(TestCase):
     def setUp(self):
@@ -106,7 +95,6 @@ class MarkNotDoneTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, len(get_tasks(response)))
-        self.assertEqual(0, response.context['tasks_recently_done'].count())
 
         
 class AddTaskViewTest(TestCase):

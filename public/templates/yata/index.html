@@ -32,22 +32,6 @@ Tasks done:
     <p>Cool! Nothing to do...</p>
 {% endif %}
 
-Done:
-
-{% if tasks_recently_done %}
-    <ul>
-    {% for t in tasks_recently_done %}
-        <li>
-            {{ t }} - 
-            <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a> - 
-            <a href="/yata/{{ t.id }}/edit/">Edit</a>
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Not much...</p>
-{% endif %}
-
 <a href="/yata/add_task/">Add task</a>, 
 <a href="/yata/context/add/">Add context</a><br>
 <a href="/admin/yata/task">Admin</a>,
