@@ -22,7 +22,12 @@ Tasks done:
         {% for t in tasks.1 %}
             <li>
                 {{ t }} - 
-                <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - 
+                {% if not t.done %}
+                    <a href="/yata/{{ t.id }}/mark_done/">Done!</a>
+                {% else %}
+                    <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a>
+                {% endif %}
+                - 
                 <a href="/yata/{{ t.id }}/edit/">Edit</a>
             </li>
         {% endfor %}
