@@ -1,10 +1,13 @@
 from django.test import TestCase
 from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
-from yata.test_utils import today, tomorrow, yesterday
+from yata.test_utils import today, tomorrow, yesterday, flatten
 import datetime
 import time
 from django.test.client import Client
 
+
+def get_tasks(response):
+    return flatten(response.context['tasks'])
 
 class MainViewTest(TestCase):
     def setUp(self):
@@ -19,7 +22,7 @@ class MainViewTest(TestCase):
         response = c.get('/yata/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
         
       
@@ -27,7 +30,7 @@ class MainViewHasTasksSorted(MainViewTest):
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
         self.assertEqual(sorted(tasks, Task.compare), tasks)
         
@@ -42,7 +45,7 @@ class MainViewHasListOfNotDoneTasks(MainViewTest):
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         for t in tasks:
             self.assertFalse(t.done)
 
@@ -77,7 +80,7 @@ class MainViewDoesNotShowTasksNotStartedTest(TestCase):
         c = Client()
         response = c.get('/yata/')
         self.assertEqual(response.status_code, 200)
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(1, len(tasks))
         
        
@@ -90,7 +93,7 @@ class MarkDoneTest(TestCase):
         response = c.get('/yata/1/mark_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
-        self.assertEqual(0, len(response.context['tasks']))
+        self.assertEqual(0, len(get_tasks(response)))
         self.assertEqual(1, response.context['tasks_recently_done'].count())
 
 class MarkNotDoneTest(TestCase):
@@ -102,7 +105,7 @@ class MarkNotDoneTest(TestCase):
         response = c.get('/yata/1/mark_not_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
-        self.assertEqual(1, len(response.context['tasks']))
+        self.assertEqual(1, len(get_tasks(response)))
         self.assertEqual(0, response.context['tasks_recently_done'].count())
 
         
@@ -208,7 +211,7 @@ class FilterTasksByContext(TestCase):
         
     def test_default_is_to_show_all_contexts(self):
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
         
     def ask_for_contexts(self, contexts):
@@ -223,13 +226,13 @@ class FilterTasksByContext(TestCase):
     def test_show_all_contexts(self):
         self.ask_for_contexts([])
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
     
     def test_show_one_contexts(self):
         self.ask_for_contexts(['C1'])
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(1, len(tasks))
         for t in tasks:
             self.assertEqual('C1', t.context.title)
@@ -237,7 +240,7 @@ class FilterTasksByContext(TestCase):
     def test_show_two_contexts(self):
         self.ask_for_contexts(['C1', 'C2'])
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(2, len(tasks))
         for t in tasks:
             self.assertTrue(t.context.title in ['C1','C2'])
@@ -245,7 +248,7 @@ class FilterTasksByContext(TestCase):
     def test_show_no_context(self):
         self.ask_for_contexts([''])
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(1, len(tasks))
         for t in tasks:
             self.assertEqual(None, t.context)
@@ -253,7 +256,7 @@ class FilterTasksByContext(TestCase):
     def test_show_one_and_no(self):
         self.ask_for_contexts(['', 'C2'])
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(2, len(tasks))
         for t in tasks:
             self.assertTrue(t.context == None or t.context.title == 'C2')
@@ -263,7 +266,7 @@ class FilterTasksByContext(TestCase):
         response = self.client.get('/yata/')
         # A second call to check if the setting was stored
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(2, len(tasks))
         for t in tasks:
             self.assertTrue(t.context == None or t.context.title == 'C2')
@@ -307,20 +310,20 @@ class SelectContextTests(FilterTasksByContext):
     def test_select_one_context(self):
         self.ask_for_contexts(['', 'C2'])
         response = self.client.get('/yata/context/show/1/', follow=True)
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         for t in tasks:
             self.assertTrue(t.context.title == 'C1')
     
     def test_select_all_contexts(self):
         self.ask_for_contexts(['', 'C2'])
         response = self.client.get('/yata/context/show/all/', follow=True)
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
     
     def test_select_no_context(self):
         self.ask_for_contexts(['', 'C2'])
         response = self.client.get('/yata/context/show/none/', follow=True)
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         for t in tasks:
             self.assertFalse(t.context)
 
@@ -348,7 +351,7 @@ class HideOrShowFutureTasks(TestCase):
         
     def test_default_is_to_hide_future_tasks(self):
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual(1, len(tasks))
         self.assertEqual(None, tasks[0].start_date)
         
@@ -372,7 +375,7 @@ class HideOrShowFutureTasks(TestCase):
     def test_show_future_tasks(self):
         self.ask_for_future(True)
         response = self.client.get('/yata/')
-        tasks = response.context['tasks']
+        tasks = get_tasks(response)
         self.assertEqual('Show', response.context['future_tasks_menu_selected'])
         self.assertEqual(2, len(tasks))
     
@@ -382,15 +385,16 @@ class ShowFutureTasksMenuTests(HideOrShowFutureTasks):
     def test_show_future_tasks(self):
         self.ask_for_future(False)
         response = self.client.get('/yata/future/show/', follow=True)
-        tasks = response.context['tasks']
         self.assertEqual('Show', response.context['future_tasks_menu_selected'])
-        self.assertEqual(2, len(tasks))
+        self.assertEqual(2, len(get_tasks(response)))
             
     def test_hide_future_tasks(self):
         self.ask_for_future(False)
         response = self.client.get('/yata/future/hide/', follow=True)
-        tasks = response.context['tasks']
         self.assertEqual('Hide', response.context['future_tasks_menu_selected'])
-        self.assertEqual(1, len(tasks))
+        self.assertEqual(1, len(get_tasks(response)))
             
+    
+    
+    
     

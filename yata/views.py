@@ -3,7 +3,7 @@ from django.template import Context, loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
-from yata.models import Task, Context
+from yata.models import Task, Context, group_by
 from yata.forms import AddTaskForm, AddContextForm, UploadXMLForm
 from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 
@@ -50,35 +50,24 @@ def index(request):
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
     tasks.sort(Task.compare)
+    tasks = group_by(tasks, lambda t: 
+        'Importance %s' % t.importance()
+    )
     
     recently_done = Task.objects.all(). \
                         filter(done__exact = True). \
                         order_by('-last_edited')
 
     def tasks_by_importance(tasks):
-        result = []
-        if len(tasks) is 0:
-            return result
-        i = tasks[0].importance()
-        same_importance = []
-        for t in tasks:
-            if t.importance() == i:
-                same_importance.append(t)
-            else:
-                i = t.importance()
-                result.append(same_importance)
-                same_importance = [t]
-        result.append(same_importance)
-        return result
+        return 
                         
     return render_to_response('yata/index.html', {
-        'tasks': tasks,
         'contexts': context_menu(),
         'context_displayed': context_menu_displayed(contexts_to_display),
         'future_tasks_menu': future_tasks_menu(),
         'future_tasks_menu_selected': future_tasks_menu_displayed(show_future_tasks),
+        'tasks': tasks,
         'tasks_recently_done': recently_done,
-        'task_lists': tasks_by_importance(tasks)
     })
     
     

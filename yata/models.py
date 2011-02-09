@@ -183,3 +183,23 @@ class Context(models.Model):
         
         
         
+        
+def group_by(list, value):
+    'Returns a list of pairs (value, [items])'
+    if len(list) == 0:
+        return []
+    result = []
+    v = value(list[0])
+    same_value = []
+    for l in list:
+        new_v = value(l)
+        if new_v == v:
+            same_value.append(l)
+        else:
+            result.append([v, same_value])
+            v = new_v
+            same_value = [l]
+    result.append([v, same_value])
+    return result
+    
+    

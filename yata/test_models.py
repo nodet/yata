@@ -2,8 +2,8 @@
 Tests for my ToDo app
 """
 
-from yata.models import Task, relativeDueDate, due_date_cmp, next_date, Context
-from yata.test_utils import today, tomorrow, yesterday
+from yata.models import Task, relativeDueDate, due_date_cmp, next_date, Context, group_by
+from yata.test_utils import today, tomorrow, yesterday, flatten
 from django.test import TestCase
 import datetime
 import unittest
@@ -213,5 +213,34 @@ class TaskHasImportance(TestCase):
 
 
 
+class GroupByTest(TestCase):
 
+    def group(self, list):
+        return group_by(list, lambda t: t)
 
+    def test_empty_list(self):
+        gb = self.group([])
+        self.assertEqual([], gb)
+
+    def test_one(self):
+        gb = self.group([1])
+        self.assertEqual([[1, [1]]], gb)
+        self.assertEqual([1], flatten(gb))
+        
+    def test_two_equal(self):
+        gb = self.group([1,1])
+        self.assertEqual([[1, [1,1]]], gb)
+        self.assertEqual([1,1], flatten(gb))
+        
+    def test_two_different(self):
+        gb = self.group([1,2])
+        self.assertEqual([[1, [1]], [2, [2]]], gb)
+        self.assertEqual([1,2], flatten(gb))
+    
+    def test_tasks(self):
+        t = Task(description = 'T1')
+        list = group_by([t], lambda t: t.importance())
+        self.assertEqual(list[0][0], t.importance())
+        self.assertEqual(list[0][1], [t])
+        self.assertEqual([t], flatten(list))
+        
