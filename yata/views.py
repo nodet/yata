@@ -24,7 +24,7 @@ def index(request):
         # Specify which context is actually displayed
         if len(contexts_to_display) == 0:
             return 'All'
-        elif contexts_to_display[0] is '':
+        elif contexts_to_display[0] == '':
             return 'None'
         else:
             return contexts_to_display[0]
@@ -46,7 +46,23 @@ def index(request):
     request.session['show_future_tasks'] = show_future_tasks
 
     
-    tasks = [t for t in Task.objects.all().exclude(done__exact = True)
+    def tasks_done_menu():
+        return (('Not done', '/yata/done/yes/'), 
+                 ('Done', '/yata/done/no/'),
+                 ('All', '/yata/done/all/'),
+        )
+    
+    def show_task(t, show_tasks_done):
+        if show_tasks_done == 'All':
+            return True
+        return t.done == (show_tasks_done == 'Done')
+    
+    show_tasks_done = request.session.get('show_tasks_done', 'Not done')
+    request.session['show_tasks_done'] = show_tasks_done
+
+    
+    tasks = [t for t in Task.objects.all()
+                if show_task(t, show_tasks_done)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
     tasks.sort(Task.compare)
@@ -58,14 +74,13 @@ def index(request):
                         filter(done__exact = True). \
                         order_by('-last_edited')
 
-    def tasks_by_importance(tasks):
-        return 
-                        
     return render_to_response('yata/index.html', {
         'contexts': context_menu(),
         'context_displayed': context_menu_displayed(contexts_to_display),
         'future_tasks_menu': future_tasks_menu(),
         'future_tasks_menu_selected': future_tasks_menu_displayed(show_future_tasks),
+        'tasks_done_menu': tasks_done_menu(),
+        'tasks_done_menu_selected': show_tasks_done,
         'tasks': tasks,
         'tasks_recently_done': recently_done,
     })
@@ -93,6 +108,14 @@ def select_context_none(request):
 def show_future_tasks(request, b):
     s = request.session
     s['show_future_tasks'] = b
+    s.modified = True
+    s.save()
+    return HttpResponseRedirect(reverse('yata.views.index'))
+    
+
+def show_tasks_done(request, b):
+    s = request.session
+    s['show_tasks_done'] = b
     s.modified = True
     s.save()
     return HttpResponseRedirect(reverse('yata.views.index'))

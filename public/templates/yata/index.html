@@ -8,6 +8,11 @@ Future tasks:
 {% for c in future_tasks_menu %}
     {% if c.0 == future_tasks_menu_selected %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == future_tasks_menu_selected %}# {% endif %}
 {% endfor %}    
+<br>
+Tasks done:
+{% for c in tasks_done_menu %}
+    {% if c.0 == tasks_done_menu_selected %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == tasks_done_menu_selected %}# {% endif %}
+{% endfor %}    
 </p>
 
 {% if tasks %}

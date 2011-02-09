@@ -394,7 +394,64 @@ class ShowFutureTasksMenuTests(HideOrShowFutureTasks):
         self.assertEqual('Hide', response.context['future_tasks_menu_selected'])
         self.assertEqual(1, len(get_tasks(response)))
             
+class HideOrShowTasksDone(TestCase):
+    def setUp(self):
+        t = Task(description = "Not done")
+        t.save()
+        t = Task(description = "Done", done = True)
+        t.save()
+        self.client = Client()
+        # Make sure we call the view first so that it saves a session
+        self.client.get('/yata/')
+        
+    def test_default_is_to_hide_tasks_done(self):
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual(1, len(tasks))
+        self.assertFalse(tasks[0].done)
+        
+    def test_view_is_given_tasks_done_menu(self):
+        c = Client()
+        url = '/yata/'
+        response = c.get(url)
+        expected = (('Not done', '/yata/done/yes/'), 
+                    ('Done', '/yata/done/no/'),
+                    ('All', '/yata/done/all/'),
+        )
+        self.assertEqual(expected, response.context['tasks_done_menu'])
     
+    def ask_for_done(self, done):
+        session = self.client.session
+        session['show_tasks_done'] = done
+        session.save()
+
+    def test_session(self):
+        self.ask_for_done('All')
+        self.assertEqual('All', self.client.session['show_tasks_done'])
+
+    def test_show_tasks_done(self):
+        self.ask_for_done('Done')
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual('Done', response.context['tasks_done_menu_selected'])
+        self.assertEqual(1, len(tasks))
+        self.assertTrue(tasks[0].done)
+        
+    def test_show_tasks_not_done(self):
+        self.ask_for_done('Not done')
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual('Not done', response.context['tasks_done_menu_selected'])
+        self.assertEqual(1, len(tasks))
+        self.assertFalse(tasks[0].done)
+        
+    def test_show_all_tasks(self):
+        self.ask_for_done('All')
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual('All', response.context['tasks_done_menu_selected'])
+        self.assertEqual(2, len(tasks))
+        
     
     
     

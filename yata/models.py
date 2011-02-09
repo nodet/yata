@@ -91,7 +91,10 @@ class Task(models.Model):
                 d = 6
             return d
             
-        return 2 + self.priority + due_date_contribution(self)
+        if not self.done:
+            return 2 + self.priority + due_date_contribution(self)
+        else:
+            return 0
 
         
     @staticmethod
