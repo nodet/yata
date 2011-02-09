@@ -20,6 +20,11 @@
                 $('#id_start_date').datepicker(param);
             });
         </script>
+        <script type="text/javascript">
+            function confirmation() {
+                return confirm("Do you really want to delete this task?")
+            }
+        </script>        
     </head>
     
 <body>
@@ -27,14 +32,14 @@
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
     
-    <form action="{{ action }}" method="post">
-    
+    <form  action="{{ action }}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" />
     </form>
     
-    <form action="{{ delete }}" method="post">
+    <form  action="{{ delete }}" method="post" 
+            OnSubmit="return confirmation();">
     {% csrf_token %}
     <input type="submit" value="Delete!">
     </form>
