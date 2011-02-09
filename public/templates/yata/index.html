@@ -10,24 +10,24 @@ Future tasks:
 {% endfor %}    
 </p>
 
-Tasks by earliest due date:
-
 {% if tasks %}
-    <ul>
-    {% for t in tasks %}
-        <li>
-            {{ t }} - 
-            <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - 
-            <a href="/yata/{{ t.id }}/edit/">Edit</a>
-        </li>
+    {% for tasks in tasks %}
+        {{ tasks.0 }}:
+        <ul>
+        {% for t in tasks.1 %}
+            <li>
+                {{ t }} - 
+                <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - 
+                <a href="/yata/{{ t.id }}/edit/">Edit</a>
+            </li>
+        {% endfor %}
+        </ul>
     {% endfor %}
-    </ul>
 {% else %}
-    <p>Nothing to do!</p>
+    <p>Cool! Nothing to do...</p>
 {% endif %}
 
-
-Tasks done:
+Done:
 
 {% if tasks_recently_done %}
     <ul>
@@ -40,27 +40,8 @@ Tasks done:
     {% endfor %}
     </ul>
 {% else %}
-    <p>Nothing...</p>
+    <p>Not much...</p>
 {% endif %}
-
-{% comment %}
-{% if task_lists %}
-   {% for tasks in task_lists %}
-        <ul>
-        {% for t in tasks %}
-            <li>
-                {{ t }} - 
-                <a href="/yata/{{ t.id }}/mark_done/">Done!</a> - 
-                <a href="/yata/{{ t.id }}/edit/">Edit</a>
-            </li>
-        {% endfor %}
-        </ul>
-   {% endfor %}
-{% else %}
-    <p>Nothing to do!</p>
-{% endif %}
-{% endcomment %}
-
 
 <a href="/yata/add_task/">Add task</a>, 
 <a href="/yata/context/add/">Add context</a><br>
