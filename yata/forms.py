@@ -5,6 +5,7 @@ from yata.models import Task, Context
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
+    description = forms.CharField(widget=forms.TextInput(attrs={'size':'100'}))
         
 class AddContextForm(forms.ModelForm):
     class Meta:
