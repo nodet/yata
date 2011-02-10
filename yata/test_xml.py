@@ -207,3 +207,19 @@ Python</note>
 </xml>"""
         out = create_xml_from_tasks(create_tasks_from_xml(the_xml))
         self.assertEqual(the_xml, out)
+        
+        
+    def test_export_done(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+<completed>1111-11-11</completed>
+</item>
+</xml>"""
+        t = Task(
+            description = 't1',
+            done = True
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)
+        

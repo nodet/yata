@@ -113,6 +113,9 @@ def create_xml_from_tasks(tasks):
             return ''
         return tag("note", t.note)
         
+    def write_done(t):
+        return tag('completed', '1111-11-11') if t.done else ''
+        
     def write_task(t):
         res = ['<item>\n']
         res.append(write_title(t))
@@ -120,6 +123,7 @@ def create_xml_from_tasks(tasks):
         res.append(write_due_date(t))
         res.append(write_context(t))
         res.append(write_note(t))
+        res.append(write_done(t))
         res.append('</item>\n')
         return ''.join(res)
 
