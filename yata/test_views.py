@@ -203,6 +203,12 @@ class UrlForActionIsProvidedToEditView(TestCase):
         response = c.get(url)
         self.assertEqual(url, response.context['action'])
        
+def get_menus(response):
+    return response.context['menus']
+
+def get_menu(response, i):
+    return get_menus(response)[i]
+
        
 class MainViewMenusTests(TestCase):
 
@@ -219,14 +225,8 @@ class MainViewMenusTests(TestCase):
         self.c = Client()
         self.response = self.c.get('/yata/')
 
-    def get_menus(self):
-        return self.response.context['menus']
-
-    def get_menu(self, i):
-        return self.get_menus()[i]
-
     def test_has_menus(self):
-        self.assertTrue(not self.get_menus() is None)
+        self.assertTrue(not get_menus(self.response) is None)
         
     def test_has_context_menu(self):
         expected = [ 'Context to display', 'All', [
@@ -235,14 +235,14 @@ class MainViewMenusTests(TestCase):
             ('C1', '/yata/context/show/1/'),
             ('C2', '/yata/context/show/2/'),
         ]]
-        self.assertEqual(expected, self.get_menu(0))
+        self.assertEqual(expected, get_menu(self.response, 0))
         
     def test_has_future_menu(self):
         expected = [ 'Future tasks', 'Hide', [
             ('Show', '/yata/future/show/'),
             ('Hide', '/yata/future/hide/'),
         ]]
-        self.assertEqual(expected, self.get_menu(1))
+        self.assertEqual(expected, get_menu(self.response, 1))
         
     def test_has_done_menu(self):
         expected = [ 'Tasks done', 'Not done', [
@@ -250,7 +250,7 @@ class MainViewMenusTests(TestCase):
             ('Done', '/yata/done/no/'),
             ('All', '/yata/done/all/'),
         ]]
-        self.assertEqual(expected, self.get_menu(2))
+        self.assertEqual(expected, get_menu(self.response, 2))
         
         
 class FilterTaskByContextSetup(TestCase):        
@@ -335,16 +335,6 @@ class FilterTasksByContext(FilterTaskByContextSetup):
         for t in tasks:
             self.assertTrue(t.context == None or t.context.title == 'C2')
 
-    def test_view_is_given_list_of_contexts(self):
-        c = Client()
-        url = '/yata/'
-        response = c.get(url)
-        expected = [('All', '/yata/context/show/all/'), 
-            ('None', '/yata/context/show/none/'), 
-            (u'C1', '/yata/context/show/1/'), 
-            (u'C2', '/yata/context/show/2/')]
-        self.assertEqual(expected, response.context['contexts'])
-    
 
 class EditViewHasDeleteButton(FilterTaskByContextSetup):
     def test_delete_context(self):
@@ -427,14 +417,6 @@ class HideOrShowFutureTasks(HideOrShowFutureTasksSetup):
         self.assertEqual(1, len(tasks))
         self.assertEqual(None, tasks[0].start_date)
         
-    def test_view_is_given_future_tasks_menu(self):
-        c = Client()
-        url = '/yata/'
-        response = c.get(url)
-        expected = (('Show', '/yata/future/show/'), 
-                    ('Hide', '/yata/future/hide/'))
-        self.assertEqual(expected, response.context['future_tasks_menu'])
-    
     def test_session(self):
         self.ask_for_future(True)
         self.assertEqual(True, self.client.session['show_future_tasks'])
@@ -478,16 +460,6 @@ class HideOrShowTasksDone(TestCase):
         self.assertEqual(1, len(tasks))
         self.assertFalse(tasks[0].done)
         
-    def test_view_is_given_tasks_done_menu(self):
-        c = Client()
-        url = '/yata/'
-        response = c.get(url)
-        expected = (('Not done', '/yata/done/yes/'), 
-                    ('Done', '/yata/done/no/'),
-                    ('All', '/yata/done/all/'),
-        )
-        self.assertEqual(expected, response.context['tasks_done_menu'])
-    
     def ask_for_done(self, done):
         session = self.client.session
         session['show_tasks_done'] = done
