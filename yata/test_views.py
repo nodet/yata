@@ -130,6 +130,30 @@ class AddTaskViewTest(TestCase):
         self.assertEqual(repeat_type, t.repeat_type)
         self.assertEqual(note, t.note)
         
+    def test_post_only_required_fields(self):
+        desc = 'The created task'
+        prio = 0
+        sdate = today()
+        ddate = tomorrow()
+        repeat_nb = 1
+        repeat_type = 'W'
+        note = 'the note...'
+        response = Client().post('/yata/add_task/', {
+            'description': desc,
+            'priority': prio
+        })
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(desc, t.description)
+        self.assertEqual(0, t.priority)
+        self.assertEqual(None, t.start_date)
+        self.assertEqual(None, t.due_date)
+        self.assertEqual(None, t.repeat_nb)
+        self.assertEqual(None, t.repeat_type)
+        self.assertEqual('', t.note)
+        
+        
         
 class EditViewTest(TestCase):
     def setUp(self):
