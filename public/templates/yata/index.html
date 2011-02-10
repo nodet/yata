@@ -1,18 +1,11 @@
 <p>
-Context to display:
-{% for c in contexts %}
-    {% if c.0 == context_displayed %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == context_displayed %}# {% endif %}
-{% endfor %}    
-<br>
-Future tasks:
-{% for c in future_tasks_menu %}
-    {% if c.0 == future_tasks_menu_selected %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == future_tasks_menu_selected %}# {% endif %}
-{% endfor %}    
-<br>
-Tasks done:
-{% for c in tasks_done_menu %}
-    {% if c.0 == tasks_done_menu_selected %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == tasks_done_menu_selected %}# {% endif %}
-{% endfor %}    
+{% for m in menus %}
+    {{ m.0 }}:
+    {% for c in m.2 %}
+        {% if c.0 == m.1 %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == m.1 %}# {% endif %}
+    {% endfor %}    
+    <br>
+{% endfor %}
 </p>
 
 {% if tasks %}

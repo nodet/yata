@@ -19,6 +19,9 @@ def index(request):
         for c in Context.objects.all():
             l.append((c.title, '/yata/context/show/%s/' % c.id))
         return l
+        
+    def build_context_menu(chosen):
+        return [ 'Context to display', chosen, context_menu() ]
 
     def context_menu_displayed(contexts_to_display):
         # Specify which context is actually displayed
@@ -38,6 +41,14 @@ def index(request):
         return (('Show', '/yata/future/show/'), 
                  ('Hide', '/yata/future/hide/'))
                  
+    def future_tasks_menu2():
+        return [('Show', '/yata/future/show/'), 
+                 ('Hide', '/yata/future/hide/')
+        ]
+                 
+    def build_future_menu(chosen):
+        return [ 'Future tasks', chosen, future_tasks_menu2() ]
+
     def future_tasks_menu_displayed(b):
         return 'Show' if b else 'Hide'
         
@@ -51,7 +62,15 @@ def index(request):
                  ('Done', '/yata/done/no/'),
                  ('All', '/yata/done/all/'),
         )
+    def tasks_done_menu2():
+        return [('Not done', '/yata/done/yes/'), 
+                 ('Done', '/yata/done/no/'),
+                 ('All', '/yata/done/all/'),
+        ]
     
+    def build_done_menu(chosen):
+        return [ 'Tasks done', chosen, tasks_done_menu2() ]
+
     def show_task(t, show_tasks_done):
         if show_tasks_done == 'All':
             return True
@@ -70,6 +89,10 @@ def index(request):
         'Importance %s' % t.importance()
     )
 
+    the_context_menu = build_context_menu(context_menu_displayed(contexts_to_display))
+    the_future_menu  = build_future_menu(future_tasks_menu_displayed(show_future_tasks))
+    the_done_menu    = build_done_menu(show_tasks_done)
+    
     return render_to_response('yata/index.html', {
         'contexts': context_menu(),
         'context_displayed': context_menu_displayed(contexts_to_display),
@@ -78,6 +101,7 @@ def index(request):
         'tasks_done_menu': tasks_done_menu(),
         'tasks_done_menu_selected': show_tasks_done,
         'tasks': tasks,
+        'menus': [the_context_menu, the_future_menu, the_done_menu]
     })
     
     

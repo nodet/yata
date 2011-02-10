@@ -8,7 +8,7 @@ from django.test.client import Client
 
 def get_tasks(response):
     return flatten(response.context['tasks'])
-
+    
 class MainViewTest(TestCase):
     def setUp(self):
         t = Task(description = "something to do")
@@ -202,7 +202,55 @@ class UrlForActionIsProvidedToEditView(TestCase):
         url = '/yata/1/edit/'
         response = c.get(url)
         self.assertEqual(url, response.context['action'])
+       
+       
+class MainViewMenusTests(TestCase):
+
+    # menus  ::=  [ menu ]
+    # menu   ::=  [ title, selected_value, menu_list ]
+    # menu_list ::=  [ item ]
+    # item      ::=  ( display,  URL )
+
+    def setUp(self):
+        c1 = Context(title = 'C1')
+        c1.save()
+        c2 = Context(title = 'C2')
+        c2.save()
+        self.c = Client()
+        self.response = self.c.get('/yata/')
+
+    def get_menus(self):
+        return self.response.context['menus']
+
+    def get_menu(self, i):
+        return self.get_menus()[i]
+
+    def test_has_menus(self):
+        self.assertTrue(not self.get_menus() is None)
         
+    def test_has_context_menu(self):
+        expected = [ 'Context to display', 'All', [
+            ('All', '/yata/context/show/all/'),
+            ('None', '/yata/context/show/none/'),
+            ('C1', '/yata/context/show/1/'),
+            ('C2', '/yata/context/show/2/'),
+        ]]
+        self.assertEqual(expected, self.get_menu(0))
+        
+    def test_has_future_menu(self):
+        expected = [ 'Future tasks', 'Hide', [
+            ('Show', '/yata/future/show/'),
+            ('Hide', '/yata/future/hide/'),
+        ]]
+        self.assertEqual(expected, self.get_menu(1))
+        
+    def test_has_done_menu(self):
+        expected = [ 'Tasks done', 'Not done', [
+            ('Not done', '/yata/done/yes/'), 
+            ('Done', '/yata/done/no/'),
+            ('All', '/yata/done/all/'),
+        ]]
+        self.assertEqual(expected, self.get_menu(2))
         
         
 class FilterTaskByContextSetup(TestCase):        
@@ -226,7 +274,8 @@ class FilterTaskByContextSetup(TestCase):
         session = self.client.session
         session['contexts_to_display'] = contexts
         session.save()
-        
+
+
         
 class FilterTasksByContext(FilterTaskByContextSetup):
     def test_default_is_to_show_all_contexts(self):
