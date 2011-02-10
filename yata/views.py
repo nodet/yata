@@ -12,16 +12,13 @@ import datetime
 
 def index(request):
 
-    def context_menu():
+    def build_context_menu(chosen):
         l = []
         l.append(('All', '/yata/context/show/all/'))
         l.append(('None', '/yata/context/show/none/'))
         for c in Context.objects.all():
             l.append((c.title, '/yata/context/show/%s/' % c.id))
-        return l
-        
-    def build_context_menu(chosen):
-        return [ 'Context to display', chosen, context_menu() ]
+        return [ 'Context to display', chosen, l ]
 
     def context_menu_displayed(contexts_to_display):
         # Specify which context is actually displayed
@@ -38,12 +35,13 @@ def index(request):
 
 
     def future_tasks_menu():
-        return [('Show', '/yata/future/show/'), 
-                 ('Hide', '/yata/future/hide/')
-        ]
+        return 
                  
     def build_future_menu(chosen):
-        return [ 'Future tasks', chosen, future_tasks_menu() ]
+        return [ 'Future tasks', chosen, [
+                    ('Show', '/yata/future/show/'), 
+                    ('Hide', '/yata/future/hide/')
+        ]]
 
     def future_tasks_menu_displayed(b):
         return 'Show' if b else 'Hide'
@@ -53,14 +51,12 @@ def index(request):
     request.session['show_future_tasks'] = show_future_tasks
 
     
-    def tasks_done_menu():
-        return [('Not done', '/yata/done/yes/'), 
-                 ('Done', '/yata/done/no/'),
-                 ('All', '/yata/done/all/'),
-        ]
-    
     def build_done_menu(chosen):
-        return [ 'Tasks done', chosen, tasks_done_menu() ]
+        return [ 'Tasks done', chosen, [
+                    ('Not done', '/yata/done/yes/'), 
+                    ('Done', '/yata/done/no/'),
+                    ('All', '/yata/done/all/'),
+        ]]
 
     def show_task(t, show_tasks_done):
         if show_tasks_done == 'All':
@@ -85,9 +81,6 @@ def index(request):
     the_done_menu    = build_done_menu(show_tasks_done)
     
     return render_to_response('yata/index.html', {
-        'context_displayed': context_menu_displayed(contexts_to_display),
-        'future_tasks_menu_selected': future_tasks_menu_displayed(show_future_tasks),
-        'tasks_done_menu_selected': show_tasks_done,
         'tasks': tasks,
         'menus': [the_context_menu, the_future_menu, the_done_menu]
     })

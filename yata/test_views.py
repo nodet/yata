@@ -209,6 +209,8 @@ def get_menus(response):
 def get_menu(response, i):
     return get_menus(response)[i]
 
+def get_menu_selection(response, i):
+    return get_menus(response)[i][1]
        
 class MainViewMenusTests(TestCase):
 
@@ -425,7 +427,7 @@ class HideOrShowFutureTasks(HideOrShowFutureTasksSetup):
         self.ask_for_future(True)
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
-        self.assertEqual('Show', response.context['future_tasks_menu_selected'])
+        self.assertEqual('Show', get_menu_selection(response, 1))
         self.assertEqual(2, len(tasks))
     
 
@@ -434,13 +436,13 @@ class ShowFutureTasksMenuTests(HideOrShowFutureTasksSetup):
     def test_show_future_tasks(self):
         self.ask_for_future(False)
         response = self.client.get('/yata/future/show/', follow=True)
-        self.assertEqual('Show', response.context['future_tasks_menu_selected'])
+        self.assertEqual('Show', get_menu_selection(response, 1))
         self.assertEqual(2, len(get_tasks(response)))
             
     def test_hide_future_tasks(self):
         self.ask_for_future(False)
         response = self.client.get('/yata/future/hide/', follow=True)
-        self.assertEqual('Hide', response.context['future_tasks_menu_selected'])
+        self.assertEqual('Hide', get_menu_selection(response, 1))
         self.assertEqual(1, len(get_tasks(response)))
             
             
@@ -473,7 +475,7 @@ class HideOrShowTasksDone(TestCase):
         self.ask_for_done('Done')
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
-        self.assertEqual('Done', response.context['tasks_done_menu_selected'])
+        self.assertEqual('Done', get_menu_selection(response, 2))
         self.assertEqual(1, len(tasks))
         self.assertTrue(tasks[0].done)
         
@@ -481,7 +483,7 @@ class HideOrShowTasksDone(TestCase):
         self.ask_for_done('Not done')
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
-        self.assertEqual('Not done', response.context['tasks_done_menu_selected'])
+        self.assertEqual('Not done', get_menu_selection(response, 2))
         self.assertEqual(1, len(tasks))
         self.assertFalse(tasks[0].done)
         
@@ -489,7 +491,7 @@ class HideOrShowTasksDone(TestCase):
         self.ask_for_done('All')
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
-        self.assertEqual('All', response.context['tasks_done_menu_selected'])
+        self.assertEqual('All', get_menu_selection(response, 2))
         self.assertEqual(2, len(tasks))
         
     
