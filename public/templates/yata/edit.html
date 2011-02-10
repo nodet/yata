@@ -20,14 +20,20 @@
                 $('#id_start_date').datepicker(param);
             });
         </script>
-        <script type="text/javascript">
+       <script type="text/javascript">
             function confirmation() {
                 return confirm("Do you really want to delete this task?")
             }
         </script>        
+       <script type="text/javascript">
+            function set_focus_on(chp)
+            {
+                document.getElementById(chp).focus();
+            }
+        </script>        
     </head>
     
-<body>
+<body onload="set_focus_on('focused')">
     {% if error_message %}
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
