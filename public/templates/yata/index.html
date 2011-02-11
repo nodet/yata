@@ -18,43 +18,41 @@
     </p>
 {% endfor %}
 
-{% if tasks %}
-    {% for tasks in tasks %}
-        <p class="list-header">{{ tasks.0 }}:</p>
-        <ul>
-        {% for t in tasks.1 %}
-            <li>
+{% for tasks in tasks %}
+    <p class="list-header">{{ tasks.0 }}:</p>
+    <ul>
+    {% for t in tasks.1 %}
+        <li>
+            <span class="
+                {% if t.priority >= 1 %}prio-medium{% endif %}
+                {% if t.priority >= 2 %}prio-high{% endif %}
+                ">
+                {{ t.description }}
+            </span>
+            {% if t.due_date %}
+                due, 
                 <span class="
-                    {% if t.priority >= 1 %}prio-medium{% endif %}
-                    {% if t.priority >= 2 %}prio-high{% endif %}
+                    {% if t.days_to_due_date < 15 %}date-soon{% endif %}
+                    {% if t.days_to_due_date < 3 %}date-very-soon{% endif %}
+                    {% if t.days_to_due_date < 0 %}date-overdue{% endif %}
                     ">
-                    {{ t.description }}
+                    {{ t.relative_due_date }}
                 </span>
-                {% if t.due_date %}
-                    due, 
-                    <span class="
-                        {% if t.days_to_due_date < 15 %}date-soon{% endif %}
-                        {% if t.days_to_due_date < 3 %}date-very-soon{% endif %}
-                        {% if t.days_to_due_date < 0 %}date-overdue{% endif %}
-                        ">
-                        {{ t.relative_due_date }}
-                    </span>
-                {% endif %}
-                - 
-                {% if not t.done %}
-                    <a href="/yata/{{ t.id }}/mark_done/">Done!</a>
-                {% else %}
-                    <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a>
-                {% endif %}
-                - 
-                <a href="/yata/{{ t.id }}/edit/">Edit</a>
-            </li>
-        {% endfor %}
-        </ul>
+            {% endif %}
+            - 
+            {% if not t.done %}
+                <a href="/yata/{{ t.id }}/mark_done/">Done!</a>
+            {% else %}
+                <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a>
+            {% endif %}
+            - 
+            <a href="/yata/{{ t.id }}/edit/">Edit</a>
+        </li>
     {% endfor %}
-{% else %}
-    <p>Cool! Nothing to do...</p>
-{% endif %}
+    </ul>
+{% empty %}
+    <p class="list-header">Cool! Nothing to do...</p>
+{% endfor %}
 
 <p class="menu">
 <br>

@@ -35,25 +35,25 @@ def index(request):
 
 
     def future_tasks_menu():
-        return 
-                 
+        return
+
     def build_future_menu(chosen):
         return [ 'Future tasks', chosen, [
-                    ('Show', '/yata/future/show/'), 
+                    ('Show', '/yata/future/show/'),
                     ('Hide', '/yata/future/hide/')
         ]]
 
     def future_tasks_menu_displayed(b):
         return 'Show' if b else 'Hide'
-        
+
     show_future_tasks = request.session.get('show_future_tasks', False)
     # Need to ensure something is put in the session so that it's saved.
     request.session['show_future_tasks'] = show_future_tasks
 
-    
+
     def build_done_menu(chosen):
         return [ 'Tasks done', chosen, [
-                    ('Active', '/yata/done/no/'), 
+                    ('Active', '/yata/done/no/'),
                     ('Done', '/yata/done/yes/'),
                     ('All', '/yata/done/all/'),
         ]]
@@ -62,30 +62,30 @@ def index(request):
         if show_tasks_done == 'All':
             return True
         return t.done == (show_tasks_done == 'Done')
-    
+
     show_tasks_done = request.session.get('show_tasks_done', 'Active')
     request.session['show_tasks_done'] = show_tasks_done
 
-    
+
     tasks = [t for t in Task.objects.all()
                 if show_task(t, show_tasks_done)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
     tasks.sort(Task.compare)
-    tasks = group_by(tasks, lambda t: 
+    tasks = group_by(tasks, lambda t:
         'Importance %s' % t.importance()
     )
 
     the_context_menu = build_context_menu(context_menu_displayed(contexts_to_display))
     the_future_menu  = build_future_menu(future_tasks_menu_displayed(show_future_tasks))
     the_done_menu    = build_done_menu(show_tasks_done)
-    
+
     return render_to_response('yata/index.html', {
         'tasks': tasks,
         'menus': [the_context_menu, the_future_menu, the_done_menu]
     })
-    
-    
+
+
 
 def _select_context_helper(request, contexts):
     s = request.session
@@ -93,11 +93,11 @@ def _select_context_helper(request, contexts):
     s.modified = True
     s.save()
     return HttpResponseRedirect(reverse('yata.views.index'))
-    
+
 def select_context(request, context_id):
     c = get_object_or_404(Context, pk=context_id)
     return _select_context_helper(request, [c.title])
-    
+
 def select_context_all(request):
     return _select_context_helper(request, [])
 
@@ -111,7 +111,7 @@ def show_future_tasks(request, b):
     s.modified = True
     s.save()
     return HttpResponseRedirect(reverse('yata.views.index'))
-    
+
 
 def show_tasks_done(request, b):
     s = request.session
@@ -119,8 +119,8 @@ def show_tasks_done(request, b):
     s.modified = True
     s.save()
     return HttpResponseRedirect(reverse('yata.views.index'))
-    
-    
+
+
 def mark_done(request, task_id, b = True):
     t = get_object_or_404(Task, pk=task_id)
     t.mark_done(b)
@@ -137,32 +137,33 @@ def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, i
             return HttpResponseRedirect('/yata/')
     else:
         form = the_form_class(instance = c)
-        
+
     # Either the form was not valid, or we've just created it
     return render_to_response('yata/edit.html', {
-        'form': form, 
+        'form': form,
         'action': reverse(view_func, args=[id] if id else None),
         'delete': reverse(delete_func, args=[id]) if id else None
     }, context_instance=RequestContext(request))
 
-    
+
 def edit(request, task_id = None):
 
     # An 'AddTaskForm' that additionally can provide a default value
     # for the context when it makes sense
-    # see http://stackoverflow.com/questions/4235883/django-testing-test-the-initial-value-of-a-form-field/4249407#4249407
+    # see http://stackoverflow.com/questions/4235883/
+    #     django-testing-test-the-initial-value-of-a-form-field/4249407#4249407
     class AddTaskFormWithInitial(AddTaskForm):
         def __init__(self, *args, **kwargs):
             initial = kwargs.get('initial', {})
             c = request.session.get('contexts_to_display')
             if c and len(c) == 1 and c[0] != '':
                 initial['context'] = Context.objects.get(title__exact=c[0])
-            kwargs['initial'] = initial        
+            kwargs['initial'] = initial
             super(AddTaskFormWithInitial, self).__init__(*args, **kwargs)
-            
+
     return _edit_any_form(request, Task, AddTaskFormWithInitial, edit, delete_task, task_id)
 
-        
+
 def edit_context(request, id = None):
     return _edit_any_form(request, Context, AddContextForm, edit_context, delete_context, id)
 
@@ -182,10 +183,10 @@ def delete_task(request, id):
     t.delete()
     return HttpResponseRedirect(reverse('yata.views.index'))
 
-    
-    
-    
-    
+
+
+
+
 def xml_import(request):
     if request.method == 'POST':
         form = UploadXMLForm(request.POST, request.FILES)
@@ -204,4 +205,3 @@ def xml_export(request):
     response = HttpResponse(the_xml, mimetype="text/xml")
     response['Content-Disposition'] = 'attachment; filename=yata.xml'
     return response
-    
