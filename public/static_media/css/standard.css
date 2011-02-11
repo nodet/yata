@@ -1,11 +1,20 @@
 p {
 font-family: Verdana, Arial, Helvetica, sans-serif;
 font-size: 0.8em;
+margin-top: 0;
+margin-bottom:0;
 }
+
 ul {
 font-family: Verdana, Arial, Helvetica, sans-serif;
 font-size: 0.8em;
 list-style-type: none;
+margin-top: 0.5em;
+margin-bottom:0.5em;
+}
+
+.menu-group {
+margin-bottom:0.5em;
 }
 
 .menu {

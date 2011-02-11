@@ -6,7 +6,6 @@
 </head>
 
 <body>
-<p>
 {% for m in menus %}
     <p class="menu"> {{ m.0 }}:
     {% for c in m.2 %}
@@ -18,8 +17,8 @@
     {% endfor %}    
     </p>
 {% endfor %}
+<p class="menu-group">
 </p>
-
 {% if tasks %}
     {% for tasks in tasks %}
         <p>{{ tasks.0 }}:</p>
@@ -43,6 +42,7 @@
 {% endif %}
 
 <p class="menu">
+<br>
 <a href="/yata/add_task/">Add task</a> | 
 <a href="/yata/context/add/">Add context</a><br>
 <a href="/admin/yata/task">Admin</a> |
