@@ -17,15 +17,19 @@
     {% endfor %}    
     </p>
 {% endfor %}
-<p class="menu-group">
-</p>
+
 {% if tasks %}
     {% for tasks in tasks %}
-        <p>{{ tasks.0 }}:</p>
+        <p class="list-header">{{ tasks.0 }}:</p>
         <ul>
         {% for t in tasks.1 %}
             <li>
-                {{ t }} - 
+                <span class="
+                    {% if t.priority >= 1 %}prio-medium{% endif %}
+                    {% if t.priority >= 2 %}prio-high{% endif %}
+                    ">
+                    {{ t }}
+                </span> - 
                 {% if not t.done %}
                     <a href="/yata/{{ t.id }}/mark_done/">Done!</a>
                 {% else %}

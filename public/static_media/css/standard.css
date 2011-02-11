@@ -13,6 +13,10 @@ margin-top: 0.5em;
 margin-bottom:0.5em;
 }
 
+.list-header {
+    margin-top:0.5em;
+}
+
 .menu-group {
 margin-bottom:0.5em;
 }
@@ -47,3 +51,12 @@ text-decoration: none;
 color: #666666;
 font-weight: 600;
 }
+
+.prio-medium {
+color: green;
+}
+.prio-high {
+//color: green;
+font-weight: bold;
+}
+
