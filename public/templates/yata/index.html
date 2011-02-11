@@ -1,16 +1,24 @@
+<head>
+    <link href="/static_media/css/standard.css" rel="stylesheet" type="text/css">
+</head>
+<body>
 <p>
 {% for m in menus %}
-    {{ m.0 }}:
+    <p class="menu"> {{ m.0 }}:
     {% for c in m.2 %}
-        {% if c.0 == m.1 %} #{% endif %}<a href="{{ c.1 }}">{{ c.0 }}</a>{% if c.0 == m.1 %}# {% endif %}
+        {% if c.0 == m.1 %} 
+            <a href="{{ c.1 }}" class="selected">[{{ c.0 }}]</a>
+        {% else %}
+            <a href="{{ c.1 }}">{{ c.0 }}</a>
+        {% endif %}
     {% endfor %}    
-    <br>
+    </p>
 {% endfor %}
 </p>
 
 {% if tasks %}
     {% for tasks in tasks %}
-        {{ tasks.0 }}:
+        <p>{{ tasks.0 }}:</p>
         <ul>
         {% for t in tasks.1 %}
             <li>
@@ -30,8 +38,11 @@
     <p>Cool! Nothing to do...</p>
 {% endif %}
 
-<a href="/yata/add_task/">Add task</a>, 
+<p class="menu">
+<a href="/yata/add_task/">Add task</a> | 
 <a href="/yata/context/add/">Add context</a><br>
-<a href="/admin/yata/task">Admin</a>,
-<a href="/yata/xml/import/">Import tasks...</a>, 
+<a href="/admin/yata/task">Admin</a> |
+<a href="/yata/xml/import/">Import tasks...</a> |
 <a href="/yata/xml/export/">Export tasks...</a>
+</p>
+</body>
