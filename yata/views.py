@@ -53,7 +53,7 @@ def index(request):
     
     def build_done_menu(chosen):
         return [ 'Tasks done', chosen, [
-                    ('Not done', '/yata/done/yes/'), 
+                    ('Active', '/yata/done/yes/'), 
                     ('Done', '/yata/done/no/'),
                     ('All', '/yata/done/all/'),
         ]]
@@ -63,7 +63,7 @@ def index(request):
             return True
         return t.done == (show_tasks_done == 'Done')
     
-    show_tasks_done = request.session.get('show_tasks_done', 'Not done')
+    show_tasks_done = request.session.get('show_tasks_done', 'Active')
     request.session['show_tasks_done'] = show_tasks_done
 
     

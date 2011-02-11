@@ -247,8 +247,8 @@ class MainViewMenusTests(TestCase):
         self.assertEqual(expected, get_menu(self.response, 1))
         
     def test_has_done_menu(self):
-        expected = [ 'Tasks done', 'Not done', [
-            ('Not done', '/yata/done/yes/'), 
+        expected = [ 'Tasks done', 'Active', [
+            ('Active', '/yata/done/yes/'), 
             ('Done', '/yata/done/no/'),
             ('All', '/yata/done/all/'),
         ]]
@@ -448,7 +448,7 @@ class ShowFutureTasksMenuTests(HideOrShowFutureTasksSetup):
             
 class HideOrShowTasksDone(TestCase):
     def setUp(self):
-        t = Task(description = "Not done")
+        t = Task(description = "Active")
         t.save()
         t = Task(description = "Done", done = True)
         t.save()
@@ -480,10 +480,10 @@ class HideOrShowTasksDone(TestCase):
         self.assertTrue(tasks[0].done)
         
     def test_show_tasks_not_done(self):
-        self.ask_for_done('Not done')
+        self.ask_for_done('Active')
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
-        self.assertEqual('Not done', get_menu_selection(response, 2))
+        self.assertEqual('Active', get_menu_selection(response, 2))
         self.assertEqual(1, len(tasks))
         self.assertFalse(tasks[0].done)
         
