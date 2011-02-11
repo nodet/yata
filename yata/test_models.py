@@ -7,6 +7,7 @@ from yata.test_utils import today, tomorrow, yesterday, flatten
 from django.test import TestCase
 import datetime
 import unittest
+import sys
 
 
 class CanCreateATask(TestCase):
@@ -54,10 +55,9 @@ class DueDateCmpTest(TestCase):
         self.assertEqual( 0, due_date_cmp(aDate, aDate))
         self.assertEqual(-1, due_date_cmp(aDate, tomorrow(aDate)))
         self.assertEqual( 1, due_date_cmp(tomorrow(aDate), aDate))
-        self.assertEqual( 1, due_date_cmp(None, aDate))
-        self.assertEqual(-1, due_date_cmp(aDate, None))
+        self.assertEqual( sys.maxint, due_date_cmp(None, aDate))
+        self.assertEqual(-sys.maxint-1, due_date_cmp(aDate, None))
         self.assertEqual( 0, due_date_cmp(None, None))
-        
 
       
 class GetRelativeDateTest(TestCase):
@@ -243,4 +243,5 @@ class GroupByTest(TestCase):
         self.assertEqual(list[0][0], t.importance())
         self.assertEqual(list[0][1], [t])
         self.assertEqual([t], flatten(list))
+        
         

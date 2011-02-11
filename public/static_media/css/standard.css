@@ -60,3 +60,12 @@ color: green;
 font-weight: bold;
 }
 
+.date-soon {
+color: brown;
+}
+.date-very-soon {
+font-weight: bold;
+}
+.date-overdue {
+color: red;
+}

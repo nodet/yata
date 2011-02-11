@@ -3,6 +3,7 @@ import datetime
 import calendar
 from django.db import models
 import copy
+import sys
 
 
 class Task(models.Model):
@@ -50,6 +51,9 @@ class Task(models.Model):
     # When ordering for relative_due_date, use 'due_date' instead
     relative_due_date.admin_order_field = 'due_date'
 
+    def days_to_due_date(self):
+        return due_date_cmp(self.due_date, datetime.date.today())
+    
     def is_future(self):
         if self.start_date:
             return self.start_date >= datetime.date.today()
@@ -130,12 +134,13 @@ def due_date_cmp(t1, t2):
     if t1 == None and t2 == None:
         return 0;
     if t1 == None:
-        return 1
+        return sys.maxint
     if t2 == None:
-        return -1
+        return -sys.maxint-1
     return (t1 - t2).days
+
+
     
-        
 def relativeDueDate(origin, theDate):
     "Returns a string representing theDate relative to origin (i.e. 'Today', 'In 3 days', ...)"
     nbDays = (theDate - origin).days

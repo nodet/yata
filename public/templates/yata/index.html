@@ -28,8 +28,19 @@
                     {% if t.priority >= 1 %}prio-medium{% endif %}
                     {% if t.priority >= 2 %}prio-high{% endif %}
                     ">
-                    {{ t }}
-                </span> - 
+                    {{ t.description }}
+                </span>
+                {% if t.due_date %}
+                    due, 
+                    <span class="
+                        {% if t.days_to_due_date < 15 %}date-soon{% endif %}
+                        {% if t.days_to_due_date < 3 %}date-very-soon{% endif %}
+                        {% if t.days_to_due_date < 0 %}date-overdue{% endif %}
+                        ">
+                        {{ t.relative_due_date }}
+                    </span>
+                {% endif %}
+                - 
                 {% if not t.done %}
                     <a href="/yata/{{ t.id }}/mark_done/">Done!</a>
                 {% else %}
