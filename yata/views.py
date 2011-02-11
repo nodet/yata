@@ -53,8 +53,8 @@ def index(request):
     
     def build_done_menu(chosen):
         return [ 'Tasks done', chosen, [
-                    ('Active', '/yata/done/yes/'), 
-                    ('Done', '/yata/done/no/'),
+                    ('Active', '/yata/done/no/'), 
+                    ('Done', '/yata/done/yes/'),
                     ('All', '/yata/done/all/'),
         ]]
 

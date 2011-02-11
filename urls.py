@@ -23,8 +23,8 @@ urlpatterns = patterns('',
     (r'^yata/xml/export/$', 'yata.views.xml_export'),
     (r'^yata/future/show/$', 'yata.views.show_future_tasks', {'b': True}),
     (r'^yata/future/hide/$', 'yata.views.show_future_tasks', {'b': False}),
-    (r'^yata/done/yes/$', 'yata.views.show_tasks_done', {'b': 'Not done'}),
-    (r'^yata/done/no/$', 'yata.views.show_tasks_done', {'b': 'Done'}),
+    (r'^yata/done/yes/$', 'yata.views.show_tasks_done', {'b': 'Done'}),
+    (r'^yata/done/no/$', 'yata.views.show_tasks_done', {'b': 'Active'}),
     (r'^yata/done/all/$', 'yata.views.show_tasks_done', {'b': 'All'}),
     
     

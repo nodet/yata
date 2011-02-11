@@ -38,8 +38,6 @@ class MainViewHasListOfNotDoneTasks(MainViewTest):
     def setUp(self):
         t = Task(description = "Already done", done = True)
         t.save()
-        # Ensure enough time between saves so they have different last_edited date/time
-        time.sleep(0.05)
         t = Task(description = "Another that's done", done = True)
         t.save()
     def runTest(self):
@@ -248,8 +246,8 @@ class MainViewMenusTests(TestCase):
         
     def test_has_done_menu(self):
         expected = [ 'Tasks done', 'Active', [
-            ('Active', '/yata/done/yes/'), 
-            ('Done', '/yata/done/no/'),
+            ('Active', '/yata/done/no/'), 
+            ('Done', '/yata/done/yes/'),
             ('All', '/yata/done/all/'),
         ]]
         self.assertEqual(expected, get_menu(self.response, 2))
@@ -472,24 +470,21 @@ class HideOrShowTasksDone(TestCase):
         self.assertEqual('All', self.client.session['show_tasks_done'])
 
     def test_show_tasks_done(self):
-        self.ask_for_done('Done')
-        response = self.client.get('/yata/')
+        response = self.client.get('/yata/done/yes/', follow=True)
         tasks = get_tasks(response)
         self.assertEqual('Done', get_menu_selection(response, 2))
         self.assertEqual(1, len(tasks))
         self.assertTrue(tasks[0].done)
         
     def test_show_tasks_not_done(self):
-        self.ask_for_done('Active')
-        response = self.client.get('/yata/')
+        response = self.client.get('/yata/done/no/', follow=True)
         tasks = get_tasks(response)
         self.assertEqual('Active', get_menu_selection(response, 2))
         self.assertEqual(1, len(tasks))
         self.assertFalse(tasks[0].done)
         
     def test_show_all_tasks(self):
-        self.ask_for_done('All')
-        response = self.client.get('/yata/')
+        response = self.client.get('/yata/done/all/', follow=True)
         tasks = get_tasks(response)
         self.assertEqual('All', get_menu_selection(response, 2))
         self.assertEqual(2, len(tasks))
