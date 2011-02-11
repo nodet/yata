@@ -92,6 +92,11 @@ def create_xml_from_tasks(tasks):
     def write_title(t):
         return tag("title", t.description)
         
+    def write_priority(t):
+        if t.priority == 0:
+            return ''
+        return tag("priority", t.priority_as_string())
+        
     def write_date(tag_name, d):
         if d is None:
             return ''
@@ -119,6 +124,7 @@ def create_xml_from_tasks(tasks):
     def write_task(t):
         res = ['<item>\n']
         res.append(write_title(t))
+        res.append(write_priority(t))
         res.append(write_start_date(t))
         res.append(write_due_date(t))
         res.append(write_context(t))

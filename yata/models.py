@@ -4,6 +4,7 @@ import calendar
 from django.db import models
 import copy
 import sys
+import math
 
 
 class Task(models.Model):
@@ -44,6 +45,14 @@ class Task(models.Model):
                 s = '%s, repeating every %s' % (s, self.repeat_choice(self.repeat_type))
         return s
 
+    def priority_as_string(self):
+        if self.priority is None:
+            return ''
+        for pair in self.PRIO_CHOICES:
+            if (self.priority == pair[0]):
+                return pair[1]
+
+        
     def relative_due_date(self):
         if self.due_date:
             return relativeDueDate(datetime.date.today(), self.due_date)
@@ -97,7 +106,8 @@ class Task(models.Model):
             
         if self.done:
             return 0
-        return 2 + self.priority + due_date_contribution(self)
+        #return 2 + self.priority + due_date_contribution(self)
+        return pow(2, 1 + self.priority) + due_date_contribution(self)
 
         
     @staticmethod

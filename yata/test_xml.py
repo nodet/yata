@@ -164,6 +164,7 @@ class XmlExportTest(TestCase):
         the_xml = """<xml>
 <item>
 <title>t1</title>
+<priority>Top</priority>
 <startdate>2011-02-01</startdate>
 <duedate>2011-03-28</duedate>
 <context>C2</context>
@@ -174,6 +175,7 @@ Python</note>
         c = Context(title = 'C2')
         t = Task(
             description = 't1',
+            priority = 3,
             start_date = datetime.date(2011,2,1),
             due_date = datetime.date(2011,3,28),
             context = c,
@@ -198,6 +200,7 @@ Python</note>
         the_xml = """<xml>
 <item>
 <title>Change password</title>
+<priority>Top</priority>
 <startdate>2011-02-01</startdate>
 <duedate>2011-03-28</duedate>
 <context>C2</context>
