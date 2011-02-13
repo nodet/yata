@@ -55,16 +55,37 @@ def create_tasks_from_xml(the_xml):
             c.save()
         return c
 
+    def handle_repeat(repeat_string):
+        if repeat_string == 'Yearly':
+            return (1, 'Y')
+        if repeat_string == 'Quaterly':
+            return (3, 'M')
+        if repeat_string == 'Monthly':
+            return (1, 'M')
+        if repeat_string == 'Biweekly':
+            return (2, 'W')
+        if repeat_string == 'Weekly':
+            return (1, 'W')
+            
+        match_object = re.match('Every (\d{1,4}) (.).*', repeat_string)
+        if match_object is None:
+            return (0, '')
+        return (match_object.group(1), match_object.group(2).upper())
+        
+        
     def handle_completed(completed):
         return completed != '0000-00-00'
         
     def handle_task(task):
+        repeat = expect_one_of(task, "repeat", handle_repeat, (0,None))
         t = Task(
             description = expect_one_of(task, "title"),
             priority    = expect_one_of(task, "priority", handle_prio, 0),
             start_date  = expect_one_of(task, "startdate", handle_date),
             due_date    = expect_one_of(task, "duedate", handle_date),
             context     = expect_one_of(task, "context", handle_context),
+            repeat_nb   = repeat[0],
+            repeat_type = repeat[1],
             done        = expect_one_of(task, "completed", handle_completed, False),
             note        = expect_one_of(task, "note"),
         )
@@ -119,8 +140,27 @@ def create_xml_from_tasks(tasks):
         return tag("note", t.note)
         
     def write_done(t):
-        return tag('completed', '1111-11-11') if t.done else ''
+        return tag('completed', '1111-11-11') if t.done else ''    
         
+    def write_repeat(t):
+    
+        if not t.is_repeating():
+            return ''
+            
+        def get_name_for(nb, type):
+            dict = {
+                'W': 'week',
+                'M': 'month',
+                'Y': 'year',
+            }
+            s = dict[type]
+            if nb > 1:
+                s = '%ss' % s
+            return s
+        
+        s = 'Every %s %s' % (t.repeat_nb, get_name_for(t.repeat_nb, t.repeat_type))
+        return tag('repeat', s)
+    
     def write_task(t):
         res = ['<item>\n']
         res.append(write_title(t))
@@ -129,6 +169,7 @@ def create_xml_from_tasks(tasks):
         res.append(write_due_date(t))
         res.append(write_context(t))
         res.append(write_note(t))
+        res.append(write_repeat(t))
         res.append(write_done(t))
         res.append('</item>\n')
         return ''.join(res)

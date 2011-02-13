@@ -15,7 +15,8 @@ class XmlImportTest(TestCase):
 <duedate>2011-03-28</duedate>
 <context>C2</context>
 <note>Django
-Python</note>        
+Python</note>
+<repeat>Every 1 week</repeat>
 </item>
 </xml>
 """
@@ -27,6 +28,8 @@ Python</note>
         self.assertEqual(datetime.date(2011,03,28), t.due_date)
         self.assertEqual('C2', t.context.title)
         self.assertFalse(re.match(r'Django\nPython', t.note) is None)
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('W', t.repeat_type)
         
     def test_import_two_tasks(self):
         the_xml = """
@@ -127,9 +130,70 @@ Python</note>
         self.assertTrue(seen_exception)
         self.assertEqual(0, Task.objects.all().count())
     
+    def test_repeat_yearly(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Yearly</repeat></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('Y', t.repeat_type)
         
+    def test_repeat_quaterly(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Quaterly</repeat></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(3, t.repeat_nb)
+        self.assertEqual('M', t.repeat_type)
         
+    def test_repeat_monthly(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Monthly</repeat></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('M', t.repeat_type)
         
+    def test_repeat_biweekly(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Biweekly</repeat></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(2, t.repeat_nb)
+        self.assertEqual('W', t.repeat_type)
+        
+    def test_repeat_weekly(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Weekly</repeat></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('W', t.repeat_type)
         
         
         
@@ -170,6 +234,7 @@ class XmlExportTest(TestCase):
 <context>C2</context>
 <note>Django
 Python</note>
+<repeat>Every 1 week</repeat>
 </item>
 </xml>"""
         c = Context(title = 'C2')
@@ -179,7 +244,9 @@ Python</note>
             start_date = datetime.date(2011,2,1),
             due_date = datetime.date(2011,3,28),
             context = c,
-            note = 'Django\nPython'
+            note = 'Django\nPython',
+            repeat_nb = 1,
+            repeat_type = 'W'
         )
         s = create_xml_from_tasks([t])
         self.assertEqual(the_xml, s)
@@ -226,3 +293,47 @@ Python</note>
         s = create_xml_from_tasks([t])
         self.assertEqual(the_xml, s)
         
+    def test_export_repeat_week(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+<repeat>Every 2 weeks</repeat>
+</item>
+</xml>"""
+        t = Task(
+            description = 't1',
+            repeat_nb = 2,
+            repeat_type = 'W'
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)
+        
+    def test_export_repeat_month(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+<repeat>Every 3 months</repeat>
+</item>
+</xml>"""
+        t = Task(
+            description = 't1',
+            repeat_nb = 3,
+            repeat_type = 'M'
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)
+        
+    def test_export_repeat_month(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+<repeat>Every 1 year</repeat>
+</item>
+</xml>"""
+        t = Task(
+            description = 't1',
+            repeat_nb = 1,
+            repeat_type = 'Y'
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)

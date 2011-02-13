@@ -115,8 +115,12 @@ class TestRepetitionDate(TestCase):
 class MarkingARepeatableTaskCreatesANewCopy(TestCase):
     def runTest(self):
         t = Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
-        self.assertEqual(0, Task.objects.exclude(done__exact = True).count())
+        t.save()
+        self.assertEqual(1, Task.objects.exclude(done__exact = True).count())
+        self.assertEqual(0, Task.objects.filter(done__exact = True).count())
         t.mark_done()
+        self.assertEqual(1, Task.objects.exclude(done__exact = True).count())
+        self.assertEqual(1, Task.objects.filter(done__exact = True).count())
         tasks = Task.objects.exclude(done__exact = True)
         self.assertEqual(1, tasks.count())
         t = tasks[0]
