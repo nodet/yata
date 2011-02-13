@@ -120,6 +120,7 @@ class Task(models.Model):
     def mark_done(self, b = True):
         if b and self.is_repeating():
             new_task = copy.copy(self)
+            new_task.id = None
 
             if self.start_date:
                 new_task.start_date = next_date(self.start_date, self.repeat_nb, self.repeat_type)
