@@ -80,9 +80,19 @@ def index(request):
     the_future_menu  = build_future_menu(future_tasks_menu_displayed(show_future_tasks))
     the_done_menu    = build_done_menu(show_tasks_done)
 
+    footers = [ [
+        ('/yata/add_task/', 'Add task'),
+        ('/yata/context/add/', 'Add context'),
+    ], [
+        ('/admin/yata/task', 'Admin'),
+        ('/yata/xml/import/', 'Import tasks...'),
+        ('/yata/xml/export/', 'Export tasks...'),
+    ] ]
+    
     return render_to_response('yata/index.html', {
         'tasks': tasks,
-        'menus': [the_context_menu, the_future_menu, the_done_menu]
+        'menus': [the_context_menu, the_future_menu, the_done_menu],
+        'footers': footers,
     })
 
 

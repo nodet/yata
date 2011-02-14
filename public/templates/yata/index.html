@@ -55,13 +55,15 @@
 {% endfor %}
 
 <p class="menu">
-<br>
-<a href="/yata/add_task/">Add task</a> | 
-<a href="/yata/context/add/">Add context</a><br>
-<a href="/admin/yata/task">Admin</a> |
-<a href="/yata/xml/import/">Import tasks...</a> |
-<a href="/yata/xml/export/">Export tasks...</a>
+{% for f in footers %}
+    <br>
+    {% for item in f %}
+        <a href="{{ item.0 }}">{{ item.1 }}</a>
+        {% if not forloop.last %} | {% endif %}
+    {% endfor %}    
+{% endfor %}
 </p>
+
 </body>
 
 </html>

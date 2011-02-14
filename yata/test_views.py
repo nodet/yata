@@ -528,4 +528,18 @@ class AddTaskHasDefaultContext(TestCase):
         self.ask_for_contexts([''])
         response = self.client.get('/yata/add_task/')
         self.assertFalse('context' in response.context['form'].initial.keys())
-                        
+
+
+        
+class CheckForURLsInFooter(TestCase):
+
+    def setUp(self):
+        self.response = Client().get('/yata/')
+
+    def test_for_URLs_in_footer(self):
+        self.assertTrue('<a href="/yata/add_task/">Add task</a>' in self.response.content)
+        self.assertTrue('<a href="/yata/context/add/">Add context</a>' in self.response.content)
+        self.assertTrue('<a href="/admin/yata/task">Admin</a>' in self.response.content)
+        self.assertTrue('<a href="/yata/xml/import/">Import tasks...</a>' in self.response.content)
+        self.assertTrue('<a href="/yata/xml/export/">Export tasks...</a>' in self.response.content)
+        
