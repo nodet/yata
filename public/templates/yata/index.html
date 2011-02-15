@@ -40,11 +40,8 @@
                 </span>
             {% endif %}
             - 
-            {% if not t.done %}
-                <a href="/yata/{{ t.id }}/mark_done/">Done!</a>
-            {% else %}
-                <a href="/yata/{{ t.id }}/mark_not_done/">Not done!</a>
-            {% endif %}
+            <a href="{{ t.mark_done_url }}">
+            {% if not t.done %}Done!{% else %}Not done!{% endif %}</a>
             - 
             <a href="/yata/{{ t.id }}/edit/">Edit</a>
         </li>

@@ -1,7 +1,8 @@
+from django.core.urlresolvers import reverse
+from django.db import models
 import unittest
 import datetime
 import calendar
-from django.db import models
 import copy
 import sys
 import math
@@ -134,6 +135,13 @@ class Task(models.Model):
         self.done = b
         self.save()
         
+        
+    def mark_done_url(self):
+        if not self.done:
+            return '/yata/%s/mark_done/' % self.id
+        else:
+            return '/yata/%s/mark_not_done/' % self.id
+
         
     @staticmethod
     def compare(t1, t2):
