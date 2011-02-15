@@ -40,10 +40,13 @@
                 </span>
             {% endif %}
             - 
-            <a href="{{ t.mark_done_url }}">
-            {% if not t.done %}Done!{% else %}Not done!{% endif %}</a>
+            {% if not t.done %}
+                <a href="{% url mark-task-done t.id %}">Done!</a>
+            {% else %}
+                <a href="{% url mark-task-not-done t.id %}">Not done!</a>
+            {% endif %}
             - 
-            <a href="{{ t.edit_url }}">Edit</a>
+            <a href="{% url yata.views.edit t.id %}">Edit</a>
         </li>
     {% endfor %}
     </ul>
