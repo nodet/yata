@@ -141,6 +141,9 @@ class Task(models.Model):
             return '/yata/%s/mark_done/' % self.id
         else:
             return '/yata/%s/mark_not_done/' % self.id
+            
+    def edit_url(self):
+        return '/yata/%s/edit/' % self.id
 
         
     @staticmethod

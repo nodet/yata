@@ -43,7 +43,7 @@
             <a href="{{ t.mark_done_url }}">
             {% if not t.done %}Done!{% else %}Not done!{% endif %}</a>
             - 
-            <a href="/yata/{{ t.id }}/edit/">Edit</a>
+            <a href="{{ t.edit_url }}">Edit</a>
         </li>
     {% endfor %}
     </ul>

@@ -165,6 +165,8 @@ class EditViewTest(TestCase):
         t.save()
     def runTest(self):
         c = Client()
+        response = c.get('/yata/')
+        self.assertTrue('/yata/1/edit/' in response.content)
         response = c.get('/yata/1/edit/')
         self.assertEqual(200, response.status_code)
         
