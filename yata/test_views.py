@@ -78,6 +78,8 @@ class MarkDoneTest(TestCase):
         t.save()
     def runTest(self):
         c = Client()
+        response = c.get('/yata/')
+        self.assertTrue('/yata/1/mark_done/' in response.content)
         response = c.get('/yata/1/mark_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
@@ -89,6 +91,10 @@ class MarkNotDoneTest(TestCase):
         t.save()
     def runTest(self):
         c = Client()
+        # Show all the tasks...
+        response = c.get('/yata/done/all/', follow=True)
+        # ... else tests below would fail!
+        self.assertTrue('/yata/1/mark_not_done/' in response.content)
         response = c.get('/yata/1/mark_not_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')

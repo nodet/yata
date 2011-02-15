@@ -18,10 +18,10 @@
     </p>
 {% endfor %}
 
-{% for tasks in tasks %}
-    <p class="list-header">{{ tasks.0 }}:</p>
+{% for list in tasks %}
+    <p class="list-header">{{ list.0 }}:</p>
     <ul>
-    {% for t in tasks.1 %}
+    {% for t in list.1 %}
         <li>
             <span class="
                 {% if t.priority >= 1 %}prio-medium{% endif %}
