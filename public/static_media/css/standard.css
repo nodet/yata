@@ -52,20 +52,9 @@ color: #666666;
 font-weight: 600;
 }
 
-.prio-medium {
-color: green;
-}
-.prio-high {
-//color: green;
-font-weight: bold;
-}
+.prio-medium {color: green;}
+.prio-high {color: green; font-weight: bold;}
 
-.date-soon {
-color: brown;
-}
-.date-very-soon {
-font-weight: bold;
-}
-.date-overdue {
-color: red;
-}
+.date-soon {color: brown;}
+.date-very-soon {font-weight: bold;}
+.date-overdue {color: red; font-weight: bold;}

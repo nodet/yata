@@ -61,9 +61,6 @@ class Task(models.Model):
     # When ordering for relative_due_date, use 'due_date' instead
     relative_due_date.admin_order_field = 'due_date'
 
-    def days_to_due_date(self):
-        return due_date_cmp(self.due_date, datetime.date.today())
-    
     def is_future(self):
         if self.start_date:
             return self.start_date >= datetime.date.today()
@@ -72,6 +69,34 @@ class Task(models.Model):
     def is_repeating(self):
         return self.repeat_type and self.repeat_nb
 
+    def _days_to_due_date(self):
+        return due_date_cmp(self.due_date, datetime.date.today())
+    def is_overdue(self):
+        return self._days_to_due_date() < 0
+    def is_due_very_soon(self):
+        diff = self._days_to_due_date()
+        return diff >= 0 and diff < 3
+    def is_due_soon(self):
+        diff = self._days_to_due_date()
+        return diff >= 3 and diff < 15
+    def css_due_date_class(self):
+        if self.is_due_soon():
+            return 'date-soon'
+        elif self.is_due_very_soon():
+            return 'date-very-soon'
+        elif self.is_overdue():
+            return 'date-overdue'
+        else:
+            return ''
+        
+    def css_prio_class(self):
+        if self.priority >= 2:
+            return 'prio-high'
+        elif self.priority == 1:
+            return 'prio-medium'
+        else:
+            return ''
+        
     def matches_contexts(self, contexts):
         if not len(contexts):
             # Matching against nothing is always ok

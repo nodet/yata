@@ -249,3 +249,43 @@ class GroupByTest(TestCase):
         self.assertEqual([t], flatten(list))
         
         
+        
+class CSS_class_test(TestCase):
+
+    def setUp(self):
+        self.overdue   = Task(description = "t1", due_date = yesterday())
+        self.very_soon = Task(description = 't2', due_date = today())
+        self.soon      = Task(description = 't3', due_date = today() + datetime.timedelta(10))
+        self.later     = Task(description = 't3', due_date = today() + datetime.timedelta(30))
+
+        self.high   = Task(description = "high",   priority = 2)
+        self.medium = Task(description = 'medium', priority = 1)
+        self.low    = Task(description = 'low',    priority = 0)
+        
+    def test_due_date_css_classes_for_overdue(self):
+        self.assertTrue(self.overdue.is_overdue())
+        self.assertFalse(self.very_soon.is_overdue())
+        self.assertFalse(self.soon.is_overdue())
+
+    def test_due_date_css_classes_for_very_soon(self):
+        self.assertFalse(self.overdue.is_due_very_soon())
+        self.assertTrue(self.very_soon.is_due_very_soon())
+        self.assertFalse(self.soon.is_due_very_soon())
+
+    def test_due_date_css_classes_for_soon(self):
+        self.assertFalse(self.overdue.is_due_soon())
+        self.assertFalse(self.very_soon.is_due_soon())
+        self.assertTrue(self.soon.is_due_soon())
+
+    def test_due_date_css_class(self):
+        self.assertEqual('date-overdue',   self.overdue.css_due_date_class())
+        self.assertEqual('date-very-soon', self.very_soon.css_due_date_class())        
+        self.assertEqual('date-soon',      self.soon.css_due_date_class())        
+        self.assertEqual('date-soon',      self.soon.css_due_date_class())        
+        self.assertEqual('',               self.later.css_due_date_class())        
+    
+    def test_prio_css_class(self):
+        self.assertEqual('prio-high',   self.high.css_prio_class())
+        self.assertEqual('prio-medium', self.medium.css_prio_class())
+        self.assertEqual('',            self.low.css_prio_class())
+    
