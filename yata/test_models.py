@@ -159,14 +159,14 @@ class DatesForTasksCreatedFromRepeating(TestCase):
         t = self.a_repeating_task()
         t.due_date = d = tomorrow()
         t = self.mark_done_and_get_repeated(t)
-        self.assertEqual(7, (t.due_date - d).days)
+        self.assertEqual(7, (t.due_date - datetime.date.today()).days)
         self.assertTrue(t.start_date == None)
         
     def test_RepeatingWithStartDateGetsAStartDate(self):
         t = self.a_repeating_task()
         t.start_date = d = tomorrow()
         t = self.mark_done_and_get_repeated(t)
-        self.assertEqual(7, (t.start_date - d).days)
+        self.assertEqual(7, (t.start_date - datetime.date.today()).days)
         self.assertTrue(t.due_date == None)
         
     def test_RepeatingWithStartAndDueDateGetsBoth(self):
@@ -175,7 +175,15 @@ class DatesForTasksCreatedFromRepeating(TestCase):
         t.due_date = d = today()
         t = self.mark_done_and_get_repeated(t)
         self.assertEqual(7, (t.due_date - d).days)
-        self.assertEqual(7, (t.start_date - y).days)
+        self.assertEqual(1, (t.due_date - t.start_date).days)
+
+    def test_RepeatingWithStartAndDueDateOverdue(self):
+        t = self.a_repeating_task()
+        t.start_date = y = yesterday(yesterday())
+        t.due_date = d = yesterday()
+        t = self.mark_done_and_get_repeated(t)
+        self.assertEqual(7, (t.due_date - datetime.date.today()).days)
+        self.assertEqual(1, (t.due_date - t.start_date).days)
 
 
         

@@ -148,13 +148,13 @@ class Task(models.Model):
             new_task = copy.copy(self)
             new_task.id = None
 
-            if self.start_date:
-                new_task.start_date = next_date(self.start_date, self.repeat_nb, self.repeat_type)
+            today = datetime.date.today()
             if not self.start_date or self.due_date:
-                d = datetime.date.today()
-                if self.due_date and (self.due_date > d):
-                    d = self.due_date
-                new_task.due_date = next_date(d, self.repeat_nb, self.repeat_type)
+                new_task.due_date = next_date(today, self.repeat_nb, self.repeat_type)
+                if self.start_date:
+                    new_task.start_date = new_task.due_date - (self.due_date - self.start_date)
+            else:
+                new_task.start_date = next_date(today, self.repeat_nb, self.repeat_type)
 
             new_task.save()
         self.done = b
