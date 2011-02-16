@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
 from yata.test_utils import today, tomorrow, yesterday, flatten
@@ -550,4 +551,3 @@ class CheckForURLsInFooter(TestCase):
         self.assertTrue('<a href="/admin/yata/task">Admin</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/import/">Import tasks...</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/export/">Export tasks...</a>' in self.response.content)
-        
