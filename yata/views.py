@@ -81,10 +81,10 @@ def index(request):
     the_done_menu    = build_done_menu(show_tasks_done)
 
     footers = [ [
-        ('/yata/add_task/', 'Add task'),
+        ('/yata/task/new/',    'Add task'),
         ('/yata/context/add/', 'Add context'),
     ], [
-        ('/admin/yata/task', 'Admin'),
+        ('/admin/yata/task',  'Admin'),
         ('/yata/xml/import/', 'Import tasks...'),
         ('/yata/xml/export/', 'Export tasks...'),
     ] ]
@@ -131,8 +131,8 @@ def show_tasks_done(request, b):
     return HttpResponseRedirect(reverse('yata.views.index'))
 
 
-def mark_done(request, task_id, b = True):
-    t = get_object_or_404(Task, pk=task_id)
+def mark_done(request, id, b = True):
+    t = get_object_or_404(Task, pk=id)
     t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))
 
@@ -156,7 +156,7 @@ def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, i
     }, context_instance=RequestContext(request))
 
 
-def edit(request, task_id = None):
+def edit_task(request, id = None):
 
     # An 'AddTaskForm' that additionally can provide a default value
     # for the context when it makes sense
@@ -171,7 +171,7 @@ def edit(request, task_id = None):
             kwargs['initial'] = initial
             super(AddTaskFormWithInitial, self).__init__(*args, **kwargs)
 
-    return _edit_any_form(request, Task, AddTaskFormWithInitial, edit, delete_task, task_id)
+    return _edit_any_form(request, Task, AddTaskFormWithInitial, edit_task, delete_task, id)
 
 
 def edit_context(request, id = None):

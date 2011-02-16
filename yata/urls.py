@@ -7,12 +7,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('yata.views',
     # Example:
-    (r'^$', 'index'),
-    (r'^add_task/$',                         'edit'),
-    (r'^(?P<task_id>\d+)/edit/$',            'edit'),
+    (r'^$',                                  'index'),
+    (r'^task/new/$',                         'edit_task'),
+    (r'^task/(?P<id>\d+)/edit/$',            'edit_task'),
     (r'^task/(?P<id>\d+)/delete/$',          'delete_task'),
- url(r'^(?P<task_id>\d+)/mark_done/$',       'mark_done',                name='mark-task-done'),
- url(r'^(?P<task_id>\d+)/mark_not_done/$',   'mark_done', {'b': False}, name='mark-task-not-done'),
+ url(r'^task/(?P<id>\d+)/mark_done/$',       'mark_done',                name='mark-task-done'),
+ url(r'^task/(?P<id>\d+)/mark_not_done/$',   'mark_done', {'b': False}, name='mark-task-not-done'),
     (r'^context/show/(?P<context_id>\d+)/$', 'select_context'),
     (r'^context/show/all/$',                 'select_context_all'),
     (r'^context/show/none/$',                'select_context_none'),

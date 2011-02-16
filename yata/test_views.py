@@ -79,8 +79,8 @@ class MarkDoneTest(TestCase):
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
-        self.assertTrue('/yata/1/mark_done/' in response.content)
-        response = c.get('/yata/1/mark_done/', follow=True)
+        self.assertTrue('/yata/task/1/mark_done/' in response.content)
+        response = c.get('/yata/task/1/mark_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(0, len(get_tasks(response)))
@@ -94,8 +94,8 @@ class MarkNotDoneTest(TestCase):
         # Show all the tasks...
         response = c.get('/yata/done/all/', follow=True)
         # ... else tests below would fail!
-        self.assertTrue('/yata/1/mark_not_done/' in response.content)
-        response = c.get('/yata/1/mark_not_done/', follow=True)
+        self.assertTrue('/yata/task/1/mark_not_done/' in response.content)
+        response = c.get('/yata/task/1/mark_not_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, len(get_tasks(response)))
@@ -103,7 +103,7 @@ class MarkNotDoneTest(TestCase):
         
 class AddTaskViewTest(TestCase):
     def test_get(self):
-        response = Client().get('/yata/add_task/')
+        response = Client().get('/yata/task/new/')
         self.assertEqual(response.status_code, 200)
         
     def test_post(self):
@@ -114,7 +114,7 @@ class AddTaskViewTest(TestCase):
         repeat_nb = 1
         repeat_type = 'W'
         note = 'the note...'
-        response = Client().post('/yata/add_task/', {
+        response = Client().post('/yata/task/new/', {
             'description': desc,
             'priority': prio,
             'start_date': sdate,
@@ -142,7 +142,7 @@ class AddTaskViewTest(TestCase):
         repeat_nb = 1
         repeat_type = 'W'
         note = 'the note...'
-        response = Client().post('/yata/add_task/', {
+        response = Client().post('/yata/task/new/', {
             'description': desc,
             'priority': prio
         })
@@ -166,8 +166,8 @@ class EditViewTest(TestCase):
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
-        self.assertTrue('/yata/1/edit/' in response.content)
-        response = c.get('/yata/1/edit/')
+        self.assertTrue('/yata/task/1/edit/' in response.content)
+        response = c.get('/yata/task/1/edit/')
         self.assertEqual(200, response.status_code)
         
         ndesc = 'new description'
@@ -178,7 +178,7 @@ class EditViewTest(TestCase):
         type = 'W'
         done = True
         note = 'the note...'
-        response = Client().post('/yata/1/edit/', {
+        response = Client().post('/yata/task/1/edit/', {
             'description': ndesc,
             'priority': prio,
             'start_date': sdate,
@@ -205,7 +205,7 @@ class UrlForActionIsProvidedToEditView(TestCase):
         t.save()
     def runTest(self):
         c = Client()
-        url = '/yata/1/edit/'
+        url = '/yata/task/1/edit/'
         response = c.get(url)
         self.assertEqual(url, response.context['action'])
        
@@ -514,27 +514,27 @@ class AddTaskHasDefaultContext(TestCase):
         session.save()
         
     def test_default_is_empty(self):
-        response = self.client.get('/yata/add_task/')
+        response = self.client.get('/yata/task/new/')
         self.assertFalse('context' in response.context['form'].initial.keys())
 
     def test_get_default_context(self):
         self.ask_for_contexts(['C2'])
-        response = self.client.get('/yata/add_task/')
+        response = self.client.get('/yata/task/new/')
         self.assertEqual(self.c2, response.context['form'].initial['context'])
 
     def test_no_default_if_several_selected(self):
         self.ask_for_contexts(['C1','C2'])
-        response = self.client.get('/yata/add_task/')
+        response = self.client.get('/yata/task/new/')
         self.assertFalse('context' in response.context['form'].initial.keys())
         
     def test_no_default_if_none(self):
         self.ask_for_contexts([])
-        response = self.client.get('/yata/add_task/')
+        response = self.client.get('/yata/task/new/')
         self.assertFalse('context' in response.context['form'].initial.keys())
 
     def test_no_default_if_all(self):
         self.ask_for_contexts([''])
-        response = self.client.get('/yata/add_task/')
+        response = self.client.get('/yata/task/new/')
         self.assertFalse('context' in response.context['form'].initial.keys())
 
 
@@ -545,7 +545,7 @@ class CheckForURLsInFooter(TestCase):
         self.response = Client().get('/yata/')
 
     def test_for_URLs_in_footer(self):
-        self.assertTrue('<a href="/yata/add_task/">Add task</a>' in self.response.content)
+        self.assertTrue('<a href="/yata/task/new/">Add task</a>' in self.response.content)
         self.assertTrue('<a href="/yata/context/add/">Add context</a>' in self.response.content)
         self.assertTrue('<a href="/admin/yata/task">Admin</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/import/">Import tasks...</a>' in self.response.content)
