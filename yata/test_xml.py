@@ -293,6 +293,21 @@ Python</note>
         s = create_xml_from_tasks([t])
         self.assertEqual(the_xml, s)
         
+    def test_export_repeat_day(self):
+        the_xml = """<xml>
+<item>
+<title>t1</title>
+<repeat>Every 2 days</repeat>
+</item>
+</xml>"""
+        t = Task(
+            description = 't1',
+            repeat_nb = 2,
+            repeat_type = 'D'
+        )
+        s = create_xml_from_tasks([t])
+        self.assertEqual(the_xml, s)
+        
     def test_export_repeat_week(self):
         the_xml = """<xml>
 <item>
@@ -323,7 +338,7 @@ Python</note>
         s = create_xml_from_tasks([t])
         self.assertEqual(the_xml, s)
         
-    def test_export_repeat_month(self):
+    def test_export_repeat_year(self):
         the_xml = """<xml>
 <item>
 <title>t1</title>

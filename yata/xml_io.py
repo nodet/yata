@@ -149,6 +149,7 @@ def create_xml_from_tasks(tasks):
             
         def get_name_for(nb, type):
             dict = {
+                'D': 'day',
                 'W': 'week',
                 'M': 'month',
                 'Y': 'year',
