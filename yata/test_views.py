@@ -247,8 +247,8 @@ class MainViewMenusTests(TestCase):
         
     def test_has_future_menu(self):
         expected = [ 'Future tasks', 'Hide', [
-            ('Show', '/yata/future/show/'),
             ('Hide', '/yata/future/hide/'),
+            ('Show', '/yata/future/show/'),
         ]]
         self.assertEqual(expected, get_menu(self.response, 1))
         
