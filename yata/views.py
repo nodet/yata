@@ -39,8 +39,8 @@ def index(request):
 
     def build_future_menu(chosen):
         return [ 'Future tasks', chosen, [
+                    ('Hide', '/yata/future/hide/'),
                     ('Show', '/yata/future/show/'),
-                    ('Hide', '/yata/future/hide/')
         ]]
 
     def future_tasks_menu_displayed(b):
