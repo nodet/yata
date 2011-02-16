@@ -14,10 +14,10 @@ def index(request):
 
     def build_context_menu(chosen):
         l = []
-        l.append(('All', '/yata/context/show/all/'))
-        l.append(('None', '/yata/context/show/none/'))
+        l.append(('All', reverse('yata.views.select_context_all')))
+        l.append(('None', reverse('yata.views.select_context_none')))
         for c in Context.objects.all():
-            l.append((c.title, '/yata/context/show/%s/' % c.id))
+            l.append((c.title, reverse('yata.views.select_context', args=[c.id,])))
         return [ 'Context to display', chosen, l ]
 
     def context_menu_displayed(contexts_to_display):
