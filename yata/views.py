@@ -39,8 +39,8 @@ def index(request):
 
     def build_future_menu(chosen):
         return [ 'Future tasks', chosen, [
-                    ('Hide', '/yata/future/hide/'),
-                    ('Show', '/yata/future/show/'),
+                    ('Hide', reverse('hide-future-tasks')),
+                    ('Show', reverse('show-future-tasks')),
         ]]
 
     def future_tasks_menu_displayed(b):
@@ -53,9 +53,9 @@ def index(request):
 
     def build_done_menu(chosen):
         return [ 'Tasks done', chosen, [
-                    ('Active', '/yata/done/no/'),
-                    ('Done', '/yata/done/yes/'),
-                    ('All', '/yata/done/all/'),
+                    ('Active', reverse('show-active-tasks')),
+                    ('Done', reverse('show-done-tasks')),
+                    ('All', reverse('show-all-tasks')),
         ]]
 
     def show_task(t, show_tasks_done):
@@ -81,12 +81,12 @@ def index(request):
     the_done_menu    = build_done_menu(show_tasks_done)
 
     footers = [ [
-        ('/yata/task/new/',    'Add task'),
-        ('/yata/context/add/', 'Add context'),
+        (reverse('add-task'),    'Add task'),
+        (reverse('add-context'), 'Add context'),
     ], [
         ('/admin/yata/task',  'Admin'),
-        ('/yata/xml/import/', 'Import tasks...'),
-        ('/yata/xml/export/', 'Export tasks...'),
+        (reverse('yata.views.xml_import'), 'Import tasks...'),
+        (reverse('yata.views.xml_export'), 'Export tasks...'),
     ] ]
     
     return render_to_response('yata/index.html', {
@@ -144,7 +144,7 @@ def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, i
         form = the_form_class(request.POST, instance=c)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/yata/')
+            return HttpResponseRedirect(reverse('yata.views.index'))
     else:
         form = the_form_class(instance = c)
 
