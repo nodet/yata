@@ -60,7 +60,7 @@ def have_same_elements(it1, it2):
             
 class MainViewDoesNotShowTasksNotStartedTest(TestCase):
     def setUp(self):
-        t = Task(description = "something to do now")
+        t = Task(description = "something to do now", start_date=today())
         t.save()
         # Something in the future. Not just tomorrow, in case the test is run around midnight...
         t = Task(description = "something to do in two days", start_date = tomorrow(tomorrow()))

@@ -63,7 +63,7 @@ class Task(models.Model):
 
     def is_future(self):
         if self.start_date:
-            return self.start_date >= datetime.date.today()
+            return self.start_date > datetime.date.today()
         return False
 
     def is_repeating(self):
