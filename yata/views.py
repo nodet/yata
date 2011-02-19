@@ -34,9 +34,6 @@ def index(request):
     request.session['contexts_to_display'] = contexts_to_display
 
 
-    def future_tasks_menu():
-        return
-
     def build_future_menu(chosen):
         return [ 'Future tasks', chosen, [
                     ('Hide', reverse('hide-future-tasks')),
