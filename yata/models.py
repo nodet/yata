@@ -31,6 +31,7 @@ class Task(models.Model):
     due_date = models.DateField(null = True, blank = True)
     repeat_nb = models.PositiveIntegerField(null = True, blank = True)
     repeat_type = models.CharField(max_length = 1, choices = REPEAT_CHOICES, null = True, blank = True)
+    repeat_from_due_date = models.BooleanField()
     done = models.BooleanField()
     note = models.TextField(null = True, blank = True)
     last_edited = models.DateTimeField(auto_now = True)
@@ -149,6 +150,8 @@ class Task(models.Model):
             new_task.id = None
 
             today = datetime.date.today()
+            if self.repeat_from_due_date:
+                today = self.due_date
             if not self.start_date or self.due_date:
                 new_task.due_date = next_date(today, self.repeat_nb, self.repeat_type)
                 if self.start_date:

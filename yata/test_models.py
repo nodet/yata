@@ -143,7 +143,7 @@ class CheckIsRepeating(TestCase):
             self.assertTrue(    Task(repeat_type = 'D', repeat_nb = 1).is_repeating())
         
         
-class DatesForTasksCreatedFromRepeating(TestCase):
+class RepeatingTasksTests(TestCase):
 
     def a_repeating_task(self):
         return Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
@@ -154,6 +154,8 @@ class DatesForTasksCreatedFromRepeating(TestCase):
         tasks = Task.objects.exclude(done__exact = True)
         self.assertEqual(1, tasks.count())
         return tasks[0]
+
+class DatesForTasksCreatedFromRepeating(RepeatingTasksTests):
         
     def test_RepeatingWithDueDateGetsADueDate(self):
         t = self.a_repeating_task()
@@ -186,6 +188,29 @@ class DatesForTasksCreatedFromRepeating(TestCase):
         self.assertEqual(1, (t.due_date - t.start_date).days)
 
 
+class DatesForTasksRepeatingFromDueDate(RepeatingTasksTests):
+
+    def a_task_repeating_from_due_date(self):
+        return Task(description = 'Repeating from due_date', 
+                     repeat_nb = 1, 
+                     repeat_type = 'W', 
+                     due_date = datetime.date(2010,04,23),
+                     repeat_from_due_date = True)
+    
+    def test_TasksUsuallyDontRepeatFromDueDate(self):
+        t = Task(description = 'A task');
+        self.assertFalse(t.repeat_from_due_date);
+        
+    def test_RepeatingWithDueDateGetsADueDate(self):
+        t = self.a_task_repeating_from_due_date()
+        old_due_date = t.due_date
+        t = self.mark_done_and_get_repeated(t)
+        self.assertEqual(7, (t.due_date - old_due_date).days)
+    
+
+
+
+        
         
 class TestContext(TestCase):
     def setUp(self):

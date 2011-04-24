@@ -39,5 +39,9 @@ def addNoteColumn():
 def addPrioColumn():
     #runQueryAndSaveAll('alter table "yata_task" add column "priority" integer')
     runQueryAndSaveAll('alter table "yata_task" modify column "priority" smallint NOT NULL')
+
+def addRepeatFromDDColumn():
+    runQueryAndSaveAll('alter table "yata_task" add column "repeat_from_due_date" boolean NOT NULL default 0')
+    
     
     
