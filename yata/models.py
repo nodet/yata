@@ -200,15 +200,16 @@ def relativeDueDate(origin, theDate):
         return theDate.isoformat()
 
 
-def _next_date_end_of_month(year, month, day):
-    year = year + (month - 1) / 12
-    month = (month - 1) % 12 + 1
-    range = calendar.monthrange(year, month)[1]
-    if range < day:
-        day = range
-    return datetime.date(year, month, day)
-        
 def next_date(aDate, nb, repetition_type):
+
+    def _next_date_end_of_month(year, month, day):
+        year = year + (month - 1) / 12
+        month = (month - 1) % 12 + 1
+        range = calendar.monthrange(year, month)[1]
+        if range < day:
+            day = range
+        return datetime.date(year, month, day)
+
     if repetition_type == 'W':
         repetition_type = 'D'
         nb = 7 * nb
@@ -232,7 +233,13 @@ class Context(models.Model):
         
         
 def group_by(list, value):
-    'Returns a list of pairs (value, [items])'
+    '''
+    Accepts a list and a function that returns the value associated with an item in the list.
+    
+    Returns a list of pairs (v, [items]) where v is a value returned
+    by the value function, and [items] is the list of all the items
+    for which the function returned this value.
+    '''
     if len(list) == 0:
         return []
     result = []
