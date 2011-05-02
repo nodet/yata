@@ -1,4 +1,4 @@
-__Yet Another Todo Application__, by Xavier Nodet <xavier.nodet@gmail.com>
+__Yet Another Todo Application__, by Xavier Nodet &lt;xavier.nodet@gmail.com&gt;
 
 Yata is a small web application written using Python and
 Django.  It implements a todo list with repeatable tasks.
