@@ -11,4 +11,4 @@ authentication, and any one that connects to the Web
 server can do anything.  I plan to change that soon.
 
 Here is a screenshot:
-![Yata screeshot](yata-screenshot.png "Main Yata page")
+![Yata screeshot](https://github.com/nodet/yata/raw/master/yata-screenshot.png "Main Yata page")
