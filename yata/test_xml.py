@@ -194,7 +194,49 @@ Python</note>
         t = all[0]
         self.assertEqual(1, t.repeat_nb)
         self.assertEqual('W', t.repeat_type)
+        self.assertFalse(t.repeat_from_due_date)
         
+    def test_repeat_from_due_date(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Weekly</repeat><repeat_from_due_date>Yes</repeat_from_due_date></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('W', t.repeat_type)
+        self.assertTrue(t.repeat_from_due_date)
+        
+    def test_xml_can_have_shortened_repeat_from_due_date(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Weekly</repeat><repeat_from_due_date /></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('W', t.repeat_type)
+        self.assertTrue(t.repeat_from_due_date)
+        
+    def test_repeat_from_due_date_can_be_No(self):
+        the_xml = """
+<xml>
+<item><title>T1</title><repeat>Weekly</repeat><repeat_from_due_date>No</repeat_from_due_date></item>
+</xml>
+"""
+        create_tasks_from_xml(the_xml)
+        all = Task.objects.all()
+        self.assertEqual(1, all.count())
+        t = all[0]
+        self.assertEqual(1, t.repeat_nb)
+        self.assertEqual('W', t.repeat_type)
+        self.assertFalse(t.repeat_from_due_date)
         
         
         
@@ -235,6 +277,7 @@ class XmlExportTest(TestCase):
 <note>Django
 Python</note>
 <repeat>Every 1 week</repeat>
+<repeat_from_due_date>Yes</repeat_from_due_date>
 </item>
 </xml>"""
         c = Context(title = 'C2')
@@ -246,7 +289,8 @@ Python</note>
             context = c,
             note = 'Django\nPython',
             repeat_nb = 1,
-            repeat_type = 'W'
+            repeat_type = 'W',
+            repeat_from_due_date = True
         )
         s = create_xml_from_tasks([t])
         self.assertEqual(the_xml, s)

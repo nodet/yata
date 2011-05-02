@@ -25,6 +25,18 @@ def create_tasks_from_xml(the_xml):
         text = getText(list[0])
         return f(text) if f else text
             
+    def expect_boolean(task, tag_name, default = False):
+        list = task.getElementsByTagName(tag_name)
+        if len(list) > 1:
+            raise Exception, "Only one '%s' tag allowed!" % tag_name
+        if not list:
+            return default
+        l = getText(list[0]).lower() 
+        if l == 'no':
+            return False
+        return True
+
+        
     def expect_list(node, tag_name, f):
         list = node.getElementsByTagName(tag_name)
         return [f(item) for item in list]
@@ -86,6 +98,7 @@ def create_tasks_from_xml(the_xml):
             context     = expect_one_of(task, "context", handle_context),
             repeat_nb   = repeat[0],
             repeat_type = repeat[1],
+            repeat_from_due_date = expect_boolean(task, "repeat_from_due_date"),
             done        = expect_one_of(task, "completed", handle_completed, False),
             note        = expect_one_of(task, "note"),
         )
@@ -162,6 +175,12 @@ def create_xml_from_tasks(tasks):
         s = 'Every %s %s' % (t.repeat_nb, get_name_for(t.repeat_nb, t.repeat_type))
         return tag('repeat', s)
     
+    def write_repeat_from_due_date(t):
+        if not t.is_repeating() or not t.repeat_from_due_date:
+            return ''
+        return tag('repeat_from_due_date', 'Yes')    
+        
+    
     def write_task(t):
         res = ['<item>\n']
         res.append(write_title(t))
@@ -171,6 +190,7 @@ def create_xml_from_tasks(tasks):
         res.append(write_context(t))
         res.append(write_note(t))
         res.append(write_repeat(t))
+        res.append(write_repeat_from_due_date(t))
         res.append(write_done(t))
         res.append('</item>\n')
         return ''.join(res)
