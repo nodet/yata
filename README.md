@@ -10,5 +10,5 @@ Yata is currently a single-user app: there is no
 authentication, and any one that connects to the Web
 server can do anything.  I plan to change that soon.
 
-Here is a screenshot:
+Here is a screenshot:  
 ![Yata screeshot](https://github.com/nodet/yata/raw/master/yata-screenshot.png "Main Yata page")
