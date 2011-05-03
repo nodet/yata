@@ -107,8 +107,16 @@ class MarkNotDoneTest(YataTestCase):
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, len(get_tasks(response)))
 
+
+class TaskViewTestBase(YataTestCase):
+
+    def setUp(self):
+        YataTestCase.setUp(self)
+        self.client = Client()
+        self.client.get('/yata/login/')
+
         
-class AddTaskViewTest(YataTestCase):
+class AddTaskViewTest(TaskViewTestBase):
 
     def test_get(self):
         response = self.client.get('/yata/task/new/')
@@ -168,9 +176,9 @@ class AddTaskViewTest(YataTestCase):
         
         
         
-class EditViewTest(YataTestCase):
+class EditViewTest(TaskViewTestBase):
     def setUp(self):
-        YataTestCase.setUp(self)
+        TaskViewTestBase.setUp(self)
         t = self.new_task(description = "something to do")
         t.save()
     def runTest(self):

@@ -16,11 +16,10 @@ import sys
 class YataTestCase(TestCase):
 
     def setUp(self):
+        # We need a user whenever we create a task, so let's get some
         self.u1 = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
         self.u2 = User.objects.create_user('test2', 'test2@yata.com.invalid', 'test2');
         self.user = authenticate(username='test1', password='test1')
-        self.client = Client()
-        self.client.get('/yata/login/')
         
     def new_task(self, 
                   description = None, 
