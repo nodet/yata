@@ -63,8 +63,11 @@ def index(request):
     show_tasks_done = request.session.get('show_tasks_done', 'Active')
     request.session['show_tasks_done'] = show_tasks_done
 
-
-    tasks = [t for t in Task.objects.all()
+    user = request.session.get('user', None)
+    query_set = Task.objects
+    if not user is None:
+        query_set = query_set.filter(user = user)
+    tasks = [t for t in query_set.all()
                 if show_task(t, show_tasks_done)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
@@ -226,4 +229,3 @@ def login(request):
     # Need to ensure something is put in the session so that it's saved.
     request.session['user'] = user
     return HttpResponseRedirect(reverse('yata.views.index'))
-    

@@ -11,7 +11,7 @@ from django.test.client import Client
 def get_tasks(response):
     return flatten(response.context['tasks'])
     
-class MainViewTest(YataTestCase):
+class MainViewTestBase(YataTestCase):
     def setUp(self):
         YataTestCase.setUp(self)
         t = self.new_task(description = "something to do")
@@ -20,6 +20,8 @@ class MainViewTest(YataTestCase):
         t.save()
         t = self.new_task(description = "another thing", due_date = datetime.date(2010,01,19));
         t.save();
+        
+class MainViewTest(MainViewTestBase):        
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
@@ -29,7 +31,7 @@ class MainViewTest(YataTestCase):
         self.assertEqual(3, len(tasks))
         
       
-class MainViewHasTasksSorted(MainViewTest):
+class MainViewHasTasksSorted(MainViewTestBase):
     def runTest(self):
         c = Client()
         response = c.get('/yata/')
@@ -37,9 +39,9 @@ class MainViewHasTasksSorted(MainViewTest):
         self.assertEqual(3, len(tasks))
         self.assertEqual(sorted(tasks, Task.compare), tasks)
         
-class MainViewHasListOfNotDoneTasks(MainViewTest):
+class MainViewShowsOnlyNotDoneTasks(MainViewTestBase):
     def setUp(self):
-        MainViewTest.setUp(self)
+        MainViewTestBase.setUp(self)
         t = self.new_task(description = "Already done", done = True)
         t.save()
         t = self.new_task(description = "Another that's done", done = True)
@@ -584,4 +586,19 @@ class LoginViews(YataTestCase):
         response = client.get('/yata/login/')
         self.assertFalse(client.session.get('user', None) is None)
     
-    
+class MainViewShowsOnlyTasksFromCurrentUser(MainViewTestBase):
+    def setUp(self):
+        MainViewTestBase.setUp(self)
+        # A task owned by u2, while the current user is u1
+        Task(user = self.u2, description = 'belongs to u2').save()
+
+    def test_show_only_tasks_from_user(self):
+        all_users = Task.objects.all()
+        for_user = Task.objects.filter(user = self.u1).all()
+        self.assertEqual(all_users.count(), for_user.count() + 1)
+        
+        self.client.get('/yata/login/')
+        self.assertEqual(self.u1, self.client.session['user'])
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual(3, len(tasks))
