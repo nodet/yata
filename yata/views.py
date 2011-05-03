@@ -200,7 +200,7 @@ def xml_import(request):
     if request.method == 'POST':
         form = UploadXMLForm(request.POST, request.FILES)
         if form.is_valid():
-            create_tasks_from_xml(request.FILES['file'].read())
+            create_tasks_from_xml(request.session.get('user', None), request.FILES['file'].read())
             return HttpResponseRedirect(reverse('yata.views.index'))
     else:
         form = UploadXMLForm()
@@ -219,7 +219,7 @@ def xml_export(request):
 def login(request):
     user = request.session.get('user', None)
 
-    user = User.objects.get(username = 'test1')
+    user = User.objects.all()[0]
     if user is None:
         user = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
     
