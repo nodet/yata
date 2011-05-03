@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from yata.models import Task, Context, relativeDueDate, due_date_cmp, next_date
 from yata.test_utils import today, tomorrow, yesterday, flatten
+from yata.test_models import YataTestCase
 import datetime
 import time
 from django.test.client import Client
@@ -10,13 +11,14 @@ from django.test.client import Client
 def get_tasks(response):
     return flatten(response.context['tasks'])
     
-class MainViewTest(TestCase):
+class MainViewTest(YataTestCase):
     def setUp(self):
-        t = Task(description = "something to do")
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "something to do")
         t.save()
-        t = Task(description = "something else", due_date = datetime.date(2011,01,19))
+        t = self.new_task(description = "something else", due_date = datetime.date(2011,01,19))
         t.save()
-        t = Task(description = "another thing", due_date = datetime.date(2010,01,19));
+        t = self.new_task(description = "another thing", due_date = datetime.date(2010,01,19));
         t.save();
     def runTest(self):
         c = Client()
@@ -37,9 +39,10 @@ class MainViewHasTasksSorted(MainViewTest):
         
 class MainViewHasListOfNotDoneTasks(MainViewTest):
     def setUp(self):
-        t = Task(description = "Already done", done = True)
+        MainViewTest.setUp(self)
+        t = self.new_task(description = "Already done", done = True)
         t.save()
-        t = Task(description = "Another that's done", done = True)
+        t = self.new_task(description = "Another that's done", done = True)
         t.save()
     def runTest(self):
         c = Client()
@@ -58,12 +61,13 @@ def have_same_elements(it1, it2):
     return True
 
             
-class MainViewDoesNotShowTasksNotStartedTest(TestCase):
+class MainViewDoesNotShowTasksNotStartedTest(YataTestCase):
     def setUp(self):
-        t = Task(description = "something to do now", start_date=today())
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "something to do now", start_date=today())
         t.save()
         # Something in the future. Not just tomorrow, in case the test is run around midnight...
-        t = Task(description = "something to do in two days", start_date = tomorrow(tomorrow()))
+        t = self.new_task(description = "something to do in two days", start_date = tomorrow(tomorrow()))
         t.save()
     def runTest(self):
         c = Client()
@@ -73,9 +77,10 @@ class MainViewDoesNotShowTasksNotStartedTest(TestCase):
         self.assertEqual(1, len(tasks))
         
        
-class MarkDoneTest(TestCase):
+class MarkDoneTest(YataTestCase):
     def setUp(self):
-        t = Task(description = "something to do")
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "something to do")
         t.save()
     def runTest(self):
         c = Client()
@@ -86,9 +91,10 @@ class MarkDoneTest(TestCase):
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(0, len(get_tasks(response)))
 
-class MarkNotDoneTest(TestCase):
+class MarkNotDoneTest(YataTestCase):
     def setUp(self):
-        t = Task(description = "something to do", done = True)
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "something to do", done = True)
         t.save()
     def runTest(self):
         c = Client()
@@ -102,7 +108,7 @@ class MarkNotDoneTest(TestCase):
         self.assertEqual(1, len(get_tasks(response)))
 
         
-class AddTaskViewTest(TestCase):
+class AddTaskViewTest(YataTestCase):
     def test_get(self):
         response = Client().get('/yata/task/new/')
         self.assertEqual(response.status_code, 200)
@@ -124,6 +130,7 @@ class AddTaskViewTest(TestCase):
             'repeat_type': repeat_type,
             'note': note
         })
+        self.assertEqual(response.status_code, 302)   # Redirect
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -160,9 +167,10 @@ class AddTaskViewTest(TestCase):
         
         
         
-class EditViewTest(TestCase):
+class EditViewTest(YataTestCase):
     def setUp(self):
-        t = Task(description = "something to do")
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "something to do")
         t.save()
     def runTest(self):
         c = Client()
@@ -200,9 +208,10 @@ class EditViewTest(TestCase):
         self.assertEqual(type, t.repeat_type)
         self.assertEqual(note, t.note)
 
-class UrlForActionIsProvidedToEditView(TestCase):
+class UrlForActionIsProvidedToEditView(YataTestCase):
     def setUp(self):
-        t = Task(description = "UrlForActionIsProvidedToEditView")
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "UrlForActionIsProvidedToEditView")
         t.save()
     def runTest(self):
         c = Client()
@@ -262,18 +271,19 @@ class MainViewMenusTests(TestCase):
         self.assertEqual(expected, get_menu(self.response, 2))
         
         
-class FilterTaskByContextSetup(TestCase):        
+class FilterTaskByContextSetup(YataTestCase):        
 
     def setUp(self):
+        YataTestCase.setUp(self)
         c1 = Context(title = 'C1')
         c1.save()
         c2 = Context(title = 'C2')
         c2.save()
-        t = Task(description = "In no context")
+        t = self.new_task(description = "In no context")
         t.save()
-        t = Task(description = "In context 'C1'", context = c1)
+        t = self.new_task(description = "In context 'C1'", context = c1)
         t.save()
-        t = Task(description = "In context 'C2'", context = c2)
+        t = self.new_task(description = "In context 'C2'", context = c2)
         t.save()
         self.client = Client()
         # Make sure we call the view first so that it saves a session
@@ -403,11 +413,12 @@ class AddContextViewTest(TestCase):
         self.assertEqual(title, c.title)
         
         
-class HideOrShowFutureTasksSetup(TestCase):
+class HideOrShowFutureTasksSetup(YataTestCase):
     def setUp(self):
-        t = Task(description = "Not future")
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "Not future")
         t.save()
-        t = Task(description = "Future", start_date = tomorrow(tomorrow()))
+        t = self.new_task(description = "Future", start_date = tomorrow(tomorrow()))
         t.save()
         self.client = Client()
         # Make sure we call the view first so that it saves a session
@@ -453,11 +464,12 @@ class ShowFutureTasksMenuTests(HideOrShowFutureTasksSetup):
         self.assertEqual(1, len(get_tasks(response)))
             
             
-class HideOrShowTasksDone(TestCase):
+class HideOrShowTasksDone(YataTestCase):
     def setUp(self):
-        t = Task(description = "Active")
+        YataTestCase.setUp(self)
+        t = self.new_task(description = "Active")
         t.save()
-        t = Task(description = "Done", done = True)
+        t = self.new_task(description = "Done", done = True)
         t.save()
         self.client = Client()
         # Make sure we call the view first so that it saves a session

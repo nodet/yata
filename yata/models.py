@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 import unittest
@@ -24,6 +25,7 @@ class Task(models.Model):
         (-1, 'Negative'),
     )
 
+    user = models.ForeignKey(User, null=True, blank=True)
     description = models.CharField(max_length = 200)
     priority = models.SmallIntegerField(choices=PRIO_CHOICES, default=0)
     context = models.ForeignKey('Context', null = True, blank = True)

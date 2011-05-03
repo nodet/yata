@@ -7,7 +7,7 @@ import datetime
 
 
 @transaction.commit_on_success
-def create_tasks_from_xml(the_xml):
+def create_tasks_from_xml(user, the_xml):
 
     def getText(nodelist):
         rc = []
@@ -90,7 +90,7 @@ def create_tasks_from_xml(the_xml):
         
     def handle_task(task):
         repeat = expect_one_of(task, "repeat", handle_repeat, (0,None))
-        t = Task(
+        t = Task(user = user,
             description = expect_one_of(task, "title"),
             priority    = expect_one_of(task, "priority", handle_prio, 0),
             start_date  = expect_one_of(task, "startdate", handle_date),
@@ -111,10 +111,10 @@ def create_tasks_from_xml(the_xml):
     
     
     
-def create_tasks_from_file(xml_file_name):
+def create_tasks_from_file(user, xml_file_name):
     with open(xml_file_name) as f:
         the_xml = f.read()
-        return create_tasks_from_xml(the_xml)
+        return create_tasks_from_xml(user, the_xml)
         
         
         

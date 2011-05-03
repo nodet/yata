@@ -1,11 +1,21 @@
 from django.test import TestCase, TransactionTestCase
 from yata.models import Task, Context
+from yata.test_models import YataTestCase
 from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 import datetime
 import re
 
+
+
+class YataXmlTestCase(YataTestCase):
+
+    def create_tasks_from_xml(self, the_xml):
+        return create_tasks_from_xml(self.user, the_xml)
+
+
         
-class XmlImportTest(TestCase):
+class XmlImportTest(YataXmlTestCase):
+
     def test_import_one_task(self):
         the_xml = """
 <xml>
@@ -20,7 +30,7 @@ Python</note>
 </item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         self.assertEqual(1, Task.objects.all().count())
         t = Task.objects.all()[0]
         self.assertEqual('Change password', t.description)
@@ -38,7 +48,7 @@ Python</note>
 <item><title>T2</title></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         self.assertEqual(2, Task.objects.all().count())
         
     def test_import_missing_title(self):
@@ -49,7 +59,7 @@ Python</note>
 """
         seen_exception = False
         try:
-            create_tasks_from_xml(the_xml)
+            self.create_tasks_from_xml(the_xml)
         except:
             seen_exception = True
         self.assertTrue(seen_exception)
@@ -63,7 +73,7 @@ Python</note>
 <item><title>T2</title><context>C1</context></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         self.assertEqual(1, Context.objects.all().count())
 
     def test_import_two_tasks_one_done(self):
@@ -73,7 +83,7 @@ Python</note>
 <item><title>T2</title><completed>2011-12-31</completed></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         not_done = Task.objects.filter(done=False)
         self.assertEqual(1, not_done.count())
         self.assertEqual('T1', not_done[0].description)
@@ -89,7 +99,7 @@ Python</note>
 <item><title>T5</title><priority>Negative</priority></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         not_done = Task.objects.filter(done=False)
         self.assertEqual(5, not_done.count())
         self.assertEqual( 3, Task.objects.get(description__exact='T1').priority)
@@ -104,7 +114,7 @@ Python</note>
 <item><title>T1</title><duedate></duedate></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         self.assertEqual(1, Task.objects.all().count())
     
     def test_import_empty_context(self):
@@ -113,7 +123,7 @@ Python</note>
 <item><title>T1</title><context></context></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         self.assertEqual(0, Context.objects.all().count())
     
     def test_no_repeated_field(self):
@@ -124,7 +134,7 @@ Python</note>
 """
         seen_exception = False
         try:
-            create_tasks_from_xml(the_xml)
+            self.create_tasks_from_xml(the_xml)
         except:
             seen_exception = True
         self.assertTrue(seen_exception)
@@ -136,7 +146,7 @@ Python</note>
 <item><title>T1</title><repeat>Yearly</repeat></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -149,7 +159,7 @@ Python</note>
 <item><title>T1</title><repeat>Quaterly</repeat></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -162,7 +172,7 @@ Python</note>
 <item><title>T1</title><repeat>Monthly</repeat></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -175,7 +185,7 @@ Python</note>
 <item><title>T1</title><repeat>Biweekly</repeat></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -188,7 +198,7 @@ Python</note>
 <item><title>T1</title><repeat>Weekly</repeat></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -202,7 +212,7 @@ Python</note>
 <item><title>T1</title><repeat>Weekly</repeat><repeat_from_due_date>Yes</repeat_from_due_date></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -216,7 +226,7 @@ Python</note>
 <item><title>T1</title><repeat>Weekly</repeat><repeat_from_due_date /></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -230,7 +240,7 @@ Python</note>
 <item><title>T1</title><repeat>Weekly</repeat><repeat_from_due_date>No</repeat_from_due_date></item>
 </xml>
 """
-        create_tasks_from_xml(the_xml)
+        self.create_tasks_from_xml(the_xml)
         all = Task.objects.all()
         self.assertEqual(1, all.count())
         t = all[0]
@@ -249,7 +259,7 @@ class XMLTransactions(TransactionTestCase):
 </xml>
 """
         try:
-            create_tasks_from_xml(the_xml)
+            self.create_tasks_from_xml(the_xml)
         except:
             pass
         self.assertEqual(0, Task.objects.all().count())
@@ -258,7 +268,7 @@ class XMLTransactions(TransactionTestCase):
                 
 
                 
-class XmlExportTest(TestCase):
+class XmlExportTest(YataXmlTestCase):
     def test_export_empty(self):
         the_xml = """<xml>
 </xml>"""
@@ -281,7 +291,7 @@ Python</note>
 </item>
 </xml>"""
         c = Context(title = 'C2')
-        t = Task(
+        t = self.new_task(
             description = 't1',
             priority = 3,
             start_date = datetime.date(2011,2,1),
@@ -301,7 +311,7 @@ Python</note>
 <title>t1</title>
 </item>
 </xml>"""
-        t = Task(
+        t = self.new_task(
             description = 't1',
         )
         s = create_xml_from_tasks([t])
@@ -319,7 +329,7 @@ Python</note>
 Python</note>
 </item>
 </xml>"""
-        out = create_xml_from_tasks(create_tasks_from_xml(the_xml))
+        out = create_xml_from_tasks(self.create_tasks_from_xml(the_xml))
         self.assertEqual(the_xml, out)
         
         
@@ -330,7 +340,7 @@ Python</note>
 <completed>1111-11-11</completed>
 </item>
 </xml>"""
-        t = Task(
+        t = self.new_task(
             description = 't1',
             done = True
         )
@@ -344,7 +354,7 @@ Python</note>
 <repeat>Every 2 days</repeat>
 </item>
 </xml>"""
-        t = Task(
+        t = self.new_task(
             description = 't1',
             repeat_nb = 2,
             repeat_type = 'D'
@@ -359,7 +369,7 @@ Python</note>
 <repeat>Every 2 weeks</repeat>
 </item>
 </xml>"""
-        t = Task(
+        t = self.new_task(
             description = 't1',
             repeat_nb = 2,
             repeat_type = 'W'
@@ -374,7 +384,7 @@ Python</note>
 <repeat>Every 3 months</repeat>
 </item>
 </xml>"""
-        t = Task(
+        t = self.new_task(
             description = 't1',
             repeat_nb = 3,
             repeat_type = 'M'
@@ -389,7 +399,7 @@ Python</note>
 <repeat>Every 1 year</repeat>
 </item>
 </xml>"""
-        t = Task(
+        t = self.new_task(
             description = 't1',
             repeat_nb = 1,
             repeat_type = 'Y'

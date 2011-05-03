@@ -4,36 +4,80 @@ Tests for my ToDo app
 
 from yata.models import Task, relativeDueDate, due_date_cmp, next_date, Context, group_by
 from yata.test_utils import today, tomorrow, yesterday, flatten
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.test import TestCase
 import datetime
 import unittest
 import sys
 
 
-class CanCreateATask(TestCase):
+class YataTestCase(TestCase):
+
+    def setUp(self):
+        self.u1 = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
+        self.u2 = User.objects.create_user('test2', 'test2@yata.com.invalid', 'test2');
+        self.user = authenticate(username='test1', password='test1')
+        
+    def new_task(self, 
+                  description = None, 
+                  due_date = None, 
+                  start_date = None,
+                  repeat_nb = None, 
+                  repeat_type = None,
+                  repeat_from_due_date = False,
+                  context = None,
+                  priority = 0,
+                  done = False,
+                  note = None):
+        return Task(user = self.user,
+                     description = description, 
+                     due_date = due_date, 
+                     start_date = start_date,
+                     repeat_nb = repeat_nb,
+                     repeat_type = repeat_type,
+                     repeat_from_due_date = repeat_from_due_date,
+                     context = context,
+                     priority = priority,
+                     done = done,
+                     note = note)
+        
+        
+        
+class Users_and_authentication(YataTestCase):
+
+    def test_user_authentication(self):
+        self.assertTrue(self.user.is_active)
+        
+    def test_Tasks_created_while_logged_have_user_field_not_null(self):
+        task = self.new_task(description = 'description')
+        self.assertFalse(task.user is None)
+        
+
+class CanCreateATask(YataTestCase):
     def runTest(self):
         somethingToDo = "Something to do"
-        t = Task(description = somethingToDo)
+        t = self.new_task(description = somethingToDo)
         self.assertEqual(t.description, somethingToDo)
 
         
-class CanRetrieveATask(TestCase):
+class CanRetrieveATask(YataTestCase):
     def runTest(self):
-        t = Task(description = "something to do")
+        t = self.new_task(description = "something to do")
         t.save()
-        t = Task(description = "another thing");
+        t = self.new_task(description = "another thing");
         t.save();
         self.assertEqual(2, Task.objects.all().count())
         self.assertEqual(1, Task.objects.filter(description__startswith="Something to do").count())
 
         
         
-class TaskHasADueDate(TestCase):
+class TaskHasADueDate(YataTestCase):
     def runTest(self):
         aDate = datetime.date(2010,01,19)
         oneDayAfter = tomorrow(aDate)
         oneDayBefore = yesterday(aDate)
-        t = Task(description = "something", due_date = aDate)
+        t = self.new_task(description = "something", due_date = aDate)
         self.assertEqual('something, due 2010-01-19', t.__unicode__()) 
         t.save();
         self.assertEqual(1, Task.objects.filter(due_date=aDate).count())
@@ -42,9 +86,9 @@ class TaskHasADueDate(TestCase):
         self.assertEqual(1, Task.objects.filter(due_date__lte=oneDayAfter).count())
         self.assertEqual(1, Task.objects.filter(due_date__gte=oneDayBefore).count())
 
-class TaskHasLastEdited(TestCase):
+class TaskHasLastEdited(YataTestCase):
     def runTest(self):
-        t = Task(description = 'something')
+        t = self.new_task(description = 'something')
         t.save()
         self.assertTrue((t.last_edited - datetime.datetime.now()).seconds <= 1)
         
@@ -75,9 +119,9 @@ class GetRelativeDateTest(TestCase):
 
         
         
-class TaskHasDone(TestCase):
+class TaskHasDone(YataTestCase):
     def runTest(self):
-        t = Task(description = 'not yet done')
+        t = self.new_task(description = 'not yet done')
         self.assertEqual(False, t.done)
         t.save()
         self.assertEqual(0, Task.objects.filter(done='True').count())
@@ -87,10 +131,10 @@ class TaskHasDone(TestCase):
         self.assertEqual(1, Task.objects.filter(done='True').count())
         
         
-class TaskHasAStartDate(TestCase):
+class TaskHasAStartDate(YataTestCase):
     def runTest(self):
         aDate = datetime.date(2010,01,19)
-        t = Task(description = "Has a start date", start_date = aDate)
+        t = self.new_task(description = "Has a start date", start_date = aDate)
         t.save()
         self.assertEqual(1, Task.objects.filter(start_date__gte = aDate).count())
         self.assertEqual(0, Task.objects.filter(start_date__lt = aDate).count())
@@ -112,9 +156,9 @@ class TestRepetitionDate(TestCase):
         self.assertEqual(datetime.date(2012,1,15), next_date(datetime.date(2011,12,15), 1, 'M'))
 
         
-class MarkingARepeatableTaskCreatesANewCopy(TestCase):
+class MarkingARepeatableTaskCreatesANewCopy(YataTestCase):
     def runTest(self):
-        t = Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
+        t = self.new_task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
         t.save()
         self.assertEqual(1, Task.objects.exclude(done__exact = True).count())
         self.assertEqual(0, Task.objects.filter(done__exact = True).count())
@@ -126,27 +170,27 @@ class MarkingARepeatableTaskCreatesANewCopy(TestCase):
         t = tasks[0]
         self.assertEqual(7, (t.due_date - datetime.date.today()).days)
         
-class TasksNotRepeatableIfNotCorrectlyDefined(TestCase):
+class TasksNotRepeatableIfNotCorrectlyDefined(YataTestCase):
     def runTest(self):
-        t = Task(description = 'Not really repeatable', repeat_nb = None, repeat_type = 'W')
+        t = self.new_task(description = 'Not really repeatable', repeat_nb = None, repeat_type = 'W')
         t.mark_done()
-        t = Task(description = 'Not really repeatable', repeat_nb = 1, repeat_type = None)
+        t = self.new_task(description = 'Not really repeatable', repeat_nb = 1, repeat_type = None)
         t.mark_done()
 
         
                 
-class CheckIsRepeating(TestCase):
+class CheckIsRepeating(YataTestCase):
     def runTest(self):
-            self.assertTrue(not Task(repeat_type = 'D'               ).is_repeating())
-            self.assertTrue(not Task(repeat_type = 'D', repeat_nb = 0).is_repeating())
-            self.assertTrue(not Task(                   repeat_nb = 1).is_repeating())
-            self.assertTrue(    Task(repeat_type = 'D', repeat_nb = 1).is_repeating())
+            self.assertTrue(not self.new_task(repeat_type = 'D'               ).is_repeating())
+            self.assertTrue(not self.new_task(repeat_type = 'D', repeat_nb = 0).is_repeating())
+            self.assertTrue(not self.new_task(                   repeat_nb = 1).is_repeating())
+            self.assertTrue(    self.new_task(repeat_type = 'D', repeat_nb = 1).is_repeating())
         
         
-class RepeatingTasksTests(TestCase):
+class RepeatingTasksTests(YataTestCase):
 
     def a_repeating_task(self):
-        return Task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
+        return self.new_task(description = 'Repeatable', repeat_nb = 1, repeat_type = 'W')
 
     def mark_done_and_get_repeated(self, t):
         self.assertEqual(0, Task.objects.exclude(done__exact = True).count())
@@ -191,14 +235,14 @@ class DatesForTasksCreatedFromRepeating(RepeatingTasksTests):
 class DatesForTasksRepeatingFromDueDate(RepeatingTasksTests):
 
     def a_task_repeating_from_due_date(self):
-        return Task(description = 'Repeating from due_date', 
-                     repeat_nb = 1, 
-                     repeat_type = 'W', 
-                     due_date = datetime.date(2010,04,23),
-                     repeat_from_due_date = True)
+        return self.new_task(description = 'Repeating from due_date', 
+                              repeat_nb = 1, 
+                              repeat_type = 'W', 
+                              due_date = datetime.date(2010,04,23),
+                              repeat_from_due_date = True)
     
     def test_TasksUsuallyDontRepeatFromDueDate(self):
-        t = Task(description = 'A task');
+        t = self.new_task(description = 'A task');
         self.assertFalse(t.repeat_from_due_date);
         
     def test_RepeatingWithDueDateGetsADueDate(self):
@@ -212,8 +256,9 @@ class DatesForTasksRepeatingFromDueDate(RepeatingTasksTests):
 
         
         
-class TestContext(TestCase):
+class TestContext(YataTestCase):
     def setUp(self):
+        YataTestCase.setUp(self)
         c = Context(title = 'Context')
         c.save()
 
@@ -224,26 +269,27 @@ class TestContext(TestCase):
 
     def test_task_can_have_a_context(self):
         c = Context.objects.get(title__exact = 'Context')
-        t = Task(description = 'a task', context = c)
+        t = self.new_task(description = 'a task', context = c)
         self.assertEqual(t.context.title, 'Context')
         
         
         
-class TaskHasAPriority(TestCase):
+class TaskHasAPriority(YataTestCase):
     def test_can_have_positive_priority(self):
         prio = 1
-        t = Task(description = "something", priority = 1)
+        t = self.new_task(description = "something", priority = 1)
         t.save();
         self.assertEqual(1, Task.objects.filter(priority__gte=1).count())
 
         
         
-class TaskHasImportance(TestCase):
+class TaskHasImportance(YataTestCase):
 
     def setUp(self):
+        YataTestCase.setUp(self)
         d = tomorrow()
-        self.t1 = Task(description='T1')
-        self.t2 = Task(description='T2', due_date=d)
+        self.t1 = self.new_task(description='T1')
+        self.t2 = self.new_task(description='T2', due_date=d)
         
     def test_task_is_more_important_if_due_date(self):
         self.assertTrue(self.t1.importance() < self.t2.importance())
@@ -321,4 +367,5 @@ class CSS_class_test(TestCase):
         self.assertEqual('prio-high',   self.high.css_prio_class())
         self.assertEqual('prio-medium', self.medium.css_prio_class())
         self.assertEqual('',            self.low.css_prio_class())
+    
     
