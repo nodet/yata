@@ -7,6 +7,7 @@ from yata.test_utils import today, tomorrow, yesterday, flatten
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.test.client import Client
 import datetime
 import unittest
 import sys
@@ -18,6 +19,8 @@ class YataTestCase(TestCase):
         self.u1 = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
         self.u2 = User.objects.create_user('test2', 'test2@yata.com.invalid', 'test2');
         self.user = authenticate(username='test1', password='test1')
+        self.client = Client()
+        self.client.get('/yata/login/')
         
     def new_task(self, 
                   description = None, 

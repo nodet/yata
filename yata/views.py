@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
@@ -32,8 +33,7 @@ def index(request):
     contexts_to_display = request.session.get('contexts_to_display', [])
     # Need to ensure something is put in the session so that it's saved.
     request.session['contexts_to_display'] = contexts_to_display
-
-
+    
     def build_future_menu(chosen):
         return [ 'Future tasks', chosen, [
                     ('Hide', reverse('hide-future-tasks')),
@@ -140,7 +140,9 @@ def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, i
     if request.method == 'POST':
         form = the_form_class(request.POST, instance=c)
         if form.is_valid():
-            form.save()
+            the_object = form.save(commit=False)
+            the_object.user = request.session.get('user', None)
+            the_object.save()
             return HttpResponseRedirect(reverse('yata.views.index'))
     else:
         form = the_form_class(instance = c)
@@ -212,3 +214,16 @@ def xml_export(request):
     response = HttpResponse(the_xml, mimetype="text/xml")
     response['Content-Disposition'] = 'attachment; filename=yata.xml'
     return response
+
+    
+def login(request):
+    user = request.session.get('user', None)
+
+    user = User.objects.get(username = 'test1')
+    if user is None:
+        user = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
+    
+    # Need to ensure something is put in the session so that it's saved.
+    request.session['user'] = user
+    return HttpResponseRedirect(reverse('yata.views.index'))
+    

@@ -109,8 +109,9 @@ class MarkNotDoneTest(YataTestCase):
 
         
 class AddTaskViewTest(YataTestCase):
+
     def test_get(self):
-        response = Client().get('/yata/task/new/')
+        response = self.client.get('/yata/task/new/')
         self.assertEqual(response.status_code, 200)
         
     def test_post(self):
@@ -121,7 +122,7 @@ class AddTaskViewTest(YataTestCase):
         repeat_nb = 1
         repeat_type = 'W'
         note = 'the note...'
-        response = Client().post('/yata/task/new/', {
+        response = self.client.post('/yata/task/new/', {
             'description': desc,
             'priority': prio,
             'start_date': sdate,
@@ -150,7 +151,7 @@ class AddTaskViewTest(YataTestCase):
         repeat_nb = 1
         repeat_type = 'W'
         note = 'the note...'
-        response = Client().post('/yata/task/new/', {
+        response = self.client.post('/yata/task/new/', {
             'description': desc,
             'priority': prio
         })
@@ -173,7 +174,8 @@ class EditViewTest(YataTestCase):
         t = self.new_task(description = "something to do")
         t.save()
     def runTest(self):
-        c = Client()
+        c = self.client
+        self.assertFalse(c.session.get('user', None) is None)
         response = c.get('/yata/')
         self.assertTrue('/yata/task/1/edit/' in response.content)
         response = c.get('/yata/task/1/edit/')
@@ -187,7 +189,7 @@ class EditViewTest(YataTestCase):
         type = 'W'
         done = True
         note = 'the note...'
-        response = Client().post('/yata/task/1/edit/', {
+        response = c.post('/yata/task/1/edit/', {
             'description': ndesc,
             'priority': prio,
             'start_date': sdate,
@@ -563,3 +565,15 @@ class CheckForURLsInFooter(TestCase):
         self.assertTrue('<a href="/admin/yata/task">Admin</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/import/">Import tasks...</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/export/">Export tasks...</a>' in self.response.content)
+
+
+        
+        
+class LoginViews(YataTestCase):
+
+    def test_exists_login_view(self):
+        client = Client()
+        response = client.get('/yata/login/')
+        self.assertFalse(client.session.get('user', None) is None)
+    
+    

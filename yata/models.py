@@ -25,7 +25,7 @@ class Task(models.Model):
         (-1, 'Negative'),
     )
 
-    user = models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(User)
     description = models.CharField(max_length = 200)
     priority = models.SmallIntegerField(choices=PRIO_CHOICES, default=0)
     context = models.ForeignKey('Context', null = True, blank = True)

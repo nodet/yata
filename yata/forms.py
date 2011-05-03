@@ -5,6 +5,8 @@ from yata.models import Task, Context
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
+        exclude = ('user',)
+        
     description = forms.CharField(widget=forms.TextInput(attrs={'size':'100', 'id':'focused'}))
     note        = forms.CharField(widget=forms.Textarea(attrs={'cols':'81', 'rows':'10'}),
                                    required=False)
