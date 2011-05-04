@@ -7,6 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',    
     (r'^yata/', include('yata.urls')),
+    (r'^yata/accounts/login/$', 'django.contrib.auth.views.login'),
+    (r'^yata/accounts/logout/$', 'django.contrib.auth.views.logout', {'template_name': 'registration/logout.html'}),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),

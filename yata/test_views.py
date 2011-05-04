@@ -583,18 +583,13 @@ class LoginViews(YataTestCase):
 
     def test_exists_login_view(self):
         client = Client()
-        # New client, thus no session yet...
-        self.assertTrue(client.session.get('user', 'nothing') is 'nothing')
-        
-        response = client.get('/yata/login/')
-        self.assertFalse(client.session.get('user', None) is None)
+        response = client.get('/yata/accounts/login/')
+        self.assertEqual(response.status_code, 200)
 
     def test_exists_logout_view(self):
         client = Client()
-        client.get('/yata/login/')
-        self.assertFalse(client.session.get('user', None) is None)
-        response = client.get('/yata/logout/')
-        self.assertTrue(client.session.get('user', 'something') is None)
+        response = client.get('/yata/accounts/logout/')
+        self.assertEqual(response.status_code, 200)
 
         
         

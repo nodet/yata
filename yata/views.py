@@ -1,3 +1,5 @@
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.template import Context, loader, RequestContext
@@ -10,7 +12,7 @@ from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 
 import datetime
 
-
+#@login_required
 def index(request):
 
     def build_context_menu(chosen):
@@ -220,16 +222,22 @@ def xml_export(request):
 
     
 def yata_login(request):
+
     user = User.objects.all()[0]
     if user is None:
         user = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
     
-    # Need to ensure something is put in the session so that it's saved.
-    request.session['user'] = user
-    return HttpResponseRedirect(reverse('yata.views.index'))
-
+    user = authenticate(username='test1', password='test1')
+    if user is not None:
+        login(request, user)
+        # Need to ensure something is put in the session so that it's saved.
+        request.session['user'] = user
+        return HttpResponseRedirect(reverse('yata.views.index'))
+    else:
+        return HttpResponseRedirect(reverse('yata.views.yata_login'))
     
 def yata_logout(request):
+    return logout(request)
     request.session['user'] = None
     return HttpResponseRedirect(reverse('yata.views.index'))
     

@@ -106,3 +106,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'yata',
 )
+
+LOGIN_URL='/yata/accounts/login/'
+LOGIN_REDIRECT_URL='/yata/'
