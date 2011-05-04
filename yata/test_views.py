@@ -585,7 +585,13 @@ class LoginViews(YataTestCase):
         client = Client()
         response = client.get('/yata/login/')
         self.assertFalse(client.session.get('user', None) is None)
-    
+
+    def test_exists_logout_view(self):
+        client = Client()
+        response = client.get('/yata/logout/')
+        #self.assertFalse(client.session.get('user', None) is None)
+
+        
 class MainViewShowsOnlyTasksFromCurrentUser(MainViewTestBase):
     def setUp(self):
         MainViewTestBase.setUp(self)

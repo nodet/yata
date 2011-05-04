@@ -229,3 +229,9 @@ def login(request):
     # Need to ensure something is put in the session so that it's saved.
     request.session['user'] = user
     return HttpResponseRedirect(reverse('yata.views.index'))
+
+    
+    
+def logout(request):
+    return HttpResponseRedirect(reverse('yata.views.index'))
+    
