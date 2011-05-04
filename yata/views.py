@@ -233,5 +233,6 @@ def login(request):
     
     
 def logout(request):
+    request.session['user'] = None
     return HttpResponseRedirect(reverse('yata.views.index'))
     
