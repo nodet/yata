@@ -3,8 +3,8 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('yata.views',
     # Example:
     (r'^$',                                  'index'),
-    (r'^login/$',                            'login'),
-    (r'^logout/$',                           'logout'),
+    (r'^login/$',                            'yata_login'),
+    (r'^logout/$',                           'yata_logout'),
 
  url(r'^task/new/$',                         'edit_task', name='add-task'),
     (r'^task/(?P<id>\d+)/edit/$',            'edit_task'),

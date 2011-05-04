@@ -219,7 +219,7 @@ def xml_export(request):
     return response
 
     
-def login(request):
+def yata_login(request):
     user = User.objects.all()[0]
     if user is None:
         user = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
@@ -229,8 +229,7 @@ def login(request):
     return HttpResponseRedirect(reverse('yata.views.index'))
 
     
-    
-def logout(request):
+def yata_logout(request):
     request.session['user'] = None
     return HttpResponseRedirect(reverse('yata.views.index'))
     
