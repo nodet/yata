@@ -220,8 +220,6 @@ def xml_export(request):
 
     
 def login(request):
-    user = request.session.get('user', None)
-
     user = User.objects.all()[0]
     if user is None:
         user = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
