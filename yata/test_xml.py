@@ -290,7 +290,7 @@ Python</note>
 <repeat_from_due_date>Yes</repeat_from_due_date>
 </item>
 </xml>"""
-        c = Context(title = 'C2')
+        c = self.new_context(title = 'C2')
         t = self.new_task(
             description = 't1',
             priority = 3,

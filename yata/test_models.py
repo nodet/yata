@@ -45,7 +45,10 @@ class YataTestCase(TestCase):
                      priority = priority,
                      done = done,
                      note = note)
-        
+
+    def new_context(self, title):
+        return Context(user = self.user, title = title)
+                     
         
         
 class Users_and_authentication(YataTestCase):
@@ -263,7 +266,7 @@ class DatesForTasksRepeatingFromDueDate(RepeatingTasksTests):
 class TestContext(YataTestCase):
     def setUp(self):
         YataTestCase.setUp(self)
-        c = Context(title = 'Context')
+        c = self.new_context(title = 'Context')
         c.save()
 
     def test_can_retrieve(self):

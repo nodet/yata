@@ -226,6 +226,7 @@ def next_date(aDate, nb, repetition_type):
         
 class Context(models.Model):
 
+    user = models.ForeignKey(User)
     title = models.CharField(max_length = 20)
 
     def __unicode__(self):

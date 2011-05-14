@@ -14,7 +14,10 @@ class AddTaskForm(forms.ModelForm):
 class AddContextForm(forms.ModelForm):
     class Meta:
         model = Context
+        exclude = ('user',)
+        
     title = forms.CharField(widget=forms.TextInput(attrs={'size':'50', 'id':'focused'}))
+        
         
 class UploadXMLForm(forms.Form):
     file  = forms.FileField()

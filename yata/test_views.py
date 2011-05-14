@@ -104,14 +104,7 @@ class MarkNotDoneTest(YataTestCase):
         self.assertEqual(1, len(get_tasks(response)))
 
 
-class TaskViewTestBase(YataTestCase):
-
-    def setUp(self):
-        YataTestCase.setUp(self)
-        self.client.get('/yata/login/')
-
-        
-class AddTaskViewTest(TaskViewTestBase):
+class AddTaskViewTest(YataTestCase):
 
     def test_get(self):
         response = self.client.get('/yata/task/new/')
@@ -171,14 +164,13 @@ class AddTaskViewTest(TaskViewTestBase):
         
         
         
-class EditViewTest(TaskViewTestBase):
+class EditViewTest(YataTestCase):
     def setUp(self):
-        TaskViewTestBase.setUp(self)
+        YataTestCase.setUp(self)
         t = self.new_task(description = "something to do")
         t.save()
     def runTest(self):
         c = self.client
-        self.assertFalse(c.session.get('user', None) is None)
         response = c.get('/yata/')
         self.assertTrue('/yata/task/1/edit/' in response.content)
         response = c.get('/yata/task/1/edit/')
@@ -242,9 +234,9 @@ class MainViewMenusTests(YataTestCase):
 
     def setUp(self):
         YataTestCase.setUp(self)
-        c1 = Context(title = 'C1')
+        c1 = self.new_context(title = 'C1')
         c1.save()
-        c2 = Context(title = 'C2')
+        c2 = self.new_context(title = 'C2')
         c2.save()
         self.response = self.client.get('/yata/')
 
@@ -280,9 +272,9 @@ class FilterTaskByContextSetup(YataTestCase):
 
     def setUp(self):
         YataTestCase.setUp(self)
-        c1 = Context(title = 'C1')
+        c1 = self.new_context(title = 'C1')
         c1.save()
-        c2 = Context(title = 'C2')
+        c2 = self.new_context(title = 'C2')
         c2.save()
         t = self.new_task(description = "In no context")
         t.save()
@@ -405,10 +397,10 @@ class SelectContextTests(FilterTaskByContextSetup):
             self.assertFalse(t.context)
 
             
-class AddContextViewTest(TestCase):
-    def runTest(self):
+class AddContextViewTest(YataTestCase):
+    def test_can_create_context_with_view(self):
         title = 'New context'
-        response = Client().post('/yata/context/add/', {
+        response = self.client.post('/yata/context/add/', {
             'title': title,
         })
         all = Context.objects.all()
@@ -516,9 +508,9 @@ class HideOrShowTasksDone(YataTestCase):
 class AddTaskHasDefaultContext(YataTestCase):
     def setUp(self):
         YataTestCase.setUp(self)
-        self.c1 = Context(title = 'C1')
+        self.c1 = self.new_context(title = 'C1')
         self.c1.save()
-        self.c2 = Context(title = 'C2')
+        self.c2 = self.new_context(title = 'C2')
         self.c2.save()
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
@@ -585,19 +577,28 @@ class LoginViews(YataTestCase):
     
         
 
-class MainViewShowsOnlyTasksFromCurrentUser(MainViewTestBase):
+class MainViewShowsOnlyItemsFromCurrentUser(MainViewTestBase):
     def setUp(self):
         MainViewTestBase.setUp(self)
-        # A task owned by u2, while the current user is u1
+        # Items owned by u2, while the current user is u1
         Task(user = self.u2, description = 'belongs to u2').save()
+        Context(user = self.u2, title = 'c2').save()
 
     def test_show_only_tasks_from_user(self):
         all_users = Task.objects.all()
         for_user = Task.objects.filter(user = self.u1).all()
         self.assertEqual(all_users.count(), for_user.count() + 1)
         
-        self.client.get('/yata/login/')
-        self.assertEqual(self.u1, self.client.session['user'])
         response = self.client.get('/yata/')
         tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
+
+    def test_show_only_contexts_from_user(self):
+        all_users = Task.objects.all()
+        for_user = Task.objects.filter(user = self.u1).all()
+        self.assertEqual(all_users.count(), for_user.count() + 1)
+        
+        response = self.client.get('/yata/')
+        tasks = get_tasks(response)
+        self.assertEqual(3, len(tasks))
+        

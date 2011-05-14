@@ -65,7 +65,7 @@ def index(request):
     show_tasks_done = request.session.get('show_tasks_done', 'Active')
     request.session['show_tasks_done'] = show_tasks_done
 
-    user = request.session.get('user', None)
+    user = request.user
     query_set = Task.objects
     if not user is None:
         query_set = query_set.filter(user = user)
@@ -146,7 +146,7 @@ def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, i
         form = the_form_class(request.POST, instance=c)
         if form.is_valid():
             the_object = form.save(commit=False)
-            the_object.user = request.session.get('user', None)
+            the_object.user = request.user
             the_object.save()
             return HttpResponseRedirect(reverse('yata.views.index'))
     else:
@@ -205,7 +205,7 @@ def xml_import(request):
     if request.method == 'POST':
         form = UploadXMLForm(request.POST, request.FILES)
         if form.is_valid():
-            create_tasks_from_xml(request.session.get('user', None), request.FILES['file'].read())
+            create_tasks_from_xml(request.user, request.FILES['file'].read())
             return HttpResponseRedirect(reverse('yata.views.index'))
     else:
         form = UploadXMLForm()
@@ -220,24 +220,4 @@ def xml_export(request):
     response['Content-Disposition'] = 'attachment; filename=yata.xml'
     return response
 
-    
-def yata_login(request):
-
-    user = User.objects.all()[0]
-    if user is None:
-        user = User.objects.create_user('test1', 'test1@yata.com.invalid', 'test1');
-    
-    user = authenticate(username='test1', password='test1')
-    if user is not None:
-        login(request, user)
-        # Need to ensure something is put in the session so that it's saved.
-        request.session['user'] = user
-        return HttpResponseRedirect(reverse('yata.views.index'))
-    else:
-        return HttpResponseRedirect(reverse('yata.views.yata_login'))
-    
-def yata_logout(request):
-    return logout(request)
-    request.session['user'] = None
-    return HttpResponseRedirect(reverse('yata.views.index'))
     

@@ -63,7 +63,7 @@ def create_tasks_from_xml(user, the_xml):
         if contexts.exists():
             c = contexts[0]
         else:
-            c = Context(title = context_name)
+            c = Context(user = user, title = context_name)
             c.save()
         return c
 
