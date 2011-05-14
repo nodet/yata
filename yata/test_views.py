@@ -23,8 +23,7 @@ class MainViewTestBase(YataTestCase):
         
 class MainViewTest(MainViewTestBase):        
     def runTest(self):
-        c = Client()
-        response = c.get('/yata/')
+        response = self.client.get('/yata/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         tasks = get_tasks(response)
@@ -33,8 +32,7 @@ class MainViewTest(MainViewTestBase):
       
 class MainViewHasTasksSorted(MainViewTestBase):
     def runTest(self):
-        c = Client()
-        response = c.get('/yata/')
+        response = self.client.get('/yata/')
         tasks = get_tasks(response)
         self.assertEqual(3, len(tasks))
         self.assertEqual(sorted(tasks, Task.compare), tasks)
@@ -47,8 +45,7 @@ class MainViewShowsOnlyNotDoneTasks(MainViewTestBase):
         t = self.new_task(description = "Another that's done", done = True)
         t.save()
     def runTest(self):
-        c = Client()
-        response = c.get('/yata/')
+        response = self.client.get('/yata/')
         tasks = get_tasks(response)
         for t in tasks:
             self.assertFalse(t.done)
@@ -72,8 +69,7 @@ class MainViewDoesNotShowTasksNotStartedTest(YataTestCase):
         t = self.new_task(description = "something to do in two days", start_date = tomorrow(tomorrow()))
         t.save()
     def runTest(self):
-        c = Client()
-        response = c.get('/yata/')
+        response = self.client.get('/yata/')
         self.assertEqual(response.status_code, 200)
         tasks = get_tasks(response)
         self.assertEqual(1, len(tasks))
@@ -85,10 +81,9 @@ class MarkDoneTest(YataTestCase):
         t = self.new_task(description = "something to do")
         t.save()
     def runTest(self):
-        c = Client()
-        response = c.get('/yata/')
+        response = self.client.get('/yata/')
         self.assertTrue('/yata/task/1/mark_done/' in response.content)
-        response = c.get('/yata/task/1/mark_done/', follow=True)
+        response = self.client.get('/yata/task/1/mark_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(0, len(get_tasks(response)))
@@ -99,12 +94,11 @@ class MarkNotDoneTest(YataTestCase):
         t = self.new_task(description = "something to do", done = True)
         t.save()
     def runTest(self):
-        c = Client()
         # Show all the tasks...
-        response = c.get('/yata/done/all/', follow=True)
+        response = self.client.get('/yata/done/all/', follow=True)
         # ... else tests below would fail!
         self.assertTrue('/yata/task/1/mark_not_done/' in response.content)
-        response = c.get('/yata/task/1/mark_not_done/', follow=True)
+        response = self.client.get('/yata/task/1/mark_not_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, len(get_tasks(response)))
@@ -114,7 +108,6 @@ class TaskViewTestBase(YataTestCase):
 
     def setUp(self):
         YataTestCase.setUp(self)
-        self.client = Client()
         self.client.get('/yata/login/')
 
         
@@ -240,7 +233,7 @@ def get_menu(response, i):
 def get_menu_selection(response, i):
     return get_menus(response)[i][1]
        
-class MainViewMenusTests(TestCase):
+class MainViewMenusTests(YataTestCase):
 
     # menus  ::=  [ menu ]
     # menu   ::=  [ title, selected_value, menu_list ]
@@ -248,12 +241,12 @@ class MainViewMenusTests(TestCase):
     # item      ::=  ( display,  URL )
 
     def setUp(self):
+        YataTestCase.setUp(self)
         c1 = Context(title = 'C1')
         c1.save()
         c2 = Context(title = 'C2')
         c2.save()
-        self.c = Client()
-        self.response = self.c.get('/yata/')
+        self.response = self.client.get('/yata/')
 
     def test_has_menus(self):
         self.assertTrue(not get_menus(self.response) is None)
@@ -297,7 +290,6 @@ class FilterTaskByContextSetup(YataTestCase):
         t.save()
         t = self.new_task(description = "In context 'C2'", context = c2)
         t.save()
-        self.client = Client()
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
         
@@ -432,7 +424,6 @@ class HideOrShowFutureTasksSetup(YataTestCase):
         t.save()
         t = self.new_task(description = "Future", start_date = tomorrow(tomorrow()))
         t.save()
-        self.client = Client()
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
         
@@ -483,7 +474,6 @@ class HideOrShowTasksDone(YataTestCase):
         t.save()
         t = self.new_task(description = "Done", done = True)
         t.save()
-        self.client = Client()
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
         
@@ -523,13 +513,13 @@ class HideOrShowTasksDone(YataTestCase):
         self.assertEqual(2, len(tasks))
         
     
-class AddTaskHasDefaultContext(TestCase):
+class AddTaskHasDefaultContext(YataTestCase):
     def setUp(self):
+        YataTestCase.setUp(self)
         self.c1 = Context(title = 'C1')
         self.c1.save()
         self.c2 = Context(title = 'C2')
         self.c2.save()
-        self.client = Client()
         # Make sure we call the view first so that it saves a session
         self.client.get('/yata/')
 
@@ -564,10 +554,11 @@ class AddTaskHasDefaultContext(TestCase):
 
 
         
-class CheckForURLsInFooter(TestCase):
+class CheckForURLsInFooter(YataTestCase):
 
     def setUp(self):
-        self.response = Client().get('/yata/')
+        YataTestCase.setUp(self)
+        self.response = self.client.get('/yata/')
 
     def test_for_URLs_in_footer(self):
         self.assertTrue('<a href="/yata/task/new/">Add task</a>' in self.response.content)
@@ -577,23 +568,23 @@ class CheckForURLsInFooter(TestCase):
         self.assertTrue('<a href="/yata/xml/export/">Export tasks...</a>' in self.response.content)
 
 
-        
-        
 class LoginViews(YataTestCase):
 
     def test_exists_login_view(self):
-        client = Client()
-        response = client.get('/yata/accounts/login/')
+        response = self.client.get('/yata/accounts/login/')
         self.assertEqual(response.status_code, 200)
 
     def test_exists_logout_view(self):
-        client = Client()
-        response = client.get('/yata/accounts/logout/')
+        response = self.client.get('/yata/accounts/logout/')
         self.assertEqual(response.status_code, 200)
 
+    def test_main_view_requires_login(self):
+        # Create a new client: self.client is logged in...
+        response = Client().get('/yata/', follow=True)
+        self.assertEqual(response.redirect_chain, [(u'http://testserver/yata/accounts/login/?next=/yata/',302)])
+    
         
-        
-        
+
 class MainViewShowsOnlyTasksFromCurrentUser(MainViewTestBase):
     def setUp(self):
         MainViewTestBase.setUp(self)

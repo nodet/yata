@@ -12,7 +12,7 @@ from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 
 import datetime
 
-#@login_required
+@login_required
 def index(request):
 
     def build_context_menu(chosen):
