@@ -19,7 +19,7 @@ def index(request):
         l = []
         l.append(('All', reverse('yata.views.select_context_all')))
         l.append(('None', reverse('yata.views.select_context_none')))
-        for c in Context.objects.all():
+        for c in Context.objects.filter(user = request.user):
             l.append((c.title, reverse('yata.views.select_context', args=[c.id,])))
         return [ 'Context to display', chosen, l ]
 

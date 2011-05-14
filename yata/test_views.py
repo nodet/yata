@@ -10,6 +10,12 @@ from django.test.client import Client
 
 def get_tasks(response):
     return flatten(response.context['tasks'])
+
+def get_contexts(response):
+    # get the contexts in the menu, remove the first two items, 
+    # return the first element of each of the remaining pairs
+    return [p[0] for p in response.context['menus'][0][2][2:]]
+
     
 class MainViewTestBase(YataTestCase):
     def setUp(self):
@@ -582,7 +588,7 @@ class MainViewShowsOnlyItemsFromCurrentUser(MainViewTestBase):
         MainViewTestBase.setUp(self)
         # Items owned by u2, while the current user is u1
         Task(user = self.u2, description = 'belongs to u2').save()
-        Context(user = self.u2, title = 'c2').save()
+        Context(user = self.u2, title = 'incorrect context').save()
 
     def test_show_only_tasks_from_user(self):
         all_users = Task.objects.all()
@@ -594,11 +600,11 @@ class MainViewShowsOnlyItemsFromCurrentUser(MainViewTestBase):
         self.assertEqual(3, len(tasks))
 
     def test_show_only_contexts_from_user(self):
-        all_users = Task.objects.all()
-        for_user = Task.objects.filter(user = self.u1).all()
+        all_users = Context.objects.all()
+        for_user = Context.objects.filter(user = self.u1).all()
         self.assertEqual(all_users.count(), for_user.count() + 1)
         
         response = self.client.get('/yata/')
-        tasks = get_tasks(response)
-        self.assertEqual(3, len(tasks))
+        contexts = get_contexts(response)
+        self.assertFalse('incorrect context' in contexts)
         
