@@ -1,16 +1,17 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from django.template import Context, loader, RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template import Context, loader, RequestContext
+
 from yata.models import Task, Context, group_by
 from yata.forms import AddTaskForm, AddContextForm, UploadXMLForm
 from yata.xml_io import create_tasks_from_xml, create_xml_from_tasks
 
 import datetime
+
 
 @login_required
 def index(request):
@@ -65,11 +66,7 @@ def index(request):
     show_tasks_done = request.session.get('show_tasks_done', 'Active')
     request.session['show_tasks_done'] = show_tasks_done
 
-    user = request.user
-    query_set = Task.objects
-    if not user is None:
-        query_set = query_set.filter(user = user)
-    tasks = [t for t in query_set.all()
+    tasks = [t for t in Task.objects.for_user(request.user).all()
                 if show_task(t, show_tasks_done)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
@@ -184,9 +181,12 @@ def edit_context(request, id = None):
 
 def delete_context(request, id):
     c = get_object_or_404(Context, pk=id)
+    #if c.user != request.user:
+    #    raise Http404
+    
     # in next Django version, use on_delete on the context FK in Task
     # and remove this code
-    for t in Task.objects.filter(context = c):
+    for t in Task.objects.for_user(request.user).filter(context = c):
         t.context = None
         t.save()
     c.delete()
@@ -194,6 +194,8 @@ def delete_context(request, id):
 
 def delete_task(request, id):
     t = get_object_or_404(Task, pk=id)
+    #if t.user != request.user:
+    #    raise Http404
     t.delete()
     return HttpResponseRedirect(reverse('yata.views.index'))
 

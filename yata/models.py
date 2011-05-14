@@ -9,7 +9,14 @@ import sys
 import math
 
 
+class ForUserManager(models.Manager):
+    def for_user(self, user):
+        return self.filter(user=user)
+
 class Task(models.Model):
+
+    # Replace the default manager with our own...
+    objects = ForUserManager()
 
     REPEAT_CHOICES = (
         ('D', 'day'),
