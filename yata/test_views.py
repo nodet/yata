@@ -175,7 +175,8 @@ class EditViewTest(YataTestCase):
         YataTestCase.setUp(self)
         t = self.new_task(description = "something to do")
         t.save()
-    def runTest(self):
+        
+    def test_edit_view_saves_the_changes(self):
         c = self.client
         response = c.get('/yata/')
         self.assertTrue('/yata/task/1/edit/' in response.content)
@@ -210,6 +211,14 @@ class EditViewTest(YataTestCase):
         self.assertEqual(nb, t.repeat_nb)
         self.assertEqual(type, t.repeat_type)
         self.assertEqual(note, t.note)
+        
+    def test_edit_view_returns_404_for_incorrect_user(self):
+        self.client.login(username='test2', password='test2')
+        response = self.client.get('/yata/task/1/edit/')
+        self.assertEqual(response.status_code, 404)
+    
+        
+        
 
 class UrlForActionIsProvidedToEditView(YataTestCase):
     def setUp(self):
@@ -217,7 +226,7 @@ class UrlForActionIsProvidedToEditView(YataTestCase):
         t = self.new_task(description = "UrlForActionIsProvidedToEditView")
         t.save()
     def runTest(self):
-        c = Client()
+        c = self.client
         url = '/yata/task/1/edit/'
         response = c.get(url)
         self.assertEqual(url, response.context['action'])

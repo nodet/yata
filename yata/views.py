@@ -139,6 +139,8 @@ def mark_done(request, id, b = True):
 
 def _edit_any_form(request, the_class, the_form_class, view_func, delete_func, id = None):
     c = get_object_or_404(the_class, pk=id) if id else None
+    if c and c.user != request.user:
+        raise Http404
     if request.method == 'POST':
         form = the_form_class(request.POST, instance=c)
         if form.is_valid():
