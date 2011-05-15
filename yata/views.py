@@ -132,6 +132,8 @@ def show_tasks_done(request, b):
 
 def mark_done(request, id, b = True):
     t = get_object_or_404(Task, pk=id)
+    if t.user != request.user:
+        raise Http404
     t.mark_done(b)
     return HttpResponseRedirect(reverse('yata.views.index'))
 

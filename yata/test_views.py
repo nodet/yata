@@ -82,24 +82,35 @@ class MainViewDoesNotShowTasksNotStartedTest(YataTestCase):
         
        
 class MarkDoneTest(YataTestCase):
+
     def setUp(self):
         YataTestCase.setUp(self)
         t = self.new_task(description = "something to do")
         t.save()
-    def runTest(self):
+        
+    def test_tasks_marked_done_do_not_show_up_any_more(self):
         response = self.client.get('/yata/')
         self.assertTrue('/yata/task/1/mark_done/' in response.content)
         response = self.client.get('/yata/task/1/mark_done/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(0, len(get_tasks(response)))
+        
+    def test_cant_mark_done_others_task(self):
+        self.client.login(username='test2', password='test2')
+        response = self.client.get('/yata/task/1/mark_done/', follow=True)
+        self.assertEqual(response.status_code, 404)
+    
 
+    
 class MarkNotDoneTest(YataTestCase):
+
     def setUp(self):
         YataTestCase.setUp(self)
         t = self.new_task(description = "something to do", done = True)
         t.save()
-    def runTest(self):
+        
+    def test_tasks_marked_not_done_show_up_again(self):
         # Show all the tasks...
         response = self.client.get('/yata/done/all/', follow=True)
         # ... else tests below would fail!
@@ -108,6 +119,11 @@ class MarkNotDoneTest(YataTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template.name, 'yata/index.html')
         self.assertEqual(1, len(get_tasks(response)))
+        
+    def test_cant_mark_not_done_others_task(self):
+        self.client.login(username='test2', password='test2')
+        response = self.client.get('/yata/task/1/mark_not_done/', follow=True)
+        self.assertEqual(response.status_code, 404)
 
 
 class AddTaskViewTest(YataTestCase):
