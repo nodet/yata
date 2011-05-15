@@ -66,7 +66,7 @@ def index(request):
     show_tasks_done = request.session.get('show_tasks_done', 'Active')
     request.session['show_tasks_done'] = show_tasks_done
 
-    tasks = [t for t in Task.objects.for_user(request.user).all()
+    tasks = [t for t in Task.objects.for_user(request.user)
                 if show_task(t, show_tasks_done)
                 if t.matches_contexts(contexts_to_display)
                 if show_future_tasks or t.can_start_now()]
