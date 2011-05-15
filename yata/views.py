@@ -209,6 +209,7 @@ def delete_task(request, id):
 
 
 
+@login_required
 def xml_import(request):
     if request.method == 'POST':
         form = UploadXMLForm(request.POST, request.FILES)

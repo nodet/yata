@@ -624,6 +624,14 @@ class LoginViews(YataTestCase):
         # Create a new client: self.client is logged in...
         response = Client().get('/yata/', follow=True)
         self.assertEqual(response.redirect_chain, [(u'http://testserver/yata/accounts/login/?next=/yata/',302)])
+        
+    def test_user_must_be_logged_to_import_tasks(self):
+        # Create a new client: self.client is logged in...
+        response = Client().get('/yata/xml/import', follow=True)
+        self.assertEqual(response.redirect_chain, [
+                ('http://testserver/yata/xml/import/', 301),
+                ('http://testserver/yata/accounts/login/?next=/yata/xml/import/',302)
+        ])
     
         
 
@@ -651,4 +659,3 @@ class MainViewShowsOnlyItemsFromCurrentUser(MainViewTestBase):
         response = self.client.get('/yata/')
         contexts = get_contexts(response)
         self.assertFalse('incorrect context' in contexts)
-        
