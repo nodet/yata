@@ -441,6 +441,11 @@ class SelectContextTests(FilterTaskByContextSetup):
         for t in tasks:
             self.assertFalse(t.context)
 
+    def test_cant_select_other_users_context(self):
+        self.client.login(username='test2', password='test2')
+        response = self.client.get('/yata/context/show/1/', follow=True)
+        self.assertEqual(response.status_code, 404)
+    
             
 class AddContextViewTest(YataTestCase):
     def test_can_create_context_with_view(self):

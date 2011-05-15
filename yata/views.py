@@ -105,6 +105,8 @@ def _select_context_helper(request, contexts):
 
 def select_context(request, context_id):
     c = get_object_or_404(Context, pk=context_id)
+    if c.user != request.user:
+        raise Http404
     return _select_context_helper(request, [c.title])
 
 def select_context_all(request):
