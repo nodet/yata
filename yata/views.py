@@ -86,6 +86,7 @@ def index(request):
         ('/admin/yata/task',  'Admin'),
         (reverse('yata.views.xml_import'), 'Import tasks...'),
         (reverse('yata.views.xml_export'), 'Export tasks...'),
+        ('/yata/accounts/logout/', 'Logout'),
     ] ]
     
     return render_to_response('yata/index.html', {

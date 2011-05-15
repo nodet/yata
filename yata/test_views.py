@@ -608,6 +608,7 @@ class CheckForURLsInFooter(YataTestCase):
         self.assertTrue('<a href="/admin/yata/task">Admin</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/import/">Import tasks...</a>' in self.response.content)
         self.assertTrue('<a href="/yata/xml/export/">Export tasks...</a>' in self.response.content)
+        self.assertTrue('<a href="/yata/accounts/logout/">Logout</a>' in self.response.content)
 
 
 class LoginViews(YataTestCase):
