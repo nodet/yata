@@ -368,6 +368,15 @@ class EditViewHasDeleteButton(FilterTaskByContextSetup):
         # We've just deleted a task!
         self.assertEqual(3, Task.objects.all().count())
 
+    def test_cant_delete_others_context(self):
+        # Log as another user
+        self.client.login(username='test2', password='test2')
+        # check can't delete first user's context
+        response = self.client.post('/yata/context/2/delete/', follow = True)
+        self.assertEqual(response.status_code, 404)
+        
+        
+        
     def test_delete_task(self):
         response = self.client.post('/yata/task/2/delete/', follow = True)
         self.assertEqual(response.status_code, 200)

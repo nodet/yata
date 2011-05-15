@@ -181,8 +181,8 @@ def edit_context(request, id = None):
 
 def delete_context(request, id):
     c = get_object_or_404(Context, pk=id)
-    #if c.user != request.user:
-    #    raise Http404
+    if c.user != request.user:
+        raise Http404
     
     # in next Django version, use on_delete on the context FK in Task
     # and remove this code
