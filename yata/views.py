@@ -194,8 +194,8 @@ def delete_context(request, id):
 
 def delete_task(request, id):
     t = get_object_or_404(Task, pk=id)
-    #if t.user != request.user:
-    #    raise Http404
+    if t.user != request.user:
+        raise Http404
     t.delete()
     return HttpResponseRedirect(reverse('yata.views.index'))
 
