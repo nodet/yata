@@ -635,7 +635,8 @@ class LoginViews(YataTestCase):
     
         
 
-class MainViewShowsOnlyItemsFromCurrentUser(MainViewTestBase):
+class ViewsShowOnlyItemsFromCurrentUser(MainViewTestBase):
+
     def setUp(self):
         MainViewTestBase.setUp(self)
         # Items owned by u2, while the current user is u1
@@ -659,3 +660,9 @@ class MainViewShowsOnlyItemsFromCurrentUser(MainViewTestBase):
         response = self.client.get('/yata/')
         contexts = get_contexts(response)
         self.assertFalse('incorrect context' in contexts)
+
+    def test_xml_exports_only_current_users_tasks(self):
+        response = self.client.get('/yata/xml/export/')
+        # U1 has only three tasks (the last one belongs to U2)
+        self.assertEqual(3, response.content.count('<item>'))
+        

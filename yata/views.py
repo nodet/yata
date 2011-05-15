@@ -224,7 +224,7 @@ def xml_import(request):
     }, context_instance=RequestContext(request))
 
 def xml_export(request):
-    the_xml = create_xml_from_tasks(Task.objects.all())
+    the_xml = create_xml_from_tasks(Task.objects.for_user(request.user))
     response = HttpResponse(the_xml, mimetype="text/xml")
     response['Content-Disposition'] = 'attachment; filename=yata.xml'
     return response
