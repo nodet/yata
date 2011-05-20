@@ -45,12 +45,13 @@
     <input type="submit" value="Save" />
     </form>
     
-    <form  action="{{ delete }}" method="post" 
-            OnSubmit="return confirmation();">
-    {% csrf_token %}
-    <input type="submit" value="Delete!">
-    </form>
-    
+    {% if delete %}
+        <form  action="{{ delete }}" method="post" 
+                OnSubmit="return confirmation();">
+        {% csrf_token %}
+        <input type="submit" value="Delete!">
+        </form>
+    {% endif %}
 
 </body>
 
