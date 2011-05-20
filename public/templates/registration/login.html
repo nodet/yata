@@ -2,6 +2,11 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+<p>
+Please enter your username and password below.<br>
+If you don't have an account yet, you can <a href="{% url add-user %}">create one</a>...
+</p>
+
 <form method="post" action="/yata/accounts/login/">
 {% csrf_token %}
 <table>

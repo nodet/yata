@@ -27,6 +27,6 @@ urlpatterns = patterns('yata.views',
  url(r'^done/no/$',                          'show_tasks_done', {'b': 'Active'}, name='show-active-tasks'),
  url(r'^done/all/$',                         'show_tasks_done', {'b': 'All'}, name='show-all-tasks'),
  
-    (r'^accounts/new/$',                      'edit_user'),
+ url(r'^accounts/new/$',                      'edit_user', name='add-user'),
 
 )

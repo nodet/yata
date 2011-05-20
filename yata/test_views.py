@@ -679,7 +679,10 @@ class UserViews(YataTestCase):
         response = self.client.get('/yata/accounts/new/')
         self.assertEqual(response.status_code, 200)
 
-    #def test_login_view_has_link_to_create_user_view(self):
+    def test_login_view_has_link_to_create_user_view(self):
+        response = self.client.get('/yata/accounts/login/')
+        self.assertTrue('/yata/accounts/new/' in response.content)
+    
     #def test_can_create_a_user_using_view(self):
     #def test_deleting_user_deletes_its_tasks_and_contexts(self)
     # rename all the 'accounts' URLs to 'account'
