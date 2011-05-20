@@ -667,3 +667,16 @@ class ViewsShowOnlyItemsFromCurrentUser(MainViewTestBase):
         # U1 has only three tasks (the last one belongs to U2)
         self.assertEqual(3, response.content.count('<item>'))
         
+        
+        
+class UserViews(YataTestCase):
+
+    def test_exists_create_user_view(self):
+        response = self.client.get('/yata/accounts/new/')
+        self.assertEqual(response.status_code, 200)
+
+    #def test_create_task_view_has_no_delete_button(self):
+    #def test_login_view_has_link_to_create_user_view(self):
+    #def test_can_create_a_user_using_view(self):
+    #def test_deleting_user_deletes_its_tasks_and_contexts(self)
+    # rename all the 'accounts' URLs to 'account'

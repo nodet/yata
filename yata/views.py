@@ -1,6 +1,7 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render_to_response
@@ -231,3 +232,10 @@ def xml_export(request):
     return response
 
     
+
+def edit_user(request, id = None):
+    #return _edit_any_form(request, Context, AddUserForm, edit_user, delete_user, id)
+    return _edit_any_form(request, Context, UserCreationForm, edit_user, None, id)
+
+def delete_user(request, id):
+    pass
