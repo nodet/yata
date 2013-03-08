@@ -7,6 +7,7 @@
 	<duedate/> 
 	<priority>High</priority> 
 	<note>En particulier, vérifier que les backups sont dupliqués sur l'autre disque</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Prévoir quoi faire en cas d'indisponibilité</title> 
@@ -15,6 +16,7 @@
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Backup XBMC settings and library</title> 
@@ -23,6 +25,7 @@
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Scanner tous les dossiers d'inscription des scouts</title> 
@@ -31,6 +34,7 @@
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Liste des changements d'adresse à prévoir</title> 
@@ -40,6 +44,7 @@
 	<priority/> 
 	<note>Toutes les banques, y compris la Caisse des Dépôts
 Cofinoga</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Finir d'installer la télécommande dans XBMC</title> 
@@ -48,6 +53,7 @@ Cofinoga</note>
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Find a mentor</title> 
@@ -56,6 +62,7 @@ Cofinoga</note>
 	<duedate/> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Demander une Visa Premier pour Lucie</title> 
@@ -64,6 +71,7 @@ Cofinoga</note>
 	<duedate>2014-10-31</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Rdv cours de chant</title> 
@@ -72,6 +80,7 @@ Cofinoga</note>
 	<duedate>2013-04-16</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Prendre une assurance-décès ?</title> 
@@ -80,6 +89,7 @@ Cofinoga</note>
 	<duedate/> 
 	<priority/> 
 	<note>Et virer celle d'IBM</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Verser 1000€ sur le PEE SG</title> 
@@ -88,6 +98,7 @@ Cofinoga</note>
 	<duedate>2012-04-27</duedate> 
 	<priority>High</priority> 
 	<note>http://d12db054.de.ibm.com/e_dir/ehript.nsf/0/d49db7553e5a0212c125698a0039e6aa?OpenDocument</note> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>10 bis avenue Marie Guignon</title> 
@@ -109,6 +120,7 @@ Monsieur Eugene Blanchi (1934)
 Immeuble Langedoc
 31 rue Marx Dormoy
 26000 Valence</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Finish reading 'First 30 days as a manager'</title> 
@@ -117,6 +129,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>High</priority> 
 	<note>http://learning.atlanta.ibm.com/manager/quickview/mgrqv.nsf/Content/185256641%3A005132D6</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Remplacer MS Money</title> 
@@ -125,6 +138,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Colmater les volets des enfants</title> 
@@ -133,6 +147,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Nettoyer gobelet argent</title> 
@@ -141,6 +156,7 @@ Immeuble Langedoc
 	<duedate>2011-12-03</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 6 months</repeat> 
 </item> 
 <item> 
 	<title>Remove the C++ warnings</title> 
@@ -149,6 +165,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Verser 1233€ sur le PEE SG</title> 
@@ -157,6 +174,7 @@ Immeuble Langedoc
 	<duedate>2012-06-30</duedate> 
 	<priority>High</priority> 
 	<note>http://d12db054.de.ibm.com/e_dir/ehript.nsf/0/d49db7553e5a0212c125698a0039e6aa?OpenDocument</note> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Create a Wiki page for licenses</title> 
@@ -165,6 +183,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note>Mathlab, MSF?, Intel compilers (with MKL), UndoDB</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Improve C++ usage of examples</title> 
@@ -173,6 +192,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note>ilodiet.cpp::main is more than 100 lines...</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Not sure column modeling is really nice from a C++ stanpoint...</title> 
@@ -181,6 +201,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note>http://publib.boulder.ibm.com/infocenter/cosinfoc/v12r3/topic/ilog.odms.cplex.help/html/refcppcplex/html/classes/IloObjective.html</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Use 077 as default umask</title> 
@@ -189,6 +210,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Cirer la table</title> 
@@ -197,6 +219,7 @@ Immeuble Langedoc
 	<duedate>2012-02-07</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 6 months</repeat> 
 </item> 
 <item> 
 	<title>Dégivrer congélateur</title> 
@@ -205,6 +228,7 @@ Immeuble Langedoc
 	<duedate>2011-11-07</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat>Every 3 months</repeat> 
 </item> 
 <item> 
 	<title>Ranger mon bureau</title> 
@@ -213,6 +237,7 @@ Immeuble Langedoc
 	<duedate>2011-08-17</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat>Every 1 week</repeat> 
 </item> 
 <item> 
 	<title>Supports à vélo dans la cave</title> 
@@ -221,6 +246,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Séparations des petits et grands couverts</title> 
@@ -229,6 +255,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Backup Lucie</title> 
@@ -237,6 +264,7 @@ Immeuble Langedoc
 	<duedate>2011-09-23</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 2 weeks</repeat> 
 </item> 
 <item> 
 	<title>Read papers suggested by Christian</title> 
@@ -253,6 +281,7 @@ Immeuble Langedoc
 &gt; 
 &gt; http://w3.ibm.com/connections/communities/service/html/communityview?communityUuid=d8da01b0-2a50-4aff-8c44-8381fe6d2455#fullpageWidgetId=Waa74086746b6_4afb_8ecf_256d2ef7c0f6&amp;file=9de702b1-08c6-4246-87ee-a9f802b3bfec
 </note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Comptes AGSE</title> 
@@ -261,6 +290,7 @@ Immeuble Langedoc
 	<duedate>2011-10-04</duedate> 
 	<priority>Top</priority> 
 	<note/> 
+	<repeat>Every 2 weeks</repeat> 
 </item> 
 <item> 
 	<title>Brainstorming session with master inventor</title> 
@@ -269,6 +299,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note>This is Philip's suggestion</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Test xlc12 on old platforms</title> 
@@ -277,6 +308,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note>From a ST discussion with Laci on 2011-10-06 evening</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Read the 'Interior Fundamentals' presentation by Ed</title> 
@@ -285,6 +317,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Read Bender's example and documentation (lazy constraints)</title> 
@@ -293,6 +326,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note>RTC-5571, by AndreaT</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Find a way to use Fn key</title> 
@@ -301,6 +335,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Piles à la poubelles</title> 
@@ -309,6 +344,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Look for old reviews</title> 
@@ -317,6 +353,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Étagères chambres enfants</title> 
@@ -325,6 +362,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Provide a Fisheye view of the CPLEX repository</title> 
@@ -333,6 +371,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note>https://labrequestdesk.ilogfr-bso.fr.ibm.com/browse/LSD-2386</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Introduction to RTC Customization for Planning &amp; Tracking</title> 
@@ -341,6 +380,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note>http://w3-03.ibm.com/qse/page/6448?open&amp;utm_source=events&amp;utm_medium=email&amp;utm_campaign=20120316</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Try Lotus Notes Traveler</title> 
@@ -349,6 +389,7 @@ Immeuble Langedoc
 	<duedate/> 
 	<priority>High</priority> 
 	<note>https://w3-connections.ibm.com/wikis/home?lang=en_US#/wiki/W905ca8106f6b_4fb8_a0d0_cdc1d65e7dc3/page/Lotus%20Traveler%20&amp;%20iNotes%20Ultra-light</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Prepare list of machines to keep for supporting old versions</title> 
@@ -360,6 +401,7 @@ Immeuble Langedoc
 The SLES 9 machines (sles9-x64 and svcplexdev19) must be kept for CPLEX 12.1 until 2014-09-30.
 
 Build a list using util/portlist for each version</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>User Story common goals event:  Rational Requirements Composer</title> 
@@ -369,6 +411,7 @@ Build a list using util/portlist for each version</note>
 	<priority/> 
 	<note>Theresa Kratschmer will be presenting Rational Requirements Composer. Details and additional Phone information can be found here:  
 https://w3-connections.ibm.com/wikis/home?lang=en#/wiki/W59d2767cca8e_49a9_bc5e_92ba5ca4ff98/page/Rational%20Requirements%20Composer%20and%20User%20Stories</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Optimization in Finance</title> 
@@ -379,6 +422,7 @@ https://w3-connections.ibm.com/wikis/home?lang=en#/wiki/W59d2767cca8e_49a9_bc5e_
 	<note>http://www.uio.no/studier/program/matokon/nyttig/arbitrage.pdf
 http://www.princeton.edu/~rvdb/542/lectures/lec17.pdf
 http://www.solver.com/ConvexConicWilmott.pdf</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Acheter chocolats</title> 
@@ -387,6 +431,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate>2013-04-15</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>All VMs should exist as two different machines</title> 
@@ -395,6 +440,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate/> 
 	<priority>High</priority> 
 	<note>svcplexdev27 should be duplicated.</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Find a dev at Matworks, ask about their build</title> 
@@ -403,6 +449,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Document Jenkins configuration</title> 
@@ -411,6 +458,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note>https://wiki.ilogfr-bso.fr.ibm.com/Lab/Optim/CPLEX/HudsonBuilds</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Watch 'A Short Introduction to Agile', by Scott Will</title> 
@@ -419,6 +467,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate/> 
 	<priority/> 
 	<note>https://w3-connections.ibm.com/wikis/home?lang=en#/wiki/W33c0673fa08e_4798_84c6_006ed5d16435/page/Welcome</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Faire les comptes</title> 
@@ -427,6 +476,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate>2012-05-26</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 1 week</repeat> 
 </item> 
 <item> 
 	<title>Plan a retrospective meeting</title> 
@@ -435,6 +485,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate>2012-12-14</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Porte placard cuisine</title> 
@@ -443,6 +494,7 @@ http://www.solver.com/ConvexConicWilmott.pdf</note>
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Change signing certificate</title> 
@@ -467,6 +519,7 @@ Added : util/IBM-France.pfx
 Added : util/IBM-France.txt
 Modified : util/makefile.bin
 </note> 
+	<repeat>Every 3 years</repeat> 
 </item> 
 <item> 
 	<title>Déclaration d'impots</title> 
@@ -475,6 +528,7 @@ Modified : util/makefile.bin
 	<duedate>2013-06-22</duedate> 
 	<priority>Top</priority> 
 	<note/> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Tondre le gazon</title> 
@@ -483,6 +537,7 @@ Modified : util/makefile.bin
 	<duedate>2012-06-29</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat>Every 1 week</repeat> 
 </item> 
 <item> 
 	<title>Come back to Sonia Cafieri</title> 
@@ -544,6 +599,7 @@ Modified : util/makefile.bin
 &gt; Tel : +33 (0)5 62 25 95 11
 &gt; Email : sonia.cafieri@enac.fr
 &gt; http://www.recherche.enac.fr/~cafieri/</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Emmener le barbecue et l'aspirateur à la déchèterie</title> 
@@ -552,6 +608,7 @@ Modified : util/makefile.bin
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Resouder chaises du salon</title> 
@@ -560,6 +617,7 @@ Modified : util/makefile.bin
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Tetracoq PH</title> 
@@ -568,6 +626,7 @@ Modified : util/makefile.bin
 	<duedate>2012-12-31</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Pneus X9</title> 
@@ -576,6 +635,7 @@ Modified : util/makefile.bin
 	<duedate>2012-12-19</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat>Every 3 weeks</repeat> 
 </item> 
 <item> 
 	<title>Cirer chaussures</title> 
@@ -584,6 +644,7 @@ Modified : util/makefile.bin
 	<duedate>2012-12-28</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 1 month</repeat> 
 </item> 
 <item> 
 	<title>Cartouche Brita</title> 
@@ -592,6 +653,7 @@ Modified : util/makefile.bin
 	<duedate>2012-12-28</duedate> 
 	<priority/> 
 	<note/> 
+	<repeat>Every 1 month</repeat> 
 </item> 
 <item> 
 	<title>Commander des lentilles de contact</title> 
@@ -600,6 +662,7 @@ Modified : util/makefile.bin
 	<duedate>2013-12-06</duedate> 
 	<priority/> 
 	<note>www.malentille.com</note> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Révision instruments</title> 
@@ -608,6 +671,7 @@ Modified : util/makefile.bin
 	<duedate>2013-12-06</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>My OSS annual education</title> 
@@ -616,6 +680,7 @@ Modified : util/makefile.bin
 	<duedate>2013-12-06</duedate> 
 	<priority>Medium</priority> 
 	<note>https://w3.tap.ibm.com/w3ki07/display/OSSCProcess/OSPG </note> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Check Java updates on optbld02s</title> 
@@ -652,6 +717,7 @@ lrwxrwxrwx   1 root     other         18 Oct  8 12:17 jdk1.6.0_35 -&gt; instance
 lrwxrwxrwx   1 root     other         11 Oct  8 12:17 latest -&gt; jdk1.6.0_35
 drwxr-xr-x   8 root     bin            8 Sep 28 18:01 packages
 </note> 
+	<repeat>Every 5 weeks</repeat> 
 </item> 
 <item> 
 	<title>Remboursements billets SNCF</title> 
@@ -660,6 +726,7 @@ drwxr-xr-x   8 root     bin            8 Sep 28 18:01 packages
 	<duedate>2012-12-21</duedate> 
 	<priority>Top</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Get people to report on Wiki (for non-dev projects) rather than to me</title> 
@@ -668,6 +735,7 @@ drwxr-xr-x   8 root     bin            8 Sep 28 18:01 packages
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Non performance items that we may want in next release nevertheless</title> 
@@ -677,6 +745,7 @@ drwxr-xr-x   8 root     bin            8 Sep 28 18:01 packages
 	<priority>Medium</priority> 
 	<note>RTC-12366: Request for CPXEaddpwl to be fully supported and publicly available
 Parametric sensibility analysis for Petrobras</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Don de sang</title> 
@@ -687,6 +756,7 @@ Parametric sensibility analysis for Petrobras</note>
 	<note>165 avenue du Docteur Maurice Donat
 06700 Saint-Laurent-du-Var
 04 92 27 52 52</note> 
+	<repeat>Every 5 weeks</repeat> 
 </item> 
 <item> 
 	<title>Huiler les volets</title> 
@@ -695,6 +765,7 @@ Parametric sensibility analysis for Petrobras</note>
 	<duedate>2013-03-09</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat>Every 3 months</repeat> 
 </item> 
 <item> 
 	<title>Détartrer la cafetière</title> 
@@ -703,6 +774,7 @@ Parametric sensibility analysis for Petrobras</note>
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 6 months</repeat> 
 </item> 
 <item> 
 	<title>Upgrade Jenkins?</title> 
@@ -713,6 +785,7 @@ Parametric sensibility analysis for Petrobras</note>
 	<note>RTC-14782
 http://jenkins-ci.org/changelog-stable
 </note> 
+	<repeat>Every 2 months</repeat> 
 </item> 
 <item> 
 	<title>Liste de films</title> 
@@ -721,6 +794,7 @@ http://jenkins-ci.org/changelog-stable
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Couper les cheveux</title> 
@@ -729,6 +803,7 @@ http://jenkins-ci.org/changelog-stable
 	<duedate>2013-01-03</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 3 weeks</repeat> 
 </item> 
 <item> 
 	<title>RdV urologue</title> 
@@ -737,6 +812,7 @@ http://jenkins-ci.org/changelog-stable
 	<duedate>2014-01-01</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Talk to two IBM-Cognos developers in UK?</title> 
@@ -749,6 +825,7 @@ http://w3.ibm.com/bluepages/searchByName.wss?task=viewrecord&amp;index=1&amp;uid
 
 uk.linkedin.com/pub/andy-balaam/37/84b/178
 http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=viewrecord</note> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Get VPN to work again</title> 
@@ -757,6 +834,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate/> 
 	<priority/> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Backup portable</title> 
@@ -765,6 +843,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2012-12-23</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat>Every 4 days</repeat> 
 </item> 
 <item> 
 	<title>Mettre mes meilleures photos sur Dropbox</title> 
@@ -773,6 +852,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate/> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Subventions CE (activités &amp; soutien)</title> 
@@ -781,6 +861,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-01-11</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Did Intel fix multi-threaded IPO?</title> 
@@ -789,6 +870,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-06-30</duedate> 
 	<priority/> 
 	<note>See comment 11 in RTC-14644</note> 
+	<repeat>Every 6 months</repeat> 
 </item> 
 <item> 
 	<title>Get Philippe to do some coverage of Barrier for Christian</title> 
@@ -797,6 +879,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-05-31</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Get Andrea to meet Tobias in person</title> 
@@ -805,6 +888,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-03-31</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Write down all PBC evaluations</title> 
@@ -813,6 +897,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2014-01-15</duedate> 
 	<priority>Top</priority> 
 	<note/> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Do all PBC meetings</title> 
@@ -821,6 +906,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2014-01-18</duedate> 
 	<priority>Top</priority> 
 	<note/> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Retake leadership survey after BBIL?</title> 
@@ -829,6 +915,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-08-31</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Get approval to use MPICH2</title> 
@@ -837,6 +924,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-04-30</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Business Conduct Guidelines</title> 
@@ -845,6 +933,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2014-02-04</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Get a disk space report for all build machines, and fix what's fixable</title> 
@@ -853,6 +942,7 @@ http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=v
 	<duedate>2013-02-28</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Team: they should all have OSS training</title> 
@@ -865,6 +955,7 @@ https://w3.tap.ibm.com/w3ki07/display/OSSCProcess/OSPG
 
 Results can be checked on:
 https://ltc.linux.ibm.com/ospg/bluegroups.php</note> 
+	<repeat>Every 1 month</repeat> 
 </item> 
 <item> 
 	<title>Check the Windows machines use an IBM JDK</title> 
@@ -873,6 +964,7 @@ https://ltc.linux.ibm.com/ospg/bluegroups.php</note>
 	<duedate/> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
 <item> 
 	<title>Change password</title> 
@@ -891,6 +983,7 @@ login on p6tpm09c.hursley.ibm.com as 'nodetxav' and run 'passwd'
 https://huritim.hursley.ibm.com/itim/self/Home.do (beware, only letters and digits!)
 http://accounts.usca.ibm.com/accounts/ to change ISLABS account
 </note> 
+	<repeat>Every 12 weeks</repeat> 
 </item> 
 <item> 
 	<title>Change cplexadmin password</title> 
@@ -907,6 +1000,7 @@ SVL Windows machines: log onto svts01 and change the password
 p6tpm09c.hursley.ibm.com: log, then use 'passwd'
 svcplexdev13: log on, then 'passwd'
 When changing password on mvfs, no need for an 'rtclogin' (it doesn't work, anyway: can't log onto the Jazz server): cplexadmin is not allowed to push anyway...</note> 
+	<repeat>Every 12 weeks</repeat> 
 </item> 
 <item> 
 	<title>Check unassigned RTC defects</title> 
@@ -915,6 +1009,7 @@ When changing password on mvfs, no need for an 'rtclogin' (it doesn't work, anyw
 	<duedate>2013-03-05</duedate> 
 	<priority>High</priority> 
 	<note/> 
+	<repeat>Every 1 week</repeat> 
 </item> 
 <item> 
 	<title>Update cos_stable</title> 
@@ -923,6 +1018,7 @@ When changing password on mvfs, no need for an 'rtclogin' (it doesn't work, anyw
 	<duedate>2013-03-05</duedate> 
 	<priority>Top</priority> 
 	<note/> 
+	<repeat>Every 1 week</repeat> 
 </item> 
 <item> 
 	<title>Anniversaire Lucie</title> 
@@ -934,6 +1030,7 @@ When changing password on mvfs, no need for an 'rtclogin' (it doesn't work, anyw
 Exfoliant Origin's
 Invitation restau (Le figuier du Saint Esprit ?)
 Sac à main</note> 
+	<repeat>Every 1 year</repeat> 
 </item> 
 <item> 
 	<title>Payer et déclarer Hélène</title> 
@@ -945,6 +1042,7 @@ Sac à main</note>
 https://www.cesu.urssaf.fr/cesweb/loginempl.jsp
 Base forfaitaire
 06 65 16 06 30</note> 
+	<repeat>Every 1 month</repeat> 
 </item> 
 <item> 
 	<title>Remboursement 'Leading a SW dev team'</title> 
@@ -953,6 +1051,7 @@ Base forfaitaire
 	<duedate>2013-03-05</duedate> 
 	<priority>Medium</priority> 
 	<note/> 
+	<repeat/> 
 </item> 
  
 </xml> 

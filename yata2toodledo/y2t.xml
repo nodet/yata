@@ -30,6 +30,8 @@
 	<priority><xsl:value-of select="priority"/></priority><xsl:text> 
 	</xsl:text>
 	<note><xsl:value-of select="note"/></note><xsl:text> 
+	</xsl:text>
+	<repeat><xsl:value-of select="repeat"/></repeat><xsl:text> 
 </xsl:text>
 </item><xsl:text> 
 </xsl:text>
