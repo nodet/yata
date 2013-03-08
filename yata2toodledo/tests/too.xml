@@ -6,6 +6,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note>En particulier, vérifier que les backups sont dupliqués sur l'autre disque</note> 
 </item> 
 <item> 
 	<title>Prévoir quoi faire en cas d'indisponibilité</title> 
@@ -13,6 +14,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Backup XBMC settings and library</title> 
@@ -20,6 +22,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Scanner tous les dossiers d'inscription des scouts</title> 
@@ -27,6 +30,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Liste des changements d'adresse à prévoir</title> 
@@ -34,6 +38,8 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>Toutes les banques, y compris la Caisse des Dépôts
+Cofinoga</note> 
 </item> 
 <item> 
 	<title>Finir d'installer la télécommande dans XBMC</title> 
@@ -41,6 +47,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Find a mentor</title> 
@@ -48,6 +55,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Demander une Visa Premier pour Lucie</title> 
@@ -55,6 +63,7 @@
 	<startdate>2014-09-01</startdate> 
 	<duedate>2014-10-31</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Rdv cours de chant</title> 
@@ -62,6 +71,7 @@
 	<startdate>2013-04-01</startdate> 
 	<duedate>2013-04-16</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Prendre une assurance-décès ?</title> 
@@ -69,6 +79,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>Et virer celle d'IBM</note> 
 </item> 
 <item> 
 	<title>Verser 1000€ sur le PEE SG</title> 
@@ -76,6 +87,7 @@
 	<startdate>2012-03-29</startdate> 
 	<duedate>2012-04-27</duedate> 
 	<priority>High</priority> 
+	<note>http://d12db054.de.ibm.com/e_dir/ehript.nsf/0/d49db7553e5a0212c125698a0039e6aa?OpenDocument</note> 
 </item> 
 <item> 
 	<title>10 bis avenue Marie Guignon</title> 
@@ -83,6 +95,20 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note>10 bis avenue Marie Guignon
+E. Bianchi (sur la sonnette)
+
+Parcelle 307 - Feuille 000 BL 01 - Antibes (06)
+Jardin 60m2
+Maison 70m2
+Zone UCb4 du PLU: COS 0.25, 20% d'emprise au sol
+
+Infos du cadastre:
+Parcelle de 160 m2
+Monsieur Eugene Blanchi (1934)
+Immeuble Langedoc
+31 rue Marx Dormoy
+26000 Valence</note> 
 </item> 
 <item> 
 	<title>Finish reading 'First 30 days as a manager'</title> 
@@ -90,6 +116,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note>http://learning.atlanta.ibm.com/manager/quickview/mgrqv.nsf/Content/185256641%3A005132D6</note> 
 </item> 
 <item> 
 	<title>Remplacer MS Money</title> 
@@ -97,6 +124,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Colmater les volets des enfants</title> 
@@ -104,6 +132,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Nettoyer gobelet argent</title> 
@@ -111,6 +140,7 @@
 	<startdate>2011-11-12</startdate> 
 	<duedate>2011-12-03</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Remove the C++ warnings</title> 
@@ -118,6 +148,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Verser 1233€ sur le PEE SG</title> 
@@ -125,6 +156,7 @@
 	<startdate>2012-06-01</startdate> 
 	<duedate>2012-06-30</duedate> 
 	<priority>High</priority> 
+	<note>http://d12db054.de.ibm.com/e_dir/ehript.nsf/0/d49db7553e5a0212c125698a0039e6aa?OpenDocument</note> 
 </item> 
 <item> 
 	<title>Create a Wiki page for licenses</title> 
@@ -132,6 +164,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>Mathlab, MSF?, Intel compilers (with MKL), UndoDB</note> 
 </item> 
 <item> 
 	<title>Improve C++ usage of examples</title> 
@@ -139,6 +172,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>ilodiet.cpp::main is more than 100 lines...</note> 
 </item> 
 <item> 
 	<title>Not sure column modeling is really nice from a C++ stanpoint...</title> 
@@ -146,6 +180,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>http://publib.boulder.ibm.com/infocenter/cosinfoc/v12r3/topic/ilog.odms.cplex.help/html/refcppcplex/html/classes/IloObjective.html</note> 
 </item> 
 <item> 
 	<title>Use 077 as default umask</title> 
@@ -153,6 +188,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Cirer la table</title> 
@@ -160,6 +196,7 @@
 	<startdate>2012-01-08</startdate> 
 	<duedate>2012-02-07</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Dégivrer congélateur</title> 
@@ -167,6 +204,7 @@
 	<startdate>2012-04-18</startdate> 
 	<duedate>2011-11-07</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Ranger mon bureau</title> 
@@ -174,6 +212,7 @@
 	<startdate>2011-08-17</startdate> 
 	<duedate>2011-08-17</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Supports à vélo dans la cave</title> 
@@ -181,6 +220,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Séparations des petits et grands couverts</title> 
@@ -188,6 +228,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Backup Lucie</title> 
@@ -195,6 +236,7 @@
 	<startdate>2011-09-19</startdate> 
 	<duedate>2011-09-23</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Read papers suggested by Christian</title> 
@@ -202,6 +244,15 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>&gt; Voici ma presentation sur Oil and Gas: 
+&gt; 
+&gt; http://w3.ibm.com/connections/files/app?lang=en_US#/person/dc3d29c0-80a3-102d-86a6-f15264b0bf15/file/0eaf7bf4-2fa9-441f-9475-364e4a4ad40c
+&gt; 
+&gt; Et le lien du financial markets framework ou on cite cplex (voir la 
+&gt; table ou il y a une liste de projets)
+&gt; 
+&gt; http://w3.ibm.com/connections/communities/service/html/communityview?communityUuid=d8da01b0-2a50-4aff-8c44-8381fe6d2455#fullpageWidgetId=Waa74086746b6_4afb_8ecf_256d2ef7c0f6&amp;file=9de702b1-08c6-4246-87ee-a9f802b3bfec
+</note> 
 </item> 
 <item> 
 	<title>Comptes AGSE</title> 
@@ -209,6 +260,7 @@
 	<startdate>2011-10-01</startdate> 
 	<duedate>2011-10-04</duedate> 
 	<priority>Top</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Brainstorming session with master inventor</title> 
@@ -216,6 +268,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>This is Philip's suggestion</note> 
 </item> 
 <item> 
 	<title>Test xlc12 on old platforms</title> 
@@ -223,6 +276,7 @@
 	<startdate>2011-12-05</startdate> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note>From a ST discussion with Laci on 2011-10-06 evening</note> 
 </item> 
 <item> 
 	<title>Read the 'Interior Fundamentals' presentation by Ed</title> 
@@ -230,6 +284,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Read Bender's example and documentation (lazy constraints)</title> 
@@ -237,6 +292,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>RTC-5571, by AndreaT</note> 
 </item> 
 <item> 
 	<title>Find a way to use Fn key</title> 
@@ -244,6 +300,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Piles à la poubelles</title> 
@@ -251,6 +308,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Look for old reviews</title> 
@@ -258,6 +316,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Étagères chambres enfants</title> 
@@ -265,6 +324,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Provide a Fisheye view of the CPLEX repository</title> 
@@ -272,6 +332,7 @@
 	<startdate>2012-09-03</startdate> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note>https://labrequestdesk.ilogfr-bso.fr.ibm.com/browse/LSD-2386</note> 
 </item> 
 <item> 
 	<title>Introduction to RTC Customization for Planning &amp; Tracking</title> 
@@ -279,6 +340,7 @@
 	<startdate>2012-03-22</startdate> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note>http://w3-03.ibm.com/qse/page/6448?open&amp;utm_source=events&amp;utm_medium=email&amp;utm_campaign=20120316</note> 
 </item> 
 <item> 
 	<title>Try Lotus Notes Traveler</title> 
@@ -286,6 +348,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note>https://w3-connections.ibm.com/wikis/home?lang=en_US#/wiki/W905ca8106f6b_4fb8_a0d0_cdc1d65e7dc3/page/Lotus%20Traveler%20&amp;%20iNotes%20Ultra-light</note> 
 </item> 
 <item> 
 	<title>Prepare list of machines to keep for supporting old versions</title> 
@@ -293,6 +356,10 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>Hugo must be kept to support CPLEX 12.2 (which was built on Hugo) until 2015-09-30
+The SLES 9 machines (sles9-x64 and svcplexdev19) must be kept for CPLEX 12.1 until 2014-09-30.
+
+Build a list using util/portlist for each version</note> 
 </item> 
 <item> 
 	<title>User Story common goals event:  Rational Requirements Composer</title> 
@@ -300,6 +367,8 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>Theresa Kratschmer will be presenting Rational Requirements Composer. Details and additional Phone information can be found here:  
+https://w3-connections.ibm.com/wikis/home?lang=en#/wiki/W59d2767cca8e_49a9_bc5e_92ba5ca4ff98/page/Rational%20Requirements%20Composer%20and%20User%20Stories</note> 
 </item> 
 <item> 
 	<title>Optimization in Finance</title> 
@@ -307,6 +376,9 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>http://www.uio.no/studier/program/matokon/nyttig/arbitrage.pdf
+http://www.princeton.edu/~rvdb/542/lectures/lec17.pdf
+http://www.solver.com/ConvexConicWilmott.pdf</note> 
 </item> 
 <item> 
 	<title>Acheter chocolats</title> 
@@ -314,6 +386,7 @@
 	<startdate>2013-04-03</startdate> 
 	<duedate>2013-04-15</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>All VMs should exist as two different machines</title> 
@@ -321,6 +394,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note>svcplexdev27 should be duplicated.</note> 
 </item> 
 <item> 
 	<title>Find a dev at Matworks, ask about their build</title> 
@@ -328,6 +402,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Document Jenkins configuration</title> 
@@ -335,6 +410,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note>https://wiki.ilogfr-bso.fr.ibm.com/Lab/Optim/CPLEX/HudsonBuilds</note> 
 </item> 
 <item> 
 	<title>Watch 'A Short Introduction to Agile', by Scott Will</title> 
@@ -342,6 +418,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>https://w3-connections.ibm.com/wikis/home?lang=en#/wiki/W33c0673fa08e_4798_84c6_006ed5d16435/page/Welcome</note> 
 </item> 
 <item> 
 	<title>Faire les comptes</title> 
@@ -349,6 +426,7 @@
 	<startdate>2012-05-22</startdate> 
 	<duedate>2012-05-26</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Plan a retrospective meeting</title> 
@@ -356,6 +434,7 @@
 	<startdate>2013-06-10</startdate> 
 	<duedate>2012-12-14</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Porte placard cuisine</title> 
@@ -363,6 +442,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Change signing certificate</title> 
@@ -370,6 +450,23 @@
 	<startdate>2014-06-01</startdate> 
 	<duedate>2014-09-30</duedate> 
 	<priority/> 
+	<note>Certificate was changed with the following commit.
+But if we wait for it to expire, we'll run into the same troubles everytime
+
+Revision: 4663408c55adddcdb8adcc2de0120fe6bfe37854
+Author: Laszlo Ladanyi
+Date: 2012-06-08 16:16:24
+Message:
+[RTC-4567] Update the pfx certificate
+
+
+----
+Added : util/IBM-France-2015.pfx
+Added : util/IBM-France-2015.txt
+Added : util/IBM-France.pfx
+Added : util/IBM-France.txt
+Modified : util/makefile.bin
+</note> 
 </item> 
 <item> 
 	<title>Déclaration d'impots</title> 
@@ -377,6 +474,7 @@
 	<startdate>2013-07-07</startdate> 
 	<duedate>2013-06-22</duedate> 
 	<priority>Top</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Tondre le gazon</title> 
@@ -384,6 +482,7 @@
 	<startdate>2012-06-29</startdate> 
 	<duedate>2012-06-29</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Come back to Sonia Cafieri</title> 
@@ -391,6 +490,60 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note>Sonia Cafieri &lt;sonia@recherche.enac.fr&gt; wrote on 2012-06-17 00:13:05:
+
+&gt; From: Sonia Cafieri &lt;sonia@recherche.enac.fr&gt;
+&gt; To: Xavier Nodet/France/IBM@IBMFR, 
+&gt; Cc: Sonia Cafieri &lt;sonia@recherche.enac.fr&gt;
+&gt; Date: 2012-06-17 00:13
+&gt; Subject: problemes resolus par Cplex -- suite discussion Roadef
+&gt; 
+&gt; Bonjour Xavier,
+&gt; 
+&gt; suite a notre (malheureusement très rapide) discussion à Angers à 
+&gt; l'occasion du Congrès ROADEF 2012, je transmets un exemple de 
+&gt; problème que j'ai résolu par CPLEX.
+&gt; Désolée d'avoir pris autant de temps a donner suite a notre 
+&gt; discussion, j’espère que l’intérêt vers les problèmes d'optimisation
+&gt; que j'essaie de résoudre soit toujours présent. 
+&gt; 
+&gt; Dans mon activité de recherche j'ai souvent a résoudre des problèmes
+&gt; non-linéaires non-convexes, ou malheureusement je ne peut pas 
+&gt; utiliser CPLEX. J'ai pourtant pas mal utilisé CPLEX récemment dans 
+&gt; le contexte de développement d'algorithmes de clustering dans des 
+&gt; réseaux. J'ai notamment développé une heuristique de type 
+&gt; hiérarchique divisive ou j'ai besoin de résoudre a chaque étape un 
+&gt; problème quadratique mixed-integer. J'utilise donc CPLEX a chaque 
+&gt; étape pour résoudre un tel problème.
+&gt; (ma présentation au congres Roadef été dans le cadre de cette ligne 
+&gt; de recherche, ainsi que la présentation d'un thésard du LIX qui 
+&gt; actuellement collabore a cette recherche).
+&gt; Le modèle en pièce jointe correspond a un problème qu'on trouve dans
+&gt; la literature de clustering dans les réseaux (dans le cas de mon 
+&gt; algorithme, c'est le problème résolu a la première étape). J’espère 
+&gt; que le format .nl soit bon (normalement j'utilise AMPL et j'ai 
+&gt; généré le modèle .nl par le commande 'write'). J'en peux générer des autres.
+&gt; Je signale que récemment on a trouvé que les options suivantes sont 
+&gt; particulièrement avantageuses pour les résolutions qui nous 
+&gt; intéressent (CPLEX 12):
+&gt;  option cplex_options "threads=1 timing=1 varsel=4 cutpass=-1 
+&gt; mipdisplay=4 nodelim=40000"
+&gt; 
+&gt; En espérant que ça soit utile et, peut-être, le début d'un échange fructueux.
+&gt; 
+&gt; Bien cordialement,
+&gt; Sonia 
+
+&gt; -- 
+&gt; =======================================
+&gt; Sonia Cafieri
+&gt; ENAC - Ecole Nationale de l'Aviation Civile
+&gt; Laboratoire MAIAA
+&gt; 7, Avenue Edouard Belin
+&gt; F-31055 Toulouse France
+&gt; Tel : +33 (0)5 62 25 95 11
+&gt; Email : sonia.cafieri@enac.fr
+&gt; http://www.recherche.enac.fr/~cafieri/</note> 
 </item> 
 <item> 
 	<title>Emmener le barbecue et l'aspirateur à la déchèterie</title> 
@@ -398,6 +551,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Resouder chaises du salon</title> 
@@ -405,6 +559,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Tetracoq PH</title> 
@@ -412,6 +567,7 @@
 	<startdate/> 
 	<duedate>2012-12-31</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Pneus X9</title> 
@@ -419,6 +575,7 @@
 	<startdate>2012-12-19</startdate> 
 	<duedate>2012-12-19</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Cirer chaussures</title> 
@@ -426,6 +583,7 @@
 	<startdate>2012-12-23</startdate> 
 	<duedate>2012-12-28</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Cartouche Brita</title> 
@@ -433,6 +591,7 @@
 	<startdate>2012-12-26</startdate> 
 	<duedate>2012-12-28</duedate> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Commander des lentilles de contact</title> 
@@ -440,6 +599,7 @@
 	<startdate>2013-11-22</startdate> 
 	<duedate>2013-12-06</duedate> 
 	<priority/> 
+	<note>www.malentille.com</note> 
 </item> 
 <item> 
 	<title>Révision instruments</title> 
@@ -447,6 +607,7 @@
 	<startdate>2013-11-14</startdate> 
 	<duedate>2013-12-06</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>My OSS annual education</title> 
@@ -454,6 +615,7 @@
 	<startdate>2013-11-09</startdate> 
 	<duedate>2013-12-06</duedate> 
 	<priority>Medium</priority> 
+	<note>https://w3.tap.ibm.com/w3ki07/display/OSSCProcess/OSPG </note> 
 </item> 
 <item> 
 	<title>Check Java updates on optbld02s</title> 
@@ -461,6 +623,35 @@
 	<startdate>2013-01-05</startdate> 
 	<duedate>2013-01-10</duedate> 
 	<priority>Medium</priority> 
+	<note>IT deals with the Oracle Java versions on Sun machines.
+
+
+https://itsas.raleigh.ibm.com/itsas/
+
+IBM:
+
+$ /opt/java_ibm5.0u36sdk_32bit/bin/java -version
+java version "1.5.0_36"
+Java(TM) 2 Runtime Environment, Standard Edition (IBM build 1.5.0_36-b32 20120809 solaris i386 (SR14))
+Java HotSpot(TM) Server VM (build 1.5.0_36-b32, mixed mode)
+IBM Java ORB build orb50-20120611
+XML build XSLT4J Java 2.7.23
+XML build IBM JAXP 1.3.12
+XML build XML4J 4.4.23
+
+$ /opt/java_ibm5.0u36sdk_64bit/bin/java -version
+
+Oracle:
+
+$ ls -l /usr/jdk
+total 10
+drwxr-xr-x   4 root     bin            4 Sep 28 17:59 instances
+lrwxrwxrwx   1 root     other          7 Oct  8 12:35 j2sdk1.4.2_38 -&gt; ../j2se
+lrwxrwxrwx   1 root     other         18 Oct  8 12:26 jdk1.5.0_36 -&gt; instances/jdk1.5.0
+lrwxrwxrwx   1 root     other         18 Oct  8 12:17 jdk1.6.0_35 -&gt; instances/jdk1.6.0
+lrwxrwxrwx   1 root     other         11 Oct  8 12:17 latest -&gt; jdk1.6.0_35
+drwxr-xr-x   8 root     bin            8 Sep 28 18:01 packages
+</note> 
 </item> 
 <item> 
 	<title>Remboursements billets SNCF</title> 
@@ -468,6 +659,7 @@
 	<startdate/> 
 	<duedate>2012-12-21</duedate> 
 	<priority>Top</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Get people to report on Wiki (for non-dev projects) rather than to me</title> 
@@ -475,6 +667,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Non performance items that we may want in next release nevertheless</title> 
@@ -482,6 +675,8 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note>RTC-12366: Request for CPXEaddpwl to be fully supported and publicly available
+Parametric sensibility analysis for Petrobras</note> 
 </item> 
 <item> 
 	<title>Don de sang</title> 
@@ -489,6 +684,9 @@
 	<startdate>2013-01-13</startdate> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note>165 avenue du Docteur Maurice Donat
+06700 Saint-Laurent-du-Var
+04 92 27 52 52</note> 
 </item> 
 <item> 
 	<title>Huiler les volets</title> 
@@ -496,6 +694,7 @@
 	<startdate>2013-02-24</startdate> 
 	<duedate>2013-03-09</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Détartrer la cafetière</title> 
@@ -503,6 +702,7 @@
 	<startdate>2013-06-09</startdate> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Upgrade Jenkins?</title> 
@@ -510,6 +710,9 @@
 	<startdate>2013-03-06</startdate> 
 	<duedate>2013-02-10</duedate> 
 	<priority/> 
+	<note>RTC-14782
+http://jenkins-ci.org/changelog-stable
+</note> 
 </item> 
 <item> 
 	<title>Liste de films</title> 
@@ -517,6 +720,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Couper les cheveux</title> 
@@ -524,6 +728,7 @@
 	<startdate>2012-12-31</startdate> 
 	<duedate>2013-01-03</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>RdV urologue</title> 
@@ -531,6 +736,7 @@
 	<startdate/> 
 	<duedate>2014-01-01</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Talk to two IBM-Cognos developers in UK?</title> 
@@ -538,6 +744,11 @@
 	<startdate/> 
 	<duedate>2013-01-31</duedate> 
 	<priority/> 
+	<note>uk.linkedin.com/pub/edmund-stephen-smith/0/1b/965
+http://w3.ibm.com/bluepages/searchByName.wss?task=viewrecord&amp;index=1&amp;uid=376603796
+
+uk.linkedin.com/pub/andy-balaam/37/84b/178
+http://w3.ibm.com/jct03019wt/bluepages/searchByName.wss?uid=076959866&amp;task=viewrecord</note> 
 </item> 
 <item> 
 	<title>Get VPN to work again</title> 
@@ -545,6 +756,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority/> 
+	<note/> 
 </item> 
 <item> 
 	<title>Backup portable</title> 
@@ -552,6 +764,7 @@
 	<startdate>2012-12-22</startdate> 
 	<duedate>2012-12-23</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Mettre mes meilleures photos sur Dropbox</title> 
@@ -559,6 +772,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Subventions CE (activités &amp; soutien)</title> 
@@ -566,6 +780,7 @@
 	<startdate/> 
 	<duedate>2013-01-11</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Did Intel fix multi-threaded IPO?</title> 
@@ -573,6 +788,7 @@
 	<startdate>2013-06-01</startdate> 
 	<duedate>2013-06-30</duedate> 
 	<priority/> 
+	<note>See comment 11 in RTC-14644</note> 
 </item> 
 <item> 
 	<title>Get Philippe to do some coverage of Barrier for Christian</title> 
@@ -580,6 +796,7 @@
 	<startdate>2013-05-01</startdate> 
 	<duedate>2013-05-31</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Get Andrea to meet Tobias in person</title> 
@@ -587,6 +804,7 @@
 	<startdate/> 
 	<duedate>2013-03-31</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Write down all PBC evaluations</title> 
@@ -594,6 +812,7 @@
 	<startdate>2013-12-15</startdate> 
 	<duedate>2014-01-15</duedate> 
 	<priority>Top</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Do all PBC meetings</title> 
@@ -601,6 +820,7 @@
 	<startdate>2014-01-07</startdate> 
 	<duedate>2014-01-18</duedate> 
 	<priority>Top</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Retake leadership survey after BBIL?</title> 
@@ -608,6 +828,7 @@
 	<startdate>2013-07-01</startdate> 
 	<duedate>2013-08-31</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Get approval to use MPICH2</title> 
@@ -615,6 +836,7 @@
 	<startdate/> 
 	<duedate>2013-04-30</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Business Conduct Guidelines</title> 
@@ -622,6 +844,7 @@
 	<startdate>2014-01-02</startdate> 
 	<duedate>2014-02-04</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Get a disk space report for all build machines, and fix what's fixable</title> 
@@ -629,6 +852,7 @@
 	<startdate/> 
 	<duedate>2013-02-28</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Team: they should all have OSS training</title> 
@@ -636,6 +860,11 @@
 	<startdate>2013-05-01</startdate> 
 	<duedate>2013-05-05</duedate> 
 	<priority>Medium</priority> 
+	<note>Devs should follow OSPG training on:
+https://w3.tap.ibm.com/w3ki07/display/OSSCProcess/OSPG
+
+Results can be checked on:
+https://ltc.linux.ibm.com/ospg/bluegroups.php</note> 
 </item> 
 <item> 
 	<title>Check the Windows machines use an IBM JDK</title> 
@@ -643,6 +872,7 @@
 	<startdate/> 
 	<duedate/> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Change password</title> 
@@ -650,6 +880,17 @@
 	<startdate>2013-04-26</startdate> 
 	<duedate>2013-05-09</duedate> 
 	<priority>Top</priority> 
+	<note>Thinkpad + Desktop
+IBM Intranet (https://w3.ibm.com/profile/update/password/en-us/index.html)
+Notes (File -&gt; Security -&gt; User Security
+IBM VPN (disconnect, click on the 'down' arrow in the Connect button, change -- No need to 'disremember' the password)
+https://ittools.francelab.fr.ibm.com/passwdmgt/ (enter xavier.nodet@fr.ibm.com with the new password), then 'Changing your AD password', and 'Changing your NIS password'
+login on mvfs.svl.ibm.com as 'nodet', run '/usr/IBMi/tools/bin/ldappasswd -e90', 'source /ilog/cplex/software/cpxtools.sh' and 'rtclogin' (type the new password)
+login on svcplexdev13.svl.ibm.com as 'nodet', run 'passwd'
+login on p6tpm09c.hursley.ibm.com as 'nodetxav' and run 'passwd'
+https://huritim.hursley.ibm.com/itim/self/Home.do (beware, only letters and digits!)
+http://accounts.usca.ibm.com/accounts/ to change ISLABS account
+</note> 
 </item> 
 <item> 
 	<title>Change cplexadmin password</title> 
@@ -657,6 +898,15 @@
 	<startdate>2013-05-13</startdate> 
 	<duedate>2013-05-21</duedate> 
 	<priority>Top</priority> 
+	<note>French unix machines first because they seem the most restrictive (must have two non-alpha, non-digit chars, not only one)
+
+French unix + Windows machines: https://ittools.ilogfr-bso.fr.ibm.com/passwdmgt/
+mvfs.svl.ibm.com: run '/usr/IBMi/tools/bin/ldappasswd -e90'
+Hursley: https://huritim.hursley.ibm.com/itim/self/Home.do ('Current Intranet password' really means my (Xavier Nodet's) password)
+SVL Windows machines: log onto svts01 and change the password
+p6tpm09c.hursley.ibm.com: log, then use 'passwd'
+svcplexdev13: log on, then 'passwd'
+When changing password on mvfs, no need for an 'rtclogin' (it doesn't work, anyway: can't log onto the Jazz server): cplexadmin is not allowed to push anyway...</note> 
 </item> 
 <item> 
 	<title>Check unassigned RTC defects</title> 
@@ -664,6 +914,7 @@
 	<startdate>2013-03-05</startdate> 
 	<duedate>2013-03-05</duedate> 
 	<priority>High</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Update cos_stable</title> 
@@ -671,6 +922,7 @@
 	<startdate>2013-03-04</startdate> 
 	<duedate>2013-03-05</duedate> 
 	<priority>Top</priority> 
+	<note/> 
 </item> 
 <item> 
 	<title>Anniversaire Lucie</title> 
@@ -678,6 +930,10 @@
 	<startdate>2014-01-01</startdate> 
 	<duedate>2014-02-16</duedate> 
 	<priority>Top</priority> 
+	<note>Prendre une journée
+Exfoliant Origin's
+Invitation restau (Le figuier du Saint Esprit ?)
+Sac à main</note> 
 </item> 
 <item> 
 	<title>Payer et déclarer Hélène</title> 
@@ -685,6 +941,10 @@
 	<startdate>2013-03-29</startdate> 
 	<duedate>2013-04-01</duedate> 
 	<priority>High</priority> 
+	<note>12.5/heure
+https://www.cesu.urssaf.fr/cesweb/loginempl.jsp
+Base forfaitaire
+06 65 16 06 30</note> 
 </item> 
 <item> 
 	<title>Remboursement 'Leading a SW dev team'</title> 
@@ -692,6 +952,7 @@
 	<startdate/> 
 	<duedate>2013-03-05</duedate> 
 	<priority>Medium</priority> 
+	<note/> 
 </item> 
  
 </xml> 
