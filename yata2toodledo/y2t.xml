@@ -23,6 +23,8 @@
 	<context><xsl:value-of select="context"/></context><xsl:text> 
 	</xsl:text>
 	<startdate><xsl:value-of select="startdate"/></startdate><xsl:text> 
+	</xsl:text>
+	<duedate><xsl:value-of select="duedate"/></duedate><xsl:text> 
 </xsl:text>
 </item><xsl:text> 
 </xsl:text>
