@@ -6,8 +6,11 @@ will be one way only, and without considering any previously
 existing tasks...
 
 
-The XML for my tasks:
+The XML for my tasks in Toodledo:
 http://www.toodledo.com/tools/xml.php?view=1
+
+The XML for my tasks in Yata:
+http://nodet.alwaysdata.net/yata/xml/export/
 
 Toodledo tasks API: http://api.toodledo.com/2/tasks/index.php
 
