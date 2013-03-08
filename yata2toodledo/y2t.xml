@@ -32,6 +32,11 @@
 	<note><xsl:value-of select="note"/></note><xsl:text> 
 	</xsl:text>
 	<repeat><xsl:value-of select="repeat"/></repeat><xsl:text> 
+	</xsl:text>
+	<repeatfrom>
+		<xsl:if test="repeat_from_due_date = 'Yes'">0</xsl:if>
+		<xsl:if test="not(repeat_from_due_date = 'Yes')">1</xsl:if>
+	</repeatfrom><xsl:text> 
 </xsl:text>
 </item><xsl:text> 
 </xsl:text>
