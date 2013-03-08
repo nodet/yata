@@ -1,8 +1,33 @@
-<xml  xsl:version="1.0"
+<xsl:stylesheet
+      version="1.0"
       xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
       xmlns="http://www.w3.org/TR/xhtml1/strict">
-<toodledoversion>6</toodledoversion>
+	  
+<xsl:template match="/">	  
+<xml><xsl:text> 
+</xsl:text>
+<toodledoversion>6</toodledoversion><xsl:text> 
+</xsl:text>
+	<xsl:apply-templates select="xml/item"/><xsl:text> 
+</xsl:text>
+</xml><xsl:text> 
+</xsl:text>
+</xsl:template>
+
+<xsl:template match="xml/item">
 <item>
-	<title><xsl:value-of select="xml/item/title"/></title>
-</item>
-</xml>
+	<xsl:apply-templates select="title"/>
+</item><xsl:text> 
+</xsl:text>
+</xsl:template>
+
+<xsl:template match="xml/item/title">
+<xsl:text> 
+	</xsl:text>
+	<title><xsl:value-of select="."/></title><xsl:text> 
+</xsl:text>
+</xsl:template>
+
+
+
+</xsl:stylesheet>
