@@ -16,15 +16,11 @@
 
 <xsl:template match="xml/item">
 <item>
-	<xsl:apply-templates select="title"/>
-</item><xsl:text> 
-</xsl:text>
-</xsl:template>
-
-<xsl:template match="xml/item/title">
 <xsl:text> 
 	</xsl:text>
-	<title><xsl:value-of select="."/></title><xsl:text> 
+	<title><xsl:value-of select="title"/></title><xsl:text> 
+</xsl:text>
+</item><xsl:text> 
 </xsl:text>
 </xsl:template>
 
