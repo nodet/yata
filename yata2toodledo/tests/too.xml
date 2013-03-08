@@ -5,594 +5,693 @@
 	<context>Computer</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Prévoir quoi faire en cas d'indisponibilité</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Backup XBMC settings and library</title> 
 	<context>Computer</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Scanner tous les dossiers d'inscription des scouts</title> 
 	<context>AGSE</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Liste des changements d'adresse à prévoir</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Finir d'installer la télécommande dans XBMC</title> 
 	<context>Computer</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Find a mentor</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Demander une Visa Premier pour Lucie</title> 
 	<context/> 
 	<startdate>2014-09-01</startdate> 
 	<duedate>2014-10-31</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Rdv cours de chant</title> 
 	<context/> 
 	<startdate>2013-04-01</startdate> 
 	<duedate>2013-04-16</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Prendre une assurance-décès ?</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Verser 1000€ sur le PEE SG</title> 
 	<context/> 
 	<startdate>2012-03-29</startdate> 
 	<duedate>2012-04-27</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>10 bis avenue Marie Guignon</title> 
 	<context>Immobilier</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Finish reading 'First 30 days as a manager'</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Remplacer MS Money</title> 
 	<context>Computer</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Colmater les volets des enfants</title> 
 	<context>Louis</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Nettoyer gobelet argent</title> 
 	<context/> 
 	<startdate>2011-11-12</startdate> 
 	<duedate>2011-12-03</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Remove the C++ warnings</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Verser 1233€ sur le PEE SG</title> 
 	<context/> 
 	<startdate>2012-06-01</startdate> 
 	<duedate>2012-06-30</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Create a Wiki page for licenses</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Improve C++ usage of examples</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Not sure column modeling is really nice from a C++ stanpoint...</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Use 077 as default umask</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Cirer la table</title> 
 	<context/> 
 	<startdate>2012-01-08</startdate> 
 	<duedate>2012-02-07</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Dégivrer congélateur</title> 
 	<context/> 
 	<startdate>2012-04-18</startdate> 
 	<duedate>2011-11-07</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Ranger mon bureau</title> 
 	<context/> 
 	<startdate>2011-08-17</startdate> 
 	<duedate>2011-08-17</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Supports à vélo dans la cave</title> 
 	<context>Louis</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Séparations des petits et grands couverts</title> 
 	<context>Louis</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Backup Lucie</title> 
 	<context>Computer</context> 
 	<startdate>2011-09-19</startdate> 
 	<duedate>2011-09-23</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Read papers suggested by Christian</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Comptes AGSE</title> 
 	<context>AGSE</context> 
 	<startdate>2011-10-01</startdate> 
 	<duedate>2011-10-04</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Brainstorming session with master inventor</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Test xlc12 on old platforms</title> 
 	<context>Work</context> 
 	<startdate>2011-12-05</startdate> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Read the 'Interior Fundamentals' presentation by Ed</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Read Bender's example and documentation (lazy constraints)</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Find a way to use Fn key</title> 
 	<context>Computer</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Piles à la poubelles</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Look for old reviews</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Étagères chambres enfants</title> 
 	<context>Louis</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Provide a Fisheye view of the CPLEX repository</title> 
 	<context>Work</context> 
 	<startdate>2012-09-03</startdate> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Introduction to RTC Customization for Planning &amp; Tracking</title> 
 	<context>Work</context> 
 	<startdate>2012-03-22</startdate> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Try Lotus Notes Traveler</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Prepare list of machines to keep for supporting old versions</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>User Story common goals event:  Rational Requirements Composer</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Optimization in Finance</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Acheter chocolats</title> 
 	<context/> 
 	<startdate>2013-04-03</startdate> 
 	<duedate>2013-04-15</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>All VMs should exist as two different machines</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Find a dev at Matworks, ask about their build</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Document Jenkins configuration</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Watch 'A Short Introduction to Agile', by Scott Will</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Faire les comptes</title> 
 	<context/> 
 	<startdate>2012-05-22</startdate> 
 	<duedate>2012-05-26</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Plan a retrospective meeting</title> 
 	<context>Work</context> 
 	<startdate>2013-06-10</startdate> 
 	<duedate>2012-12-14</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Porte placard cuisine</title> 
 	<context>Louis</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Change signing certificate</title> 
 	<context>Work</context> 
 	<startdate>2014-06-01</startdate> 
 	<duedate>2014-09-30</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Déclaration d'impots</title> 
 	<context/> 
 	<startdate>2013-07-07</startdate> 
 	<duedate>2013-06-22</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Tondre le gazon</title> 
 	<context/> 
 	<startdate>2012-06-29</startdate> 
 	<duedate>2012-06-29</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Come back to Sonia Cafieri</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Emmener le barbecue et l'aspirateur à la déchèterie</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Resouder chaises du salon</title> 
 	<context>Louis</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Tetracoq PH</title> 
 	<context/> 
 	<startdate/> 
 	<duedate>2012-12-31</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Pneus X9</title> 
 	<context/> 
 	<startdate>2012-12-19</startdate> 
 	<duedate>2012-12-19</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Cirer chaussures</title> 
 	<context/> 
 	<startdate>2012-12-23</startdate> 
 	<duedate>2012-12-28</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Cartouche Brita</title> 
 	<context/> 
 	<startdate>2012-12-26</startdate> 
 	<duedate>2012-12-28</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Commander des lentilles de contact</title> 
 	<context/> 
 	<startdate>2013-11-22</startdate> 
 	<duedate>2013-12-06</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Révision instruments</title> 
 	<context/> 
 	<startdate>2013-11-14</startdate> 
 	<duedate>2013-12-06</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>My OSS annual education</title> 
 	<context>Work</context> 
 	<startdate>2013-11-09</startdate> 
 	<duedate>2013-12-06</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Check Java updates on optbld02s</title> 
 	<context>Work</context> 
 	<startdate>2013-01-05</startdate> 
 	<duedate>2013-01-10</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Remboursements billets SNCF</title> 
 	<context/> 
 	<startdate/> 
 	<duedate>2012-12-21</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Get people to report on Wiki (for non-dev projects) rather than to me</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Non performance items that we may want in next release nevertheless</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Don de sang</title> 
 	<context/> 
 	<startdate>2013-01-13</startdate> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Huiler les volets</title> 
 	<context/> 
 	<startdate>2013-02-24</startdate> 
 	<duedate>2013-03-09</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Détartrer la cafetière</title> 
 	<context/> 
 	<startdate>2013-06-09</startdate> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Upgrade Jenkins?</title> 
 	<context>Work</context> 
 	<startdate>2013-03-06</startdate> 
 	<duedate>2013-02-10</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Liste de films</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Couper les cheveux</title> 
 	<context/> 
 	<startdate>2012-12-31</startdate> 
 	<duedate>2013-01-03</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>RdV urologue</title> 
 	<context/> 
 	<startdate/> 
 	<duedate>2014-01-01</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Talk to two IBM-Cognos developers in UK?</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate>2013-01-31</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Get VPN to work again</title> 
 	<context>Computer</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Backup portable</title> 
 	<context>Computer</context> 
 	<startdate>2012-12-22</startdate> 
 	<duedate>2012-12-23</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Mettre mes meilleures photos sur Dropbox</title> 
 	<context/> 
 	<startdate/> 
 	<duedate/> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Subventions CE (activités &amp; soutien)</title> 
 	<context/> 
 	<startdate/> 
 	<duedate>2013-01-11</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Did Intel fix multi-threaded IPO?</title> 
 	<context>Work</context> 
 	<startdate>2013-06-01</startdate> 
 	<duedate>2013-06-30</duedate> 
+	<priority/> 
 </item> 
 <item> 
 	<title>Get Philippe to do some coverage of Barrier for Christian</title> 
 	<context>Work</context> 
 	<startdate>2013-05-01</startdate> 
 	<duedate>2013-05-31</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Get Andrea to meet Tobias in person</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate>2013-03-31</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Write down all PBC evaluations</title> 
 	<context>Work</context> 
 	<startdate>2013-12-15</startdate> 
 	<duedate>2014-01-15</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Do all PBC meetings</title> 
 	<context>Work</context> 
 	<startdate>2014-01-07</startdate> 
 	<duedate>2014-01-18</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Retake leadership survey after BBIL?</title> 
 	<context>Work</context> 
 	<startdate>2013-07-01</startdate> 
 	<duedate>2013-08-31</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Get approval to use MPICH2</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate>2013-04-30</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Business Conduct Guidelines</title> 
 	<context>Work</context> 
 	<startdate>2014-01-02</startdate> 
 	<duedate>2014-02-04</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Get a disk space report for all build machines, and fix what's fixable</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate>2013-02-28</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Team: they should all have OSS training</title> 
 	<context>Work</context> 
 	<startdate>2013-05-01</startdate> 
 	<duedate>2013-05-05</duedate> 
+	<priority>Medium</priority> 
 </item> 
 <item> 
 	<title>Check the Windows machines use an IBM JDK</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate/> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Change password</title> 
 	<context>Work</context> 
 	<startdate>2013-04-26</startdate> 
 	<duedate>2013-05-09</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Change cplexadmin password</title> 
 	<context>Work</context> 
 	<startdate>2013-05-13</startdate> 
 	<duedate>2013-05-21</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Check unassigned RTC defects</title> 
 	<context>Work</context> 
 	<startdate>2013-03-05</startdate> 
 	<duedate>2013-03-05</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Update cos_stable</title> 
 	<context>Work</context> 
 	<startdate>2013-03-04</startdate> 
 	<duedate>2013-03-05</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Anniversaire Lucie</title> 
 	<context/> 
 	<startdate>2014-01-01</startdate> 
 	<duedate>2014-02-16</duedate> 
+	<priority>Top</priority> 
 </item> 
 <item> 
 	<title>Payer et déclarer Hélène</title> 
 	<context/> 
 	<startdate>2013-03-29</startdate> 
 	<duedate>2013-04-01</duedate> 
+	<priority>High</priority> 
 </item> 
 <item> 
 	<title>Remboursement 'Leading a SW dev team'</title> 
 	<context>Work</context> 
 	<startdate/> 
 	<duedate>2013-03-05</duedate> 
+	<priority>Medium</priority> 
 </item> 
  
 </xml> 

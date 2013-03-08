@@ -26,6 +26,8 @@
 	<startdate><xsl:value-of select="startdate"/></startdate><xsl:text> 
 	</xsl:text>
 	<duedate><xsl:value-of select="duedate"/></duedate><xsl:text> 
+	</xsl:text>
+	<priority><xsl:value-of select="priority"/></priority><xsl:text> 
 </xsl:text>
 </item><xsl:text> 
 </xsl:text>
