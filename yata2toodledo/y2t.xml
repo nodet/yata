@@ -19,6 +19,8 @@
 <xsl:text> 
 	</xsl:text>
 	<title><xsl:value-of select="title"/></title><xsl:text> 
+	</xsl:text>
+	<context><xsl:value-of select="context"/></context><xsl:text> 
 </xsl:text>
 </item><xsl:text> 
 </xsl:text>
