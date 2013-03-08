@@ -15,6 +15,7 @@
 </xsl:template>
 
 <xsl:template match="xml/item">
+<xsl:if test="not(completed = '1111-11-11')">
 <item>
 <xsl:text> 
 	</xsl:text>
@@ -28,6 +29,7 @@
 </xsl:text>
 </item><xsl:text> 
 </xsl:text>
+</xsl:if>
 </xsl:template>
 
 
